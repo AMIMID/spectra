@@ -1,0 +1,263 @@
+(
+s.options.numWireBufs = 1024*16;
+s.options.numOutputBusChannels=4;
+s.options.numInputBusChannels=0;
+TempoClock.default.tempo_(120/120);
+s.options.memSize = 8192*8;
+s.waitForBoot
+)
+s.options.device_("ASIO : ASIO4ALL v2");
+s.reboot
+Server.killAll
+Buffer.freeAll
+
+(
+(SynthDef.new(\oa, {
+	arg  n1=1,n2=1, cutt=1300,decay=6,t=2,attack=0.01,angle1;
+	var amps,tf,tfBuf=0;
+	var detune1, osc1;
+	var freq1, env1,m=1,x=0;
+	var bank, pitch1;
+	var fund,trig = Impulse.ar(0);
+	var wrappedOut = { |busArray, signalArray|
+	// magic trick to expand to the larger of the two arrays
+	[busArray, signalArray].flop.do { |pair|
+		Out.ar(pair[0], pair[1])
+	}
+};
+	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
+	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
+	bank=12;
+	angle1=45;
+	pitch1=2.pow(n1/(2*6));
+fund=(((4*t)-1)*((4*t)/2))/2;
+	freq1 = fund*6;
+
+	bank.do{
+
+//env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),trig,doneAction:2);
+env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
+		detune1=exp(Complex(0,1)*(angle1.degrad));
+
+		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:LFNoise1.ar(TExpRand.ar(0.1,10,Dust.kr(1))),
+		 	phase:detune1.theta),0.1),
+	SinOsc.ar(0.9999.rand));
+
+
+m=m+1;
+	//m.postln;
+				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+
+	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*0.3),cutt));
+
+		//trig = TDelay.ar(trig, 0.1);
+	};
+}).add;);
+(SynthDef.new(\ob, {
+	arg  n1=1,n2=1, cutt=1300,decay=6,t=2,attack=0.01,angle1;
+	var amps,tf,tfBuf=0;
+	var detune1, osc1;
+	var freq1, env1,m=1,x=0;
+	var bank, pitch1;
+	var fund,trig = Impulse.ar(0);
+	var wrappedOut = { |busArray, signalArray|
+	// magic trick to expand to the larger of the two arrays
+	[busArray, signalArray].flop.do { |pair|
+		Out.ar(pair[0], pair[1])
+	}
+};
+	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
+	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
+	bank=12;
+	angle1=45;
+	pitch1=2.pow(n1/(2*6));
+fund=(((4*t)-1)*((4*t)/2))/2;
+	freq1 = fund*8;
+
+	bank.do{
+//env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),trig,doneAction:2);
+env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
+
+		detune1=exp(Complex(0,1)*(angle1.degrad));
+
+		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:LFNoise1.ar(TExpRand.ar(0.1,10,Dust.kr(1))),
+		 	phase:detune1.theta),0.1),
+		SinOsc.ar(0.9999.rand));
+
+
+m=m+1;
+	//m.postln;
+				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+
+	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*0.3),cutt));
+
+		//trig = TDelay.ar(trig, 0.1);
+	};
+}).add;);
+(SynthDef.new(\oc, {
+	arg  n1=1,n2=1, cutt=1300,decay=6,t=2,attack=0.01,angle1;
+	var amps,tf,tfBuf=0;
+	var detune1, osc1;
+	var freq1, env1,m=1,x=0;
+	var bank, pitch1;
+	var fund,trig = Impulse.ar(0);
+	var wrappedOut = { |busArray, signalArray|
+	// magic trick to expand to the larger of the two arrays
+	[busArray, signalArray].flop.do { |pair|
+		Out.ar(pair[0], pair[1])
+	}
+};
+	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
+	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
+	bank=12;
+	angle1=45;
+	pitch1=2.pow(n1/(2*6));
+fund=(((4*t)-1)*((4*t)/2))/2;
+	freq1 = fund*9;
+
+	bank.do{
+
+//env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),trig,doneAction:2);
+env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
+		detune1=exp(Complex(0,1)*(angle1.degrad));
+
+		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:LFNoise1.ar(TExpRand.ar(0.1,10,Dust.kr(1))),
+		 	phase:detune1.theta),0.1),
+		SinOsc.ar(0.9999.rand));
+
+
+m=m+1;
+	//m.postln;
+				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+
+	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*0.3),cutt));
+
+		//trig = TDelay.ar(trig, 0.1);
+	};
+}).add;);
+(SynthDef.new(\od, {
+	arg  n1=1,n2=1, cutt=1300,decay=6,t=2,attack=0.01,angle1;
+	var amps,tf,tfBuf=0;
+	var detune1, osc1;
+	var freq1, env1,m=1,x=0;
+	var bank, pitch1;
+	var fund,trig = Impulse.ar(0);
+	var wrappedOut = { |busArray, signalArray|
+	// magic trick to expand to the larger of the two arrays
+	[busArray, signalArray].flop.do { |pair|
+		Out.ar(pair[0], pair[1])
+	}
+};
+	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
+	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
+	bank=12;
+	angle1=45;
+	pitch1=2.pow(n1/(2*6));
+fund=(((4*t)-1)*((4*t)/2))/2;
+	freq1 = fund*12;
+
+	bank.do{
+
+//env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),trig,doneAction:2);
+env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
+
+		detune1=exp(Complex(0,1)*(angle1.degrad));
+
+		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:LFNoise1.ar(TExpRand.ar(0.1,10,Dust.kr(1))),
+		 	phase:detune1.theta),0.1),
+		SinOsc.ar(0.9999.rand));
+
+
+m=m+1;
+	//m.postln;
+				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+
+	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*0.3),cutt));
+
+		//trig = TDelay.ar(trig, 0.1);
+	};
+}).add;);
+)
+
+
+
+(
+a=Pdef(\1, Pbind(\instrument, \oa,
+	//\dur,1/2,
+	\dur,Pbrown(1/2,1,1/8,inf),
+	//\harm,Prand([6,8,9,12],inf),
+\n1,Prand([
+
+	7,19,22,10,24,14,22,21,7,19,22,10,21,14,17,19
+
+	],inf),
+
+	\cutt,Pbrown(220*2,220*16,100,inf),
+		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
+	//\out,Pn(Pshuf([0, 1,2,3], 1), inf).clump(4).collect([_]),
+		//\attack,Pbrown(0.01,0.5,0.1,inf),
+	\angle1,Pexprand(0.0001,360,inf),
+	\decay,Pbrown(4,8,1,inf);
+));
+b=Pdef(\2, Pbind(\instrument, \ob,
+	//\dur,1/2,
+	\dur,Pbrown(1/2,1,1/8,inf),
+	//\harm,Prand([6,8,9,12],inf),
+\n1,Prand([
+
+	7,19,22,10,24,14,22,21,7,19,22,10,21,14,17,19
+
+	],inf),
+
+	\cutt,Pbrown(220*2,220*16,100,inf),
+		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
+	//\out,Pn(Pshuf([0, 1,2,3], 1), inf).clump(4).collect([_]),
+		//\attack,Pbrown(0.01,0.5,0.1,inf),
+	\angle1,Pexprand(0.0001,360,inf),
+	\decay,Pbrown(4,8,1,inf);
+));
+c=Pdef(\3, Pbind(\instrument, \oc,
+	//\dur,1/2,
+	\dur,Pbrown(1/2,1,1/8,inf),
+	//\harm,Prand([6,8,9,12],inf),
+\n1,Prand([
+
+	7,19,22,10,24,14,22,21,7,19,22,10,21,14,17,19
+
+	],inf),
+
+	\cutt,Pbrown(220*2,220*16,100,inf),
+		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
+	//\out,Pn(Pshuf([0, 1,2,3], 1), inf).clump(4).collect([_]),
+		//\attack,Pbrown(0.01,0.5,0.1,inf),
+	\angle1,Pexprand(0.0001,360,inf),
+	\decay,Pbrown(4,8,1,inf);
+));
+d=Pdef(\4, Pbind(\instrument, \od,
+	//\dur,1/2,
+	\dur,Pbrown(1/2,1,1/8,inf),
+	//\harm,Prand([6,8,9,12],inf),
+\n1,Prand([
+
+	7,19,22,10,24,14,22,21,7,19,22,10,21,14,17,19
+
+	],inf),
+
+	\cutt,Pbrown(220*2,220*16,100,inf),
+		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
+	//\out,Pn(Pshuf([0, 1,2,3], 1), inf).clump(4).collect([_]),
+		//\attack,Pbrown(0.01,0.5,0.1,inf),
+	\angle1,Pexprand(0.0001,360,inf),
+	\decay,Pbrown(4,8,1,inf);
+));
+)
+
+(
+a.play;
+b.play;
+c.play;
+d.play;
+)
+a.stop;
+
+s.record(numChannels:4)
