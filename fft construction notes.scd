@@ -48,7 +48,7 @@ m=m+1;
 	//m.postln;
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*0.3),cutt));
+	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*LFNoise1.ar(TExpRand.ar(0.1,10,Dust.kr(1)))),cutt));
 
 		//trig = TDelay.ar(trig, 0.1);
 	};
@@ -89,7 +89,7 @@ m=m+1;
 	//m.postln;
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*0.3),cutt));
+	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*LFNoise1.ar(TExpRand.ar(0.1,10,Dust.kr(1)))),cutt));
 
 		//trig = TDelay.ar(trig, 0.1);
 	};
@@ -130,7 +130,7 @@ m=m+1;
 	//m.postln;
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*0.3),cutt));
+	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*LFNoise1.ar(TExpRand.ar(0.1,10,Dust.kr(1)))),cutt));
 
 		//trig = TDelay.ar(trig, 0.1);
 	};
@@ -172,7 +172,7 @@ m=m+1;
 	//m.postln;
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*0.3),cutt));
+	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*LFNoise1.ar(TExpRand.ar(0.1,10,Dust.kr(1)))),cutt));
 
 		//trig = TDelay.ar(trig, 0.1);
 	};
