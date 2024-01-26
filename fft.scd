@@ -22,7 +22,8 @@ c = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/584948__dibko__birds
 	b=b+1;
 		angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-		Out.ar(0,PanAz.ar(2,IFFT(chain),LFNoise1.ar(0.5)))
+		Out.ar(0,PanAz.ar(2,IFFT(chain),SinOsc.ar(0.9999.rand)))
 	}
 }.play
 )
+
