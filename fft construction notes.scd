@@ -2,7 +2,7 @@
 s.options.numWireBufs = 1024*16;
 s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=0;
-TempoClock.default.tempo_(120/240);
+TempoClock.default.tempo_(120/120);
 s.options.memSize = 8192*8;
 s.waitForBoot
 )
@@ -27,7 +27,7 @@ Buffer.freeAll
 };
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=24;
+	bank=12;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2))/2;
@@ -68,7 +68,7 @@ m=m+1;
 };
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=24;
+	bank=12;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2))/2;
@@ -109,7 +109,7 @@ m=m+1;
 };
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=24;
+	bank=12;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2))/2;
@@ -150,7 +150,7 @@ m=m+1;
 };
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=24;
+	bank=12;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2))/2;
@@ -195,7 +195,7 @@ a=Pdef(\1, Pbind(\instrument, \oa,
 	//\cutt,Pbrown(220*2,220*16,100,inf),
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1,2,3], 1), inf).clump(4).collect([_]),
-		\attack,Pbrown(0.01,0.5,0.1,inf),
+		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	\angle1,Pexprand(0.0001,360,inf),
 	\decay,Pbrown(4,8,1,inf);
 ));
@@ -212,7 +212,7 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 	//\cutt,Pbrown(220*2,220*16,100,inf),
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1,2,3], 1), inf).clump(4).collect([_]),
-		\attack,Pbrown(0.01,0.5,0.1,inf),
+		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	\angle1,Pexprand(0.0001,360,inf),
 	\decay,Pbrown(4,8,1,inf);
 ));
@@ -229,7 +229,7 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 	//\cutt,Pbrown(220*2,220*16,100,inf),
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1,2,3], 1), inf).clump(4).collect([_]),
-		\attack,Pbrown(0.01,0.5,0.1,inf),
+		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	\angle1,Pexprand(0.0001,360,inf),
 	\decay,Pbrown(4,8,1,inf);
 ));
@@ -246,7 +246,7 @@ d=Pdef(\4, Pbind(\instrument, \od,
 	//\cutt,Pbrown(220*2,220*16,100,inf),
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1,2,3], 1), inf).clump(4).collect([_]),
-		\attack,Pbrown(0.01,0.5,0.1,inf),
+		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	\angle1,Pexprand(0.0001,360,inf),
 	\decay,Pbrown(4,8,1,inf);
 ));
