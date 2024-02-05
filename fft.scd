@@ -11,8 +11,8 @@ c = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/584948__dibko__birds
 (
 {
     var in1,in2, chainL,chainR, v,b=0,detune1,angle1=0;
-    in = PlayBuf.ar(1, ~c1, BufRateScale.kr(~c1), loop: 0);
-	 in = PlayBuf.ar(1, ~c2, BufRateScale.kr(~c2), loop: 0);
+    in1 = PlayBuf.ar(1, ~c1, BufRateScale.kr(~c1), loop: 0);
+	 in2 = PlayBuf.ar(1, ~c2, BufRateScale.kr(~c2), loop: 0);
    250.do{  chainL = FFT(LocalBuf(1024), in1);
 		chainR = FFT(LocalBuf(1024), in2);
 
@@ -35,8 +35,8 @@ c = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/584948__dibko__birds
 	b=b+1;
 		angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-		Out.ar(0,PanAz.ar(2,IFFT(chainL),SinOsc.ar(0.9999.rand)))
-		Out.ar(0,PanAz.ar(2,IFFT(chainR),SinOsc.ar(0.9999.rand)))
+		Out.ar(0,PanAz.ar(2,IFFT(chainL),SinOsc.ar(0.9999.rand)));
+		Out.ar(0,PanAz.ar(2,IFFT(chainR),SinOsc.ar(0.9999.rand)));
 	}
 }.play
 )
