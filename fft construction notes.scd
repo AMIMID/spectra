@@ -443,3 +443,51 @@ Synth.new(\ob);
 Synth.new(\oc);
 Synth.new(\od);
 )
+
+/////////////////////////////
+
+~e= Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/584948__dibko__birds-and-nature-4-channel-recording.wav");
+
+
+
+(SynthDef.new(\oa, {
+	arg  n1=1,decay=6,t=2,attack=0.01,angle1;
+	var amps,tf,tfBuf=0;
+	var detune1, osc1;
+	var freq1, env1,pass=1;
+	var pitch1, fund;
+	var wrappedOut = { |busArray, signalArray|
+	// magic trick to expand to the larger of the two arrays
+	[busArray, signalArray].flop.do { |pair|
+		Out.ar(pair[0], pair[1])
+	}
+};
+	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
+	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
+
+	n1=TRand.kr(12.neg, 24,  Dust.kr(1)).round(1);
+	angle1=45;
+	pitch1=2.pow(n1/(2*6));
+fund=(((4*t)-1)*((4*t)/2))/2;
+	freq1 = fund*6;
+
+
+//env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),trig,doneAction:2);
+//env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
+		detune1=exp(Complex(0,1)*(angle1.degrad));
+
+	osc1=BBandPass.ar(PlayBuf.ar(2,0,BufRateScale.kr(0),loop:inf),freq1*pitch1,Line.kr(1,0.001,10),mul:XLine.kr(1,100,10));
+
+
+				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+
+	Out.ar(0,osc1);
+
+}).add;)
+
+(
+Synth.new(\oa);
+Synth.new(\ob);
+Synth.new(\oc);
+Synth.new(\od);
+)
