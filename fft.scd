@@ -3,18 +3,18 @@ c.free; c = Buffer.read(s, Platform.resourceDir +/+ "sounds/a11wlk01.wav");
 c = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/584948__dibko__birds-and-nature-4-channel-recording.wav",channels:1 );
 
 
-c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/584948__dibko__birds-and-nature-4-channel-recording.wav",channels:0 );
-c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/584948__dibko__birds-and-nature-4-channel-recording.wav",channels:1 );
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/BLEND1.wav",channels:0 );
+~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/BLEND1.wav",channels:1 );
 
 
 
 (
 {
-    var in, chainL,chainR, v,b=0,detune1,angle1=0;
-    in = PlayBuf.ar(1, c1, BufRateScale.kr(c1), loop: 0);
-	 in = PlayBuf.ar(1, c1, BufRateScale.kr(c1), loop: 0);
-   250.do{  chainL = FFT(LocalBuf(1024), in);
-		chainR = FFT(LocalBuf(1024), in);
+    var in1,in2, chainL,chainR, v,b=0,detune1,angle1=0;
+    in = PlayBuf.ar(1, ~c1, BufRateScale.kr(~c1), loop: 0);
+	 in = PlayBuf.ar(1, ~c2, BufRateScale.kr(~c2), loop: 0);
+   250.do{  chainL = FFT(LocalBuf(1024), in1);
+		chainR = FFT(LocalBuf(1024), in2);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
