@@ -1,3 +1,13 @@
+(
+s.options.numWireBufs = 1024*16;
+s.options.numOutputBusChannels=2;
+s.options.numInputBusChannels=0;
+TempoClock.default.tempo_(120/120);
+s.options.memSize = 8192*8;
+s.waitForBoot
+)
+
+
 c.free; c = Buffer.read(s, Platform.resourceDir +/+ "sounds/a11wlk01.wav");
 
 c = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/584948__dibko__birds-and-nature-4-channel-recording.wav",channels:1 );
