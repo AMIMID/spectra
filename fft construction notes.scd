@@ -1,4 +1,4 @@
-(
+fr(
 s.options.numWireBufs = 1024*16;
 s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=0;
@@ -526,7 +526,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-	osc1=BBandPass.ar(InFeedback.ar(2),freq1*2*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(1,10000,1));
+	osc1=BBandPass.ar(InFeedback.ar(2),freq1*4*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(1,10000,1));
 
 
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
@@ -559,7 +559,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=BBandPass.ar(InFeedback.ar(2),freq1*2*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(1,10000,1));
+		osc1=BBandPass.ar(InFeedback.ar(2),freq1*4*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(1,10000,1));
 
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
@@ -590,7 +590,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=BBandPass.ar(InFeedback.ar(2),freq1*2*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(1,10000,1));
+		osc1=BBandPass.ar(InFeedback.ar(2),freq1*4*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(1,10000,1));
 
 
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
@@ -624,7 +624,7 @@ env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=BBandPass.ar(InFeedback.ar(2),freq1*2*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(1,10000,1));
+		osc1=BBandPass.ar(InFeedback.ar(2),freq1*4*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(1,10000,1));
 
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
@@ -707,7 +707,7 @@ d=Pdef(\4, Pbind(\instrument, \od,
 ));
 )
 
-~e= Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/584948__dibko__birds-and-nature-4-channel-recording.wav");
+~e= Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/free sounds/619260__klankbeeld__edge-forest-732am-210221_0257.wav");
 ({Out.ar(2,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:inf))}.play)
 
 (
