@@ -35,8 +35,8 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 	bank.do{
 
-//env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
-env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
+//env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:TExpRand.ar(0.01,1,Dust.kr(5)),
@@ -75,8 +75,8 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 	freq1 = fund*8;
 
 	bank.do{
-//env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
-env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
+//env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
@@ -117,8 +117,8 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 	bank.do{
 
-//env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
-env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
+//env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:TExpRand.ar(0.01,1,Dust.kr(5)),
@@ -158,8 +158,8 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 	bank.do{
 
-//env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
-env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
+//env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
@@ -185,7 +185,6 @@ m=m+1;
 a=Pdef(\1, Pbind(\instrument, \oa,
 	//\dur,1/2,
 	\dur,Pbrown(1/2,1,1/8,inf),
-	//\harm,Prand([6,8,9,12],inf),
 \n1,Pseq([
 
 	7,19,22,10,24,14,22,21,7,19,22,10,21,14,17,19
@@ -202,8 +201,7 @@ a=Pdef(\1, Pbind(\instrument, \oa,
 b=Pdef(\2, Pbind(\instrument, \ob,
 	//\dur,1/2,
 	\dur,Pbrown(1/2,1,1/8,inf),
-	//\harm,Prand([6,8,9,12],inf),
-\n1,Pseq([
+\n1,Prand([
 
 	7,19,22,10,24,14,22,21,7,19,22,10,21,14,17,19
 
@@ -219,8 +217,7 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 c=Pdef(\3, Pbind(\instrument, \oc,
 	//\dur,1/2,
 	\dur,Pbrown(1/2,1,1/8,inf),
-	//\harm,Prand([6,8,9,12],inf),
-\n1,Pseq([
+\n1,Prand([
 
 	7,19,22,10,24,14,22,21,7,19,22,10,21,14,17,19
 
@@ -236,8 +233,7 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 d=Pdef(\4, Pbind(\instrument, \od,
 	//\dur,1/2,
 	\dur,Pbrown(1/2,1,1/8,inf),
-	//\harm,Prand([6,8,9,12],inf),
-\n1,Pseq([
+\n1,Prand([
 
 	7,19,22,10,24,14,22,21,7,19,22,10,21,14,17,19
 
@@ -526,12 +522,12 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-	osc1=BBandPass.ar(InFeedback.ar(2,2),freq1*4*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(1,10000,1));
+	osc1=BBandPass.ar(InFeedback.ar(2,2),freq1*2*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(1,10000,1));
 
 
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	Out.ar(0,LeakDC.ar(osc1*env1*TExpRand.ar(0.01,1,Dust.kr(1))));
+	Out.ar(0,LeakDC.ar(osc1*env1*TExpRand.ar(0.01,1,Dust.kr(5))));
 
 
 }).add;);
@@ -559,12 +555,12 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=BBandPass.ar(InFeedback.ar(2,2),freq1*4*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(1,10000,1));
+		osc1=BBandPass.ar(InFeedback.ar(2,2),freq1*2*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(1,10000,1));
 
 
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	Out.ar(0,LeakDC.ar(osc1*env1*TExpRand.ar(0.01,1,Dust.kr(1))));
+	Out.ar(0,LeakDC.ar(osc1*env1*TExpRand.ar(0.01,1,Dust.kr(5))));
 
 }).add;);
 (SynthDef.new(\oc, {
@@ -591,12 +587,12 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=BBandPass.ar(InFeedback.ar(2,2),freq1*4*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(1,10000,1));
+		osc1=BBandPass.ar(InFeedback.ar(2,2),freq1*2*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(1,10000,1));
 
 
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	Out.ar(0,LeakDC.ar(osc1*env1*TExpRand.ar(0.01,1,Dust.kr(1))));
+	Out.ar(0,LeakDC.ar(osc1*env1*TExpRand.ar(0.01,1,Dust.kr(5))));
 
 
 }).add;);
@@ -625,12 +621,12 @@ env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=BBandPass.ar(InFeedback.ar(2,2),freq1*4*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(1,10000,1));
+		osc1=BBandPass.ar(InFeedback.ar(2,2),freq1*2*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(1,10000,1));
 
 
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	Out.ar(0,LeakDC.ar(osc1*env1*TExpRand.ar(0.01,1,Dust.kr(1))));
+	Out.ar(0,LeakDC.ar(osc1*env1*TExpRand.ar(0.01,1,Dust.kr(5))));
 
 
 }).add;);
@@ -709,8 +705,8 @@ d=Pdef(\4, Pbind(\instrument, \od,
 ));
 )
 
-~e= Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/free sounds/619260__klankbeeld__edge-forest-732am-210221_0257.wav");
-({Out.ar(2,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:inf))}.play)
+~e= Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/BLEND tracks and samples/TRACK1.wav");
+({Out.ar(2,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:0))}.play)
 
 (
 a.play;
