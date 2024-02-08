@@ -13,8 +13,8 @@ c.free; c = Buffer.read(s, Platform.resourceDir +/+ "sounds/a11wlk01.wav");
 c = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/584948__dibko__birds-and-nature-4-channel-recording.wav",channels:1 );
 
 
-~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/BLEND1.wav",channels:0 );
-~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/BLEND1.wav",channels:1 );
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/BLEND2.wav",channels:0 );
+~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/BLEND2.wav",channels:1 );
 
 
 
@@ -45,8 +45,8 @@ c = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/584948__dibko__birds
 	b=b+1;
 		angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-		Out.ar(0,PanAz.ar(2,IFFT(chainL),SinOsc.ar(0.9999.rand)));
-		Out.ar(0,PanAz.ar(2,IFFT(chainR),SinOsc.ar(0.9999.rand)));
+		Out.ar(0,PanAz.ar(2,IFFT(chainL),(detune1.real.round(0.0001)+TExpRand.kr(1,10,Dust.kr(5))).wrap(1.neg,1)));
+		Out.ar(0,PanAz.ar(2,IFFT(chainR),(detune1.imag.round(0.0001)+TExpRand.kr(1,10,Dust.kr(5))).wrap(1.neg,1)));
 	}
 }.play
 )
