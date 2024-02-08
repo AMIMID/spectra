@@ -1,4 +1,4 @@
-fr(
+(
 s.options.numWireBufs = 1024*16;
 s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=0;
@@ -526,12 +526,12 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-	osc1=BBandPass.ar(InFeedback.ar(2),freq1*4*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(1,10000,1));
+	osc1=BBandPass.ar(InFeedback.ar(2,2),freq1*4*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(1,10000,1));
 
 
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	wrappedOut.value(out,LeakDC.ar(osc1*env1*TExpRand.ar(0.01,1,Dust.kr(1))));
+	Out.ar(0,LeakDC.ar(osc1*env1*TExpRand.ar(0.01,1,Dust.kr(1))));
 
 
 }).add;);
@@ -559,11 +559,12 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=BBandPass.ar(InFeedback.ar(2),freq1*4*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(1,10000,1));
+		osc1=BBandPass.ar(InFeedback.ar(2,2),freq1*4*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(1,10000,1));
+
 
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	wrappedOut.value(out,LeakDC.ar(osc1*env1*TExpRand.ar(0.01,1,Dust.kr(1))));
+	Out.ar(0,LeakDC.ar(osc1*env1*TExpRand.ar(0.01,1,Dust.kr(1))));
 
 }).add;);
 (SynthDef.new(\oc, {
@@ -590,12 +591,12 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=BBandPass.ar(InFeedback.ar(2),freq1*4*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(1,10000,1));
+		osc1=BBandPass.ar(InFeedback.ar(2,2),freq1*4*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(1,10000,1));
 
 
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	wrappedOut.value(out,LeakDC.ar(osc1*env1*TExpRand.ar(0.01,1,Dust.kr(1))));
+	Out.ar(0,LeakDC.ar(osc1*env1*TExpRand.ar(0.01,1,Dust.kr(1))));
 
 
 }).add;);
@@ -624,11 +625,12 @@ env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=BBandPass.ar(InFeedback.ar(2),freq1*4*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(1,10000,1));
+		osc1=BBandPass.ar(InFeedback.ar(2,2),freq1*4*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(1,10000,1));
+
 
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	wrappedOut.value(out,LeakDC.ar(osc1*env1*TExpRand.ar(0.01,1,Dust.kr(1))));
+	Out.ar(0,LeakDC.ar(osc1*env1*TExpRand.ar(0.01,1,Dust.kr(1))));
 
 
 }).add;);
