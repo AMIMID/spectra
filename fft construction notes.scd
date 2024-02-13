@@ -706,7 +706,7 @@ k=Pdef(\8, Pbind(\instrument, \ok,
 )
 
 ~k= Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/free sounds/144827__eelke__sea-waves.wav");
-({Out.ar(2,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:0))}.play)
+({Out.ar(2,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:inf))}.play)
 
 (
 e.play;
@@ -736,7 +736,7 @@ s.record(numChannels:4)
 };
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=1;
+	bank=12;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2))/2;
@@ -749,7 +749,9 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 				//osc1=BBandPass.ar(PlayBuf.ar(2,1,BufRateScale.kr(1),startPos:~e.numFrames.rand,loop:inf),freq1*2*pitch1,pass,mul:MouseX.kr(0.01,1000,1));
-		osc1=BBandPass.ar(WhiteNoise.ar(0.25),freq1*2*pitch1,pass,mul:MouseX.kr(0.01,1000,1));
+		osc1=PanAz.ar(2,BBandPass.ar(WhiteNoise.ar(TExpRand.ar(0.01,1,Dust.kr(5))),freq1*m*pitch1,pass,mul:MouseX.kr(0.01,1000,1)),
+			SinOsc.ar(0.9999.rand));
+
 
 m=m+1;
 	//m.postln;
@@ -775,7 +777,7 @@ m=m+1;
 };
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=1;
+	bank=12;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2))/2;
@@ -788,7 +790,9 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 				//osc1=BBandPass.ar(PlayBuf.ar(2,1,BufRateScale.kr(1),startPos:~e.numFrames.rand,loop:inf),freq1*2*pitch1,pass,mul:MouseX.kr(0.01,1000,1));
-		osc1=BBandPass.ar(WhiteNoise.ar(0.25),freq1*2*pitch1,pass,mul:MouseX.kr(0.01,1000,1));
+		osc1=PanAz.ar(2,BBandPass.ar(WhiteNoise.ar(TExpRand.ar(0.01,1,Dust.kr(5))),freq1*m*pitch1,pass,mul:MouseX.kr(0.01,1000,1)),
+			SinOsc.ar(0.9999.rand));
+
 m=m+1;
 	//m.postln;
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
@@ -812,7 +816,7 @@ m=m+1;
 };
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=1;
+	bank=12;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2))/2;
@@ -825,7 +829,9 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 				//osc1=BBandPass.ar(PlayBuf.ar(2,1,BufRateScale.kr(1),startPos:~e.numFrames.rand,loop:inf),freq1*2*pitch1,pass,mul:MouseX.kr(0.01,1000,1));
-		osc1=BBandPass.ar(WhiteNoise.ar(0.25),freq1*2*pitch1,pass,mul:MouseX.kr(0.01,1000,1));
+		osc1=PanAz.ar(2,BBandPass.ar(WhiteNoise.ar(TExpRand.ar(0.01,1,Dust.kr(5))),freq1*m*pitch1,pass,mul:MouseX.kr(0.01,1000,1)),
+			SinOsc.ar(0.9999.rand));
+
 
 
 m=m+1;
@@ -852,7 +858,7 @@ m=m+1;
 };
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=1;
+	bank=12;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2))/2;
@@ -866,7 +872,9 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 		//osc1=BBandPass.ar(PlayBuf.ar(2,1,BufRateScale.kr(1),startPos:~e.numFrames.rand,loop:inf),freq1*2*pitch1,pass,mul:MouseX.kr(0.01,1000,1));
-		osc1=BBandPass.ar(WhiteNoise.ar(0.25),freq1*2*pitch1,pass,mul:MouseX.kr(0.01,1000,1));
+		osc1=PanAz.ar(2,BBandPass.ar(WhiteNoise.ar(TExpRand.ar(0.01,1,Dust.kr(5))),freq1*m*pitch1,pass,mul:MouseX.kr(0.01,1000,1)),
+			SinOsc.ar(0.9999.rand));
+
 
 
 m=m+1;
