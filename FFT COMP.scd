@@ -266,7 +266,7 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 				//osc1=BBandPass.ar(PlayBuf.ar(2,1,BufRateScale.kr(1),startPos:~e.numFrames.rand,loop:inf),freq1*2*pitch1,pass,mul:MouseX.kr(0.01,1000,1));
-		osc1=PanAz.ar(2,BBandPass.ar(WhiteNoise.ar(TExpRand.ar(0.01,1,Dust.kr(5))),freq1*m*pitch1,pass,mul:MouseX.kr(0.01,1000,1)),
+		osc1=PanAz.ar(2,BBandPass.ar(WhiteNoise.ar(TExpRand.ar(0.01,1,Dust.kr(5))),freq1*m*pitch1,pass,mul:TExpRand.ar(0.01,1,Dust.kr(5))*MouseX.kr(0.01,1000,1)),
 			(detune1.real.round(0.0001)+TExpRand.kr(1,10,Dust.kr(5))).wrap(1.neg,1));
 
 
@@ -307,7 +307,7 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 				//osc1=BBandPass.ar(PlayBuf.ar(2,1,BufRateScale.kr(1),startPos:~e.numFrames.rand,loop:inf),freq1*2*pitch1,pass,mul:MouseX.kr(0.01,1000,1));
-		osc1=PanAz.ar(2,BBandPass.ar(WhiteNoise.ar(TExpRand.ar(0.01,1,Dust.kr(5))),freq1*m*pitch1,pass,mul:MouseX.kr(0.01,1000,1)),
+		osc1=PanAz.ar(2,BBandPass.ar(WhiteNoise.ar(TExpRand.ar(0.01,1,Dust.kr(5))),freq1*m*pitch1,pass,mul:TExpRand.ar(0.01,1,Dust.kr(5))*MouseX.kr(0.01,1000,1)),
 			(detune1.real.round(0.0001)+TExpRand.kr(1,10,Dust.kr(5))).wrap(1.neg,1));
 
 m=m+1;
@@ -346,7 +346,7 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 				//osc1=BBandPass.ar(PlayBuf.ar(2,1,BufRateScale.kr(1),startPos:~e.numFrames.rand,loop:inf),freq1*2*pitch1,pass,mul:MouseX.kr(0.01,1000,1));
-		osc1=PanAz.ar(2,BBandPass.ar(WhiteNoise.ar(TExpRand.ar(0.01,1,Dust.kr(5))),freq1*m*pitch1,pass,mul:MouseX.kr(0.01,1000,1)),
+		osc1=PanAz.ar(2,BBandPass.ar(WhiteNoise.ar(TExpRand.ar(0.01,1,Dust.kr(5))),freq1*m*pitch1,pass,mul:TExpRand.ar(0.01,1,Dust.kr(5))*MouseX.kr(0.01,1000,1)),
 			(detune1.real.round(0.0001)+TExpRand.kr(1,10,Dust.kr(5))).wrap(1.neg,1));
 
 
@@ -389,7 +389,7 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 		//osc1=BBandPass.ar(PlayBuf.ar(2,1,BufRateScale.kr(1),startPos:~e.numFrames.rand,loop:inf),freq1*2*pitch1,pass,mul:MouseX.kr(0.01,1000,1));
-		osc1=PanAz.ar(2,BBandPass.ar(WhiteNoise.ar(TExpRand.ar(0.01,1,Dust.kr(5))),freq1*m*pitch1,pass,mul:MouseX.kr(0.01,1000,1)),
+		osc1=PanAz.ar(2,BBandPass.ar(WhiteNoise.ar(TExpRand.ar(0.01,1,Dust.kr(5)))freq1*m*pitch1,pass,mul:TExpRand.ar(0.01,1,Dust.kr(5))*MouseX.kr(0.01,1000,1)),
 			(detune1.real.round(0.0001)+TExpRand.kr(1,10,Dust.kr(5))).wrap(1.neg,1));
 
 
@@ -508,8 +508,8 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:TExpRand.ar(0.01,1,Dust.kr(5))*MouseX.kr(,,1),
-		 	phase:detune1.theta)),
+		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:TExpRand.ar(0.01,1,Dust.kr(5))*MouseX.kr(0.00001,1/2,1),
+		 	phase:(detune1.theta+TExpRand.kr(1,10,Dust.kr(5))).wrap(pi.neg,pi))),
 	(detune1.real.round(0.0001)+TExpRand.kr(1,10,Dust.kr(5))).wrap(1.neg,1));
 
 
@@ -549,8 +549,8 @@ env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:TExpRand.ar(0.01,1,Dust.kr(5)),
-		 	phase:detune1.theta)),
+		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:TExpRand.ar(0.01,1,Dust.kr(5))*MouseX.kr(0.00001,1/2,1),
+		 	phase:(detune1.theta+TExpRand.kr(1,10,Dust.kr(5))).wrap(pi.neg,pi))),
 		(detune1.real.round(0.0001)+TExpRand.kr(1,10,Dust.kr(5))).wrap(1.neg,1));
 
 
@@ -590,8 +590,8 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:TExpRand.ar(0.01,1,Dust.kr(5)),
-		 	phase:detune1.theta)),
+		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:TExpRand.ar(0.01,1,Dust.kr(5))*MouseX.kr(0.00001,1/2,1),
+		 	phase:(detune1.theta+TExpRand.kr(1,10,Dust.kr(5))).wrap(pi.neg,pi))),
 		(detune1.real.round(0.0001)+TExpRand.kr(1,10,Dust.kr(5))).wrap(1.neg,1));
 
 
@@ -632,8 +632,8 @@ env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:TExpRand.ar(0.01,1,Dust.kr(5)),
-		 	phase:detune1.theta)),
+		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:TExpRand.ar(0.01,1,Dust.kr(5))*MouseX.kr(0.00001,1/2,1),
+		 	phase:(detune1.theta+TExpRand.kr(1,10,Dust.kr(5))).wrap(pi.neg,pi))),
 		(detune1.real.round(0.0001)+TExpRand.kr(1,10,Dust.kr(5))).wrap(1.neg,1));
 
 
