@@ -3,7 +3,7 @@ s.options.numWireBufs = 1024*16;
 s.options.numOutputBusChannels=10;
 s.options.numInputBusChannels=0;
 TempoClock.default.tempo_(120/120);
-s.options.memSize = 8192*8;
+s.options.memSize = 8192*16;
 s.waitForBoot
 )
 s.options.device_("ASIO : ASIO4ALL v2");
@@ -104,7 +104,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=BBandPass.ar(InFeedback.ar(4,2),freq1*2*pitch1,MouseY.kr(1,0.00001,1),mul:Mouse.kr(10,10000,1));
+		osc1=BBandPass.ar(InFeedback.ar(4,2),freq1*2*pitch1,MouseY.kr(1,0.00001,1),mul:MouseY.kr(10,10000,1));
 
 
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
@@ -748,8 +748,8 @@ SynthDef.new(\player,{
 	//~c = Amplitude.ar(sig3, 0.01, 0.25);SendReply.ar(Impulse.ar(100), '/c', ~c);
 	//~d = Amplitude.ar(sig4, 0.01, 0.25);SendReply.ar(Impulse.ar(100), '/d', ~d);
 
-Out.ar(8,sig1*1);
-Out.ar(9,sig2*1);
+Out.ar(8,sig1*2);
+Out.ar(9,sig2*2);
 //Out.ar(2,sig3);
 //Out.ar(3,sig4);
 }).add;
@@ -779,12 +779,10 @@ e.play;
 f.play;
 g.play;
 k.play;
-{Out.ar(0,BPF.ar(InFeedback.ar(2,2),600,1,1,mul:1/8))}.play;
-{Out.ar(0,BPF.ar(InFeedback.ar(2,2),800,1,3/4,mul:1/8))}.play;
-{Out.ar(0,BPF.ar(InFeedback.ar(2,2),900,1,2/3,mul:1/8))}.play;
-{Out.ar(0,BPF.ar(InFeedback.ar(2,2),1200,1,1/2,mul:1/8))}.play;
-)
-
+{Out.ar(6,BPF.ar(InFeedback.ar(2,2),600,1,1,mul:1/8))}.play;
+{Out.ar(6,BPF.ar(InFeedback.ar(2,2),800,1,3/4,mul:1/8))}.play;
+{Out.ar(6,BPF.ar(InFeedback.ar(2,2),900,1,2/3,mul:1/8))}.play;
+{Out.ar(6,BPF.ar(InFeedback.ar(2,2),1200,1,1/2,mul:1/8))}.play;
 (
 {
     var in1,in2, chainL,chainR, v,b=0,detune1,angle1=0;
@@ -816,26 +814,50 @@ k.play;
 		Out.ar(0,PanAz.ar(2,IFFT(chainR),(detune1.imag.round(0.0001)+TExpRand.kr(1,10,Dust.kr(5))).wrap(1.neg,1),level:1));
 	}
 }.play
+);
+)
+
+
+
+
+(
+~e1 = Buffer.readChannel(s,,channels:0);
+~e2 = Buffer.readChannel(s,,channels:1);
 )
 
 (
-s.options.numWireBufs = 1024*16;
-s.options.numOutputBusChannels=4;
-s.options.numInputBusChannels=0;
-s.options.maxNodes=1024;
-TempoClock.default.tempo_(120/120);
-s.options.memSize = 8192*8;
-s.waitForBoot
-)
+SynthDef.new(\player,{
+	arg tempo;
+	var env;
+	var sig1, sig2, sig3, sig4;
 
+	//env=EnvGen.ar(Env.new([0,tempo.reciprocal,tempo.reciprocal,0],[1,50,1]), doneAction: 2);
 
+	sig1=PlayBuf.ar(1,1,BufRateScale.kr(1);
+	sig2=PlayBuf.ar(1,2,BufRateScale.kr(2);
+	//sig1=PlayBuf.ar(1,0,BufRateScale.kr(0),startPos:0,loop:inf,rate:1);//*env;
+	//sig2=PlayBuf.ar(1,1,BufRateScale.kr(1),startPos:0,loop:inf,rate:1);//*env;
+	//sig3=PlayBuf.ar(1,2,BufRateScale.kr(2),startPos:0,loop:inf,rate:1);//*env;
+	//sig4=PlayBuf.ar(1,3,BufRateScale.kr(3),startPos:0,loop:inf,rate:1);//*env;
+
+	~a = Amplitude.ar(sig1, 0.01, 0.25).poll;SendReply.ar(Impulse.ar(100), '/a', ~a);
+	~b = Amplitude.ar(sig2, 0.01, 0.25);SendReply.ar(Impulse.ar(100), '/b', ~b);
+	//~c = Amplitude.ar(sig3, 0.01, 0.25);SendReply.ar(Impulse.ar(100), '/c', ~c);
+	//~d = Amplitude.ar(sig4, 0.01, 0.25);SendReply.ar(Impulse.ar(100), '/d', ~d);
+
+Out.ar(8,sig1*1);
+Out.ar(9,sig2*1);
+//Out.ar(2,sig3);
+//Out.ar(3,sig4);
+}).add;
+);
 Synth.new(\player);
-//(
-//Pdef(\1, Pbind(\instrument, \player,
-//	\dur,30,
-//	\tempo,Pxrand([1],inf);
-//)).play;
-//);
+
+
+
+
+
+
 (
 var y1,y2,y3,y4,y5,y6,y7,y8;
 var	p1,p2,p3,p4;
@@ -855,16 +877,6 @@ OSCdef(\amp2, { |msg|
 	defer { ~v.refresh };
 }, '/b', s.addr);
 
-OSCdef(\amp3, { |msg|
-	~c = msg[3];
-	defer { ~v.refresh };
-}, '/c', s.addr);
-
-OSCdef(\amp4, { |msg|
-	~d = msg[3];
-	defer { ~v.refresh };
-}, '/d', s.addr);
-
 
 ///////0//////////////////////////////////////////////////////////////////////////////////////////////////
     Window.closeAll;
@@ -876,7 +888,7 @@ OSCdef(\amp4, { |msg|
 ~v.drawFunc ={
 Pen.translate(400,400);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////points
-4000.do{
+2000.do{
 
 		x1=x1+(1*(~a*0.0001));
 		p1= (x1)/1;
@@ -925,7 +937,7 @@ Pen.translate(400,400);
 		//Pen.line(Point.new(Polar.new(rad5,y5.theta).asPoint.x,Polar.new(rad6,y6.theta).asPoint.y));
 		//Pen.line(Point.new(Polar.new(rad7,y7.theta).asPoint.x,Polar.new(rad8,y8.theta).asPoint.y));
 
-		Pen.rotate((32));
+		Pen.rotate(2pi);
 		Pen.stroke;~v.refresh;
 
 
@@ -934,5 +946,5 @@ Pen.translate(400,400);
 			};
 
 };
-{ while { run } {~v.background_(Color.white); ~v.refresh; (1/1000).wait } }.fork(AppClock);
+{ while { run } {~v.background_(Color.white); ~v.refresh; (1/100).wait } }.fork(AppClock);
 )
