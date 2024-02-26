@@ -222,7 +222,7 @@ k=Pdef(\8, Pbind(\instrument, \ok,
 ));
 )
 
-~k= Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/BLEND tracks and samples/TRACK2.wav");
+~k= Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/BLEND tracks and samples/BLEND4wav.wav");
 ({Out.ar(4,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:inf))}.play)
 
 (
@@ -728,32 +728,6 @@ a.stop;
 s.record(numChannels:4)
 
 ///////////
-(
-SynthDef.new(\player,{
-	arg tempo;
-	var env;
-	var sig1, sig2, sig3, sig4;
-
-	//env=EnvGen.ar(Env.new([0,tempo.reciprocal,tempo.reciprocal,0],[1,50,1]), doneAction: 2);
-
-	sig1=InFeedback.ar(0,1);
-	sig2=InFeedback.ar(1,1);
-	//sig1=PlayBuf.ar(1,0,BufRateScale.kr(0),startPos:0,loop:inf,rate:1);//*env;
-	//sig2=PlayBuf.ar(1,1,BufRateScale.kr(1),startPos:0,loop:inf,rate:1);//*env;
-	//sig3=PlayBuf.ar(1,2,BufRateScale.kr(2),startPos:0,loop:inf,rate:1);//*env;
-	//sig4=PlayBuf.ar(1,3,BufRateScale.kr(3),startPos:0,loop:inf,rate:1);//*env;
-
-	~a = Amplitude.ar(sig1, 0.01, 0.25).poll;SendReply.ar(Impulse.ar(100), '/a', ~a);
-	~b = Amplitude.ar(sig2, 0.01, 0.25);SendReply.ar(Impulse.ar(100), '/b', ~b);
-	//~c = Amplitude.ar(sig3, 0.01, 0.25);SendReply.ar(Impulse.ar(100), '/c', ~c);
-	//~d = Amplitude.ar(sig4, 0.01, 0.25);SendReply.ar(Impulse.ar(100), '/d', ~d);
-
-Out.ar(8,sig1*2);
-Out.ar(9,sig2*2);
-//Out.ar(2,sig3);
-//Out.ar(3,sig4);
-}).add;
-);
 //;//./////
 
 //~z= Buffer.read(s,);
@@ -779,15 +753,23 @@ e.play;
 f.play;
 g.play;
 k.play;
-{Out.ar(6,BPF.ar(InFeedback.ar(2,2),600,1,1,mul:1/8))}.play;
-{Out.ar(6,BPF.ar(InFeedback.ar(2,2),800,1,3/4,mul:1/8))}.play;
-{Out.ar(6,BPF.ar(InFeedback.ar(2,2),900,1,2/3,mul:1/8))}.play;
-{Out.ar(6,BPF.ar(InFeedback.ar(2,2),1200,1,1/2,mul:1/8))}.play;
+{Out.ar(0,BPF.ar(InFeedback.ar(2,2),600,1,1,mul:1/8))}.play;
+{Out.ar(0,BPF.ar(InFeedback.ar(2,2),800,1,3/4,mul:1/8))}.play;
+{Out.ar(0,BPF.ar(InFeedback.ar(2,2),900,1,2/3,mul:1/8))}.play;
+{Out.ar(0,BPF.ar(InFeedback.ar(2,2),1200,1,1/2,mul:1/8))}.play;
+
+)
+
+
+
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240226_141337.wav",channels:0 );
+~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240226_141337.wav",channels:1 );
+
 (
 {
     var in1,in2, chainL,chainR, v,b=0,detune1,angle1=0;
-	in1 = InFeedback.ar(6,1);
-	in2 = InFeedback.ar(7,1);
+    in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0);
+	 in2 = PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c2), loop: 0);
    250.do{  chainL = FFT(LocalBuf(1024), in1);
 		chainR = FFT(LocalBuf(1024), in2);
 
@@ -810,19 +792,17 @@ k.play;
 	b=b+1;
 		angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-		Out.ar(0,PanAz.ar(2,IFFT(chainL),(detune1.real.round(0.0001)+TExpRand.kr(1,10,Dust.kr(5))).wrap(1.neg,1),level:1));
-		Out.ar(0,PanAz.ar(2,IFFT(chainR),(detune1.imag.round(0.0001)+TExpRand.kr(1,10,Dust.kr(5))).wrap(1.neg,1),level:1));
+		Out.ar(0,PanAz.ar(2,IFFT(chainL),(detune1.real.round(0.0001)+TExpRand.kr(1,10,Dust.kr(5))).wrap(1.neg,1)));
+		Out.ar(0,PanAz.ar(2,IFFT(chainR),(detune1.imag.round(0.0001)+TExpRand.kr(1,10,Dust.kr(5))).wrap(1.neg,1)));
 	}
 }.play
-);
 )
 
 
 
-
 (
-~e1 = Buffer.readChannel(s,,channels:0);
-~e2 = Buffer.readChannel(s,,channels:1);
+~e1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/BLEND tracks and samples/TRACK2.wav",channels:0);
+~e2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/BLEND tracks and samples/TRACK2.wav",channels:1);
 )
 
 (
@@ -833,8 +813,8 @@ SynthDef.new(\player,{
 
 	//env=EnvGen.ar(Env.new([0,tempo.reciprocal,tempo.reciprocal,0],[1,50,1]), doneAction: 2);
 
-	sig1=PlayBuf.ar(1,1,BufRateScale.kr(1);
-	sig2=PlayBuf.ar(1,2,BufRateScale.kr(2);
+	sig1=PlayBuf.ar(1,~e1.bufnum,BufRateScale.kr(~e1.bufnum),loop:inf);
+	sig2=PlayBuf.ar(1,~e2.bufnum,BufRateScale.kr(~e2.bufnum),loop:inf);
 	//sig1=PlayBuf.ar(1,0,BufRateScale.kr(0),startPos:0,loop:inf,rate:1);//*env;
 	//sig2=PlayBuf.ar(1,1,BufRateScale.kr(1),startPos:0,loop:inf,rate:1);//*env;
 	//sig3=PlayBuf.ar(1,2,BufRateScale.kr(2),startPos:0,loop:inf,rate:1);//*env;
@@ -845,8 +825,8 @@ SynthDef.new(\player,{
 	//~c = Amplitude.ar(sig3, 0.01, 0.25);SendReply.ar(Impulse.ar(100), '/c', ~c);
 	//~d = Amplitude.ar(sig4, 0.01, 0.25);SendReply.ar(Impulse.ar(100), '/d', ~d);
 
-Out.ar(8,sig1*1);
-Out.ar(9,sig2*1);
+Out.ar(0,sig1*1);
+Out.ar(1,sig2*1);
 //Out.ar(2,sig3);
 //Out.ar(3,sig4);
 }).add;
@@ -888,7 +868,7 @@ OSCdef(\amp2, { |msg|
 ~v.drawFunc ={
 Pen.translate(400,400);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////points
-2000.do{
+4000.do{
 
 		x1=x1+(1*(~a*0.0001));
 		p1= (x1)/1;
@@ -907,7 +887,7 @@ Pen.translate(400,400);
 		//y3=exp(Complex(0,1)*(angle.degrad+p3));
 		//y4=exp(Complex(0,1)*(angle.degrad+p4));
 
-			Pen.width=2;
+			Pen.width=1;
 			rad1=y1.real*200;
 		    rad2=y1.imag*200;
 		    rad3=y2.real*300;
@@ -918,11 +898,11 @@ Pen.translate(400,400);
 		   // rad8=y4.imag*300;
 
 
-		Color.black.set;
+			//Color(red:0.9999.rand,green:0.9999.rand,blue:0.9999.rand).set;
+Color.black.set;
+Pen.addOval(Rect.new(Polar.new(rad1,(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*200).neg,(~a*200)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a*5,~a*5));
 
-		Pen.addOval(Rect.new(Polar.new(rad1,y.theta).asPoint.x,Polar.new((rad1*~a).wrap(200.neg,200),y1.theta).asPoint.y,~a*5,~a*5));
-
-		Pen.addOval(Rect.new(Polar.new(rad2,y.theta).asPoint.x,Polar.new((rad2*~b).wrap(200.neg,200),y2.theta).asPoint.y,~b*5,~b*5));
+Pen.addOval(Rect.new(Polar.new(rad2,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad2).wrap((~b*200).neg,(~b*200)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b*5,~b*5));
 
 	//Pen.addOval(Rect.new(Polar.new(rad3,y.theta).asPoint.x,Polar.new(rad3,y1.theta).asPoint.y,~a*5,~a*5));
 
@@ -937,7 +917,8 @@ Pen.translate(400,400);
 		//Pen.line(Point.new(Polar.new(rad5,y5.theta).asPoint.x,Polar.new(rad6,y6.theta).asPoint.y));
 		//Pen.line(Point.new(Polar.new(rad7,y7.theta).asPoint.x,Polar.new(rad8,y8.theta).asPoint.y));
 
-		Pen.rotate(2pi);
+		Pen.rotate((4/3)*pi);
+		//Pen.rotate(4);
 		Pen.stroke;~v.refresh;
 
 
@@ -946,5 +927,5 @@ Pen.translate(400,400);
 			};
 
 };
-{ while { run } {~v.background_(Color.white); ~v.refresh; (1/100).wait } }.fork(AppClock);
+{ while { run } {~v.background_(Color.white); ~v.refresh; (1/1000).wait } }.fork(AppClock);
 )
