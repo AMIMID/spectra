@@ -820,8 +820,8 @@ SynthDef.new(\player,{
 	//sig3=PlayBuf.ar(1,2,BufRateScale.kr(2),startPos:0,loop:inf,rate:1);//*env;
 	//sig4=PlayBuf.ar(1,3,BufRateScale.kr(3),startPos:0,loop:inf,rate:1);//*env;
 
-	~a = Amplitude.ar(sig1, 0.01, 0.25).poll;SendReply.ar(Impulse.ar(100), '/a', ~a);
-	~b = Amplitude.ar(sig2, 0.01, 0.25);SendReply.ar(Impulse.ar(100), '/b', ~b);
+	~a = Amplitude.ar(sig1, 0.01, 0.25,2).poll;SendReply.ar(Impulse.ar(100), '/a', ~a);
+	~b = Amplitude.ar(sig2, 0.01, 0.25,2);SendReply.ar(Impulse.ar(100), '/b', ~b);
 	//~c = Amplitude.ar(sig3, 0.01, 0.25);SendReply.ar(Impulse.ar(100), '/c', ~c);
 	//~d = Amplitude.ar(sig4, 0.01, 0.25);SendReply.ar(Impulse.ar(100), '/d', ~d);
 
@@ -888,8 +888,8 @@ Pen.translate(400,400);
 		//y4=exp(Complex(0,1)*(angle.degrad+p4));
 
 			Pen.width=1;
-			rad1=y1.real*200;
-		    rad2=y1.imag*200;
+			rad1=y1.real*300;
+		    rad2=y1.imag*300;
 		    rad3=y2.real*300;
 		    rad4=y2.imag*300;
 		   // rad5=y3.real*300;
@@ -900,9 +900,9 @@ Pen.translate(400,400);
 
 			//Color(red:0.9999.rand,green:0.9999.rand,blue:0.9999.rand).set;
 Color.black.set;
-Pen.addOval(Rect.new(Polar.new(rad1,(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*200).neg,(~a*200)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a*5,~a*5));
+Pen.addOval(Rect.new(Polar.new(rad1,(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*200).neg,(~a*200)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a*2,~a*2));
 
-Pen.addOval(Rect.new(Polar.new(rad1,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad2).wrap((~b*200).neg,(~b*200)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b*5,~b*5));
+Pen.addOval(Rect.new(Polar.new(rad1,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad2).wrap((~b*200).neg,(~b*200)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b*2,~b*2));
 
 	//Pen.addOval(Rect.new(Polar.new(rad3,y.theta).asPoint.x,Polar.new(rad3,y1.theta).asPoint.y,~a*5,~a*5));
 
@@ -912,8 +912,8 @@ Pen.addOval(Rect.new(Polar.new(rad1,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Pola
 
 
 
-		//Pen.line(Point.new(Polar.new(rad1,(y1.theta)*pi).asPoint.x,Polar.new(rad2,(y1.theta)*pi).asPoint.y));
-		//Pen.line(Point.new(Polar.new(rad3,(y.theta)*pi).asPoint.x,Polar.new(rad4,(y2.theta)*pi).asPoint.y));
+//Pen.line(Point.new(Polar.new(rad1,/(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*300).neg,(~a*300)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a*1,~a*1));
+//Pen.line(Point.new(Polar.new(rad1,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad2).wrap((~b*300).neg,(~b*300)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b*1,~b*1));
 		//Pen.line(Point.new(Polar.new(rad5,y5.theta).asPoint.x,Polar.new(rad6,y6.theta).asPoint.y));
 		//Pen.line(Point.new(Polar.new(rad7,y7.theta).asPoint.x,Polar.new(rad8,y8.theta).asPoint.y));
 
