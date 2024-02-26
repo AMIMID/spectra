@@ -902,7 +902,7 @@ Pen.translate(400,400);
 Color.black.set;
 Pen.addOval(Rect.new(Polar.new(rad1,(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*200).neg,(~a*200)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a*5,~a*5));
 
-Pen.addOval(Rect.new(Polar.new(rad2,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad2).wrap((~b*200).neg,(~b*200)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b*5,~b*5));
+Pen.addOval(Rect.new(Polar.new(rad1,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad2).wrap((~b*200).neg,(~b*200)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b*5,~b*5));
 
 	//Pen.addOval(Rect.new(Polar.new(rad3,y.theta).asPoint.x,Polar.new(rad3,y1.theta).asPoint.y,~a*5,~a*5));
 
@@ -917,7 +917,7 @@ Pen.addOval(Rect.new(Polar.new(rad2,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Pola
 		//Pen.line(Point.new(Polar.new(rad5,y5.theta).asPoint.x,Polar.new(rad6,y6.theta).asPoint.y));
 		//Pen.line(Point.new(Polar.new(rad7,y7.theta).asPoint.x,Polar.new(rad8,y8.theta).asPoint.y));
 
-		Pen.rotate((4/3)*pi);
+		Pen.rotate((3/4)*pi);
 		//Pen.rotate(4);
 		Pen.stroke;~v.refresh;
 
