@@ -35,12 +35,12 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 	bank.do{
 
-//env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
-env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
+//env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:TExpRand.ar(0.01,1,Dust.kr(5)),
-		 	phase:detune1.theta)),
+		 	phase:(detune1.theta+TExpRand.kr(1,10,Dust.kr(5))).wrap(pi.neg,pi))),
 	SinOsc.ar(0.9999.rand));
 
 
@@ -75,13 +75,13 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 	freq1 = fund*8;
 
 	bank.do{
-//env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
-env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
+//env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:TExpRand.ar(0.01,1,Dust.kr(5)),
-		 	phase:detune1.theta)),
+		 	phase:(detune1.theta+TExpRand.kr(1,10,Dust.kr(5))).wrap(pi.neg,pi))),
 		SinOsc.ar(0.9999.rand));
 
 
@@ -117,12 +117,12 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 	bank.do{
 
-//env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
-env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
+//env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:TExpRand.ar(0.01,1,Dust.kr(5)),
-		 	phase:detune1.theta)),
+		 	phase:(detune1.theta+TExpRand.kr(1,10,Dust.kr(5))).wrap(pi.neg,pi))),
 		SinOsc.ar(0.9999.rand));
 
 
@@ -158,13 +158,13 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 	bank.do{
 
-//env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
-env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
+//env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:TExpRand.ar(0.01,1,Dust.kr(5)),
-		 	phase:detune1.theta)),
+		 	phase:(detune1.theta+TExpRand.kr(1,10,Dust.kr(5))).wrap(pi.neg,pi))),
 		SinOsc.ar(0.9999.rand));
 
 
@@ -522,7 +522,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-	osc1=BBandPass.ar(InFeedback.ar(2,2),freq1*2*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(10,10000,1));
+	osc1=BBandPass.ar(InFeedback.ar(2,2),freq1*2*pitch1,MouseX.kr(1,0.00001,1),mul:MouseY.kr(10,10000,1));
 
 
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
@@ -555,7 +555,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=BBandPass.ar(InFeedback.ar(2,2),freq1*2*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(10,10000,1));
+		osc1=BBandPass.ar(InFeedback.ar(2,2),freq1*2*pitch1,MouseX.kr(1,0.00001,1),mul:MouseY.kr(10,10000,1));
 
 
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
@@ -621,7 +621,7 @@ env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=BBandPass.ar(InFeedback.ar(2,2),freq1*2*pitch1,MouseX.kr(1,0.00001,1),mul:MouseX.kr(10,10000,1));
+		osc1=BBandPass.ar(InFeedback.ar(2,2),freq1*2*pitch1,MouseX.kr(1,0.00001,1),mul:MouseY.kr(10,10000,1));
 
 
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
@@ -705,7 +705,7 @@ k=Pdef(\8, Pbind(\instrument, \ok,
 ));
 )
 
-~k= Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/free sounds/144827__eelke__sea-waves.wav");
+~k= Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/BLEND tracks and samples/TRACK1.wav");
 ({Out.ar(2,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:inf))}.play)
 
 (
