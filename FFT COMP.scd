@@ -157,7 +157,7 @@ e=Pdef(\5, Pbind(\instrument, \oe,
 	\dur,Pbrown(1/2,1,1/8,inf),
 	//\pass,Pgeom(1,10,inf),
 \n1,Prand([
-0,5,6,12],inf),
+0,5,7,12],inf),
 
 	//\cutt,Pbrown(220*2,220*16,100,inf),
 		\out,Pn(Pshuf([2, 3], 1), inf).clump(2).collect([_]),
@@ -171,7 +171,7 @@ f=Pdef(\6, Pbind(\instrument, \of,
 	\dur,Pbrown(1/2,1,1/8,inf),
 	//\pass,Pgeom(1,10,inf),
 \n1,Prand([
-0,5,6,12],inf),
+0,5,7,12],inf),
 
 	//\cutt,Pbrown(220*2,220*16,100,inf),
 		\out,Pn(Pshuf([2, 3], 1), inf).clump(2).collect([_]),
@@ -185,7 +185,7 @@ g=Pdef(\7, Pbind(\instrument, \og,
 	\dur,Pbrown(1/2,1,1/8,inf),
 	//\pass,Pgeom(1,10,inf),
 \n1,Prand([
-0,5,6,12],inf),
+0,5,7,12],inf),
 
 	//\cutt,Pbrown(220*2,220*16,100,inf),
 		\out,Pn(Pshuf([2, 3], 1), inf).clump(2).collect([_]),
@@ -199,7 +199,7 @@ k=Pdef(\8, Pbind(\instrument, \ok,
 	\dur,Pbrown(1/2,1,1/8,inf),
 	//\pass,Pgeom(1,10,inf),
 \n1,Prand([
-0,5,6,12],inf),
+0,5,7,12],inf),
 
 	//\cutt,Pbrown(220*2,220*16,100,inf),
 		\out,Pn(Pshuf([2, 3], 1), inf).clump(2).collect([_]),
@@ -210,7 +210,7 @@ k=Pdef(\8, Pbind(\instrument, \ok,
 ));
 )
 
-~k= Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/BLEND tracks and samples/free sounds/723930__logicmoon__city-nights.wav");
+~k= Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/BLEND tracks and samples/TRACK4.wav");
 ({Out.ar(4,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:inf))}.play)
 
 (
@@ -398,7 +398,7 @@ l=Pdef(\9, Pbind(\instrument, \ol,
 	//\dur,1/2,
 	\dur,Pbrown(1/2,1,1/8,inf),
 \n1,Prand([
-0,5,6,12],inf),
+0,5,7,12],inf),
 
 		\out,Pn(Pshuf([2, 3], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1,2,3], 1), inf).clump(4).collect([_]),
@@ -410,7 +410,7 @@ m=Pdef(\10, Pbind(\instrument, \om,
 	//\dur,1/2,
 	\dur,Pbrown(1/2,1,1/8,inf),
 \n1,Prand([
-0,5,6,12],inf),
+0,5,7,12],inf),
 
 		\out,Pn(Pshuf([2, 3], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1,2,3], 1), inf).clump(4).collect([_]),
@@ -422,7 +422,7 @@ n=Pdef(\11, Pbind(\instrument, \on,
 	//\dur,1/2,
 	\dur,Pbrown(1/2,1,1/8,inf),
 \n1,Prand([
-0,5,6,12],inf),
+0,5,7,12],inf),
 
 		\out,Pn(Pshuf([2, 3], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1,2,3], 1), inf).clump(4).collect([_]),
@@ -434,7 +434,7 @@ o=Pdef(\12, Pbind(\instrument, \oo,
 	//\dur,1/2,
 	\dur,Pbrown(1/2,1,1/8,inf),
 \n1,Prand([
-0,5,6,12],inf),
+0,5,7,12],inf),
 
 		\out,Pn(Pshuf([2, 3], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1,2,3], 1), inf).clump(4).collect([_]),
@@ -631,7 +631,7 @@ a=Pdef(\1, Pbind(\instrument, \oa,
 	//\dur,1/2,
 	\dur,Pbrown(1/2,1,1/8,inf),
 \n1,Prand([
-0,5,6,12],inf),
+0,5,7,12],inf),
 
 	\cutt,Pbrown(220*2,220*16,100,inf),
 		\out,Pn(Pshuf([2, 3], 1), inf).clump(2).collect([_]),
@@ -644,7 +644,7 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 	//\dur,1/2,
 	\dur,Pbrown(1/2,1,1/8,inf),
 \n1,Prand([
-0,5,6,12],inf),
+0,5,7,12],inf),
 
 	\cutt,Pbrown(220*2,220*16,100,inf),
 		\out,Pn(Pshuf([2, 3], 1), inf).clump(2).collect([_]),
@@ -657,7 +657,7 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 	//\dur,1/2,
 	\dur,Pbrown(1/2,1,1/8,inf),
 \n1,Prand([
-0,5,6,12],inf),
+0,5,7,12],inf),
 
 	\cutt,Pbrown(220*2,220*16,100,inf),
 		\out,Pn(Pshuf([2, 3], 1), inf).clump(2).collect([_]),
@@ -670,7 +670,7 @@ d=Pdef(\4, Pbind(\instrument, \od,
 	//\dur,1/2,
 	\dur,Pbrown(1/2,1,1/8,inf),
 \n1,Prand([
-0,5,6,12],inf),
+0,5,7,12],inf),
 
 	\cutt,Pbrown(220*2,220*16,100,inf),
 		\out,Pn(Pshuf([2, 3], 1), inf).clump(2).collect([_]),
