@@ -504,8 +504,8 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 	bank.do{
 
-//env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
-env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
+//env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:TExpRand.ar(0.01,1,Dust.kr(5))*MouseY.kr(0.00001,1/2,1),
@@ -544,8 +544,8 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 	freq1 = fund*8;
 
 	bank.do{
-//env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
-env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
+//env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
@@ -586,8 +586,8 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 	bank.do{
 
-//env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
-env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
+//env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:TExpRand.ar(0.01,1,Dust.kr(5))*MouseY.kr(0.00001,1/2,1),
@@ -627,8 +627,8 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 	bank.do{
 
-//env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
-env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
+//env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
@@ -753,10 +753,10 @@ e.play;
 f.play;
 g.play;
 k.play;
-{Out.ar(0,BPF.ar(InFeedback.ar(2,2),600,1,1,mul:1/8))}.play;
-{Out.ar(0,BPF.ar(InFeedback.ar(2,2),800,1,3/4,mul:1/8))}.play;
-{Out.ar(0,BPF.ar(InFeedback.ar(2,2),900,1,2/3,mul:1/8))}.play;
-{Out.ar(0,BPF.ar(InFeedback.ar(2,2),1200,1,1/2,mul:1/8))}.play;
+{Out.ar(0,BPF.ar(InFeedback.ar(2,2),600,1,1))}.play;
+{Out.ar(0,BPF.ar(InFeedback.ar(2,2),800,1,3/4))}.play;
+{Out.ar(0,BPF.ar(InFeedback.ar(2,2),900,1,2/3))}.play;
+{Out.ar(0,BPF.ar(InFeedback.ar(2,2),1200,1,1/2))}.play;
 
 )
 
