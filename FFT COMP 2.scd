@@ -210,7 +210,7 @@ k=Pdef(\8, Pbind(\instrument, \ok,
 ));
 )
 
-~k= Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/BLEND tracks and samples/free sounds/586990__klankbeeld__dawnchoruscity-517am-210228_2261.wav");
+~k= Buffer.read(s,);
 ({Out.ar(4,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:inf))}.play)
 
 (
