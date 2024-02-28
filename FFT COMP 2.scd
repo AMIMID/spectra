@@ -721,12 +721,12 @@ k.play;
 //{Out.ar(0,BPF.ar(InFeedback.ar(2,2),800,1,3/4))}.play;
 //{Out.ar(0,BPF.ar(InFeedback.ar(2,2),900,1,2/3))}.play;
 //{Out.ar(0,BPF.ar(InFeedback.ar(2,2),1200,1,1/2)}.play;
-{Out.ar(0,PanAz.ar(1,InFeedback.ar(2,1),level:100*SinOsc.kr(0.1,mul:16).dbamp.poll))}.play;
-{Out.ar(1,PanAz.ar(1,InFeedback.ar(3,1),level:100*SinOsc.kr(0.1,mul:16).dbamp))}.play;
-{Out.ar(0,PanAz.ar(1,InFeedback.ar(4,1),level:1*SinOsc.kr(0.1,mul:32).dbamp))}.play;
-{Out.ar(1,PanAz.ar(1,InFeedback.ar(5,1),level:1*SinOsc.kr(0.1,mul:32).dbamp))}.play;
-{Out.ar(0,PanAz.ar(1,InFeedback.ar(6,1),level:0.1*SinOsc.kr(0.1,mul:32).dbamp))}.play;
-{Out.ar(1,PanAz.ar(1,InFeedback.ar(7,1),level:0.1*SinOsc.kr(0.1,mul:32).dbamp))}.play;
+{Out.ar(0,PanAz.ar(1,InFeedback.ar(2,1),level:100*SinOsc.kr(0.02,mul:16).dbamp.poll))}.play;
+{Out.ar(1,PanAz.ar(1,InFeedback.ar(3,1),level:100*SinOsc.kr(0.02,mul:16).dbamp))}.play;
+{Out.ar(0,PanAz.ar(1,InFeedback.ar(4,1),level:5*SinOsc.kr(0.02,mul:32).dbamp))}.play;
+{Out.ar(1,PanAz.ar(1,InFeedback.ar(5,1),level:5*SinOsc.kr(0.02,mul:32).dbamp))}.play;
+{Out.ar(0,PanAz.ar(1,InFeedback.ar(6,1),level:0.1*SinOsc.kr(0.02,mul:16).dbamp))}.play;
+{Out.ar(1,PanAz.ar(1,InFeedback.ar(7,1),level:0.1*SinOsc.kr(0.02,mul:16).dbamp))}.play;
 )
 
 
