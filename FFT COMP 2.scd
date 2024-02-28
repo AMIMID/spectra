@@ -705,7 +705,7 @@ s.record(numChannels:4)
 
 (
 {Out.kr(0,(0.01*SinOsc.ar(0.02,phase:90.neg.degrad,mul:32).dbamp).poll)}.play;
-{Out.kr(1,(100*SinOsc.ar(0.02,phase:90.degrad,mul:32).dbamp).poll)}.play;
+{Out.kr(1,(1000*SinOsc.ar(0.02,phase:90.degrad,mul:32).dbamp).poll)}.play;
 {Out.ar(8,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:inf)*8)}.play;
 a.play;
 b.play;
