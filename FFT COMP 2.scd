@@ -480,7 +480,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 	bank.do{
 
-env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/2);
 //env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
@@ -520,7 +520,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 	freq1 = fund*8;
 
 	bank.do{
-env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/2);
 //env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
@@ -562,7 +562,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 	bank.do{
 
-env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/2);
 //env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
@@ -603,7 +603,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 	bank.do{
 
-env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/2);
 //env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
