@@ -210,7 +210,7 @@ k=Pdef(\8, Pbind(\instrument, \ok,
 ));
 )
 
-~k= Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/BLEND tracks and samples/free sounds/586990__klankbeeld__dawnchoruscity-517am-210228_2261.wav");
+~k= Buffer.read(s,"/Users/petrostatsiopoulos/Dokuments/sounds/lam/lam recs/plateau stereo.wav");
 ({Out.ar(4,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:inf))}.play)
 
 (
@@ -704,7 +704,7 @@ s.record(numChannels:4)
 // )
 
 (
-{Out.ar(8,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:inf)*32)}.play;
+{Out.ar(8,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:inf)*8)}.play;
 a.play;
 b.play;
 c.play;
@@ -721,7 +721,7 @@ k.play;
 //{Out.ar(0,BPF.ar(InFeedback.ar(2,2),800,1,3/4))}.play;
 //{Out.ar(0,BPF.ar(InFeedback.ar(2,2),900,1,2/3))}.play;
 //{Out.ar(0,BPF.ar(InFeedback.ar(2,2),1200,1,1/2)}.play;
-{Out.ar(0,PanAz.ar(1,InFeedback.ar(2,1),level:100*SinOsc.kr(0.02,mul:16).dbamp.poll))}.play;
+{Out.ar(0,PanAz.ar(1,InFeedback.ar(2,1),level:(100*SinOsc.kr(0.02,mul:16).dbamp).poll))}.play;
 {Out.ar(1,PanAz.ar(1,InFeedback.ar(3,1),level:100*SinOsc.kr(0.02,mul:16).dbamp))}.play;
 {Out.ar(0,PanAz.ar(1,InFeedback.ar(4,1),level:5*SinOsc.kr(0.02,mul:32).dbamp))}.play;
 {Out.ar(1,PanAz.ar(1,InFeedback.ar(5,1),level:5*SinOsc.kr(0.02,mul:32).dbamp))}.play;
