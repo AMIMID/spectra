@@ -707,7 +707,7 @@ s.record(numChannels:4)
 // )
 
 (
-{Out.kr(0,(0.01*SinOsc.ar(MouseY.kr(0.01,0.02),phase:90.neg.degrad,mul:32).dbamp).poll)}.play;
+{Out.kr(0,(0.01*SinOsc.ar(MouseY.kr(0.01,0.02),phase:90.neg.degrad,mul:32).dbamp))}.play;
 //{Out.kr(1,(1000*SinOsc.ar(0.02,phase:90.degrad,mul:32).dbamp))}.play;
 {Out.ar(8,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:inf)*8)}.play;
 a.play;
@@ -726,12 +726,12 @@ k.play;
 //{Out.ar(0,BPF.ar(InFeedback.ar(2,2),800,1,3/4))}.play;
 //{Out.ar(0,BPF.ar(InFeedback.ar(2,2),900,1,2/3))}.play;
 //{Out.ar(0,BPF.ar(InFeedback.ar(2,2),1200,1,1/2)}.play;
-{Out.ar(0,PanAz.ar(1,InFeedback.ar(2,1),level:(100*SinOsc.kr(MouseY.kr(0.01,0.02),mul:16,phase:90.degrad).dbamp)))}.play;
-{Out.ar(1,PanAz.ar(1,InFeedback.ar(3,1),level:100*SinOsc.kr(MouseY.kr(0.01,0.02),mul:16,phase:90.degrad).dbamp))}.play;
-{Out.ar(0,PanAz.ar(1,InFeedback.ar(4,1),level:(100*SinOsc.kr(MouseY.kr(0.01,0.02),mul:16,phase:90.degrad).dbamp)))}.play;
-{Out.ar(1,PanAz.ar(1,InFeedback.ar(5,1),level:100*SinOsc.kr(MouseY.kr(0.01,0.02),mul:16,phase:90.degrad).dbamp))}.play;
-{Out.ar(0,PanAz.ar(1,InFeedback.ar(6,1),level:0.1*SinOsc.kr(MouseY.kr(0.01,0.02),mul:16,phase:90.degrad).dbamp))}.play;
-{Out.ar(1,PanAz.ar(1,InFeedback.ar(7,1),level:0.1*(SinOsc.kr(MouseY.kr(0.01,0.02),mul:16,phase:90.degrad).dbamp)))}.play;
+{Out.ar(0,PanAz.ar(1,InFeedback.ar(2,1),level:(100*SinOsc.kr(MouseY.kr(0.01,0.02),mul:32,phase:90.degrad).dbamp)))}.play;
+{Out.ar(1,PanAz.ar(1,InFeedback.ar(3,1),level:100*SinOsc.kr(MouseY.kr(0.01,0.02),mul:32,phase:90.degrad).dbamp))}.play;
+{Out.ar(0,PanAz.ar(1,InFeedback.ar(4,1),level:(100*SinOsc.kr(MouseY.kr(0.01,0.02),mul:32,phase:90.degrad).dbamp)))}.play;
+{Out.ar(1,PanAz.ar(1,InFeedback.ar(5,1),level:100*SinOsc.kr(MouseY.kr(0.01,0.02),mul:32,phase:90.degrad).dbamp))}.play;
+{Out.ar(0,PanAz.ar(1,InFeedback.ar(6,1),level:0.1*SinOsc.kr(MouseY.kr(0.01,0.02),mul:32,phase:90.degrad).dbamp))}.play;
+{Out.ar(1,PanAz.ar(1,InFeedback.ar(7,1),level:(0.1*(SinOsc.kr(MouseY.kr(0.01,0.02),mul:32,phase:90.degrad).dbamp)).poll))}.play;
 )
 
 ////MouseY.kr(1,0.00001,1),mul:MouseY.kr(10,10000,1));
@@ -842,11 +842,11 @@ OSCdef(\amp2, { |msg|
 ~v.drawFunc ={
 Pen.translate(400,400);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////points
-4000.do{
+2000.do{
 
-		x1=x1+(1*(~a*0.000001));
+		x1=x1+(1*(~a*1));
 		p1= (x1)/1;
-		x2=x2+(1*(~b*0.000001));
+		x2=x2+(1*(~b*1));
 		p2= (x2)/1;
 		//x3=x3+(1*(~c*0.001));
 		//p3= (x3)/1;
@@ -872,10 +872,11 @@ Pen.translate(400,400);
 		   // rad6=y3.imag*300;
 		   // rad7=y4.real*300;
 		   // rad8=y4.imag*300;
-Pen.width=2;
+Pen.width=1;
 
 			//Color(red:0.9999.rand,green:0.9999.rand,blue:0.9999.rand).set;
-Color(red:1,green:1,blue:1,alpha:1).set;
+//Color(red:1,green:1,blue:1,alpha:1).set;
+		Color.yellow.set;
 
 Pen.addOval(Rect.new(Polar.new(rad1,(y1.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*30).neg,(~a*300)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
 
@@ -890,14 +891,14 @@ Pen.addOval(Rect.new(Polar.new(rad4,(y2.theta*~b).wrap(pi.neg,pi)).asPoint.x,Pol
 
 		//Pen.addOval(Rect.new(Polar.new(rad4,y.theta).asPoint.x,Polar.new(rad4,y2.theta).asPoint.y,~b*5,~b*5));
 
-//Pen.addOval(Rect.new(Polar.new(rad,(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*30).neg,(~a*30)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
+Pen.addOval(Rect.new(Polar.new(rad,(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*30).neg,(~a*30)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
 
-//Pen.addOval(Rect.new(Polar.new(rad0,(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad2).wrap((~a*30).neg,(~a*30)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
+Pen.addOval(Rect.new(Polar.new(rad0,(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad2).wrap((~a*30).neg,(~a*30)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
 
 
-//Pen.addOval(Rect.new(Polar.new(rad,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad3).wrap((~b*30).neg,(~b*30)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
+Pen.addOval(Rect.new(Polar.new(rad,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad3).wrap((~b*30).neg,(~b*30)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
 
-//Pen.addOval(Rect.new(Polar.new(rad0,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad4).wrap((~b*30).neg,(~b*00)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
+Pen.addOval(Rect.new(Polar.new(rad0,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad4).wrap((~b*30).neg,(~b*00)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
 
 
 //Pen.line(Point.new(Polar.new(rad1,/(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*300).neg,(~a*300)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a*1,~a*1));
@@ -907,7 +908,7 @@ Pen.addOval(Rect.new(Polar.new(rad4,(y2.theta*~b).wrap(pi.neg,pi)).asPoint.x,Pol
 
 		//Pen.rotate((3/4)*pi);
 	//	Pen.rotate((2/3)*pi);
-		Pen.rotate((1/2)*pi);
+		Pen.rotate((1/1)*pi);
 		//Pen.rotate(4);
 		Pen.stroke;
 		//~v.refresh;
