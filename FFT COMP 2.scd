@@ -736,8 +736,8 @@ k.play;
 
 ////MouseY.kr(1,0.00001,1),mul:MouseY.kr(10,10000,1));
 
-~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240228_165100.wav",channels:0 );
-~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240228_165100.wav",channels:1 );
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240229_143020.wav",channels:0 );
+~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240229_143020.wav",channels:1 );
 
 (
 {
@@ -775,8 +775,8 @@ k.play;
 
 
 (
-~e1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240228_165721.wav",channels:0);
-~e2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240228_165721.wav",channels:1);
+~e1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/BLEND tracks and samples/TRACK6.wav",channels:0);
+~e2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/BLEND tracks and samples/TRACK6.wav",channels:1);
 )
 
 (
@@ -794,8 +794,8 @@ SynthDef.new(\player,{
 	//sig3=PlayBuf.ar(1,2,BufRateScale.kr(2),startPos:0,loop:inf,rate:1);//*env;
 	//sig4=PlayBuf.ar(1,3,BufRateScale.kr(3),startPos:0,loop:inf,rate:1);//*env;
 
-	~a = Amplitude.ar(sig1, 0.01, 0.25,20).poll;SendReply.ar(Impulse.ar(100), '/a', ~a);
-	~b = Amplitude.ar(sig2, 0.01, 0.25,20);SendReply.ar(Impulse.ar(100), '/b', ~b);
+	~a = Amplitude.ar(sig1, 0.01, 0.25,100).poll;SendReply.ar(Impulse.ar(100), '/a', ~a);
+	~b = Amplitude.ar(sig2, 0.01, 0.25,100);SendReply.ar(Impulse.ar(100), '/b', ~b);
 	//~c = Amplitude.ar(sig3, 0.01, 0.25);SendReply.ar(Impulse.ar(100), '/c', ~c);
 	//~d = Amplitude.ar(sig4, 0.01, 0.25);SendReply.ar(Impulse.ar(100), '/d', ~d);
 
@@ -842,11 +842,11 @@ OSCdef(\amp2, { |msg|
 ~v.drawFunc ={
 Pen.translate(400,400);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////points
-2000.do{
+4000.do{
 
-		x1=x1+(1*(~a*1));
+		x1=x1+(1*(~a*0.000001));
 		p1= (x1)/1;
-		x2=x2+(1*(~b*1));
+		x2=x2+(1*(~b*0.000001));
 		p2= (x2)/1;
 		//x3=x3+(1*(~c*0.001));
 		//p3= (x3)/1;
@@ -861,7 +861,7 @@ Pen.translate(400,400);
 		//y3=exp(Complex(0,1)*(angle.degrad+p3));
 		//y4=exp(Complex(0,1)*(angle.degrad+p4));
 
-			Pen.width=1;
+
 		rad=y.real*300;
 		rad0=y.imag*300;
 			rad1=y1.real*300;
@@ -872,32 +872,32 @@ Pen.translate(400,400);
 		   // rad6=y3.imag*300;
 		   // rad7=y4.real*300;
 		   // rad8=y4.imag*300;
-
+Pen.width=2;
 
 			//Color(red:0.9999.rand,green:0.9999.rand,blue:0.9999.rand).set;
-Color.white.set;
-Pen.addOval(Rect.new(Polar.new(rad1,(y1.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*200).neg,(~a*200)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
+Color(red:1,green:1,blue:1,alpha:1).set;
 
-Pen.addOval(Rect.new(Polar.new(rad2,(y1.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad2).wrap((~a*200).neg,(~a*200)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
+Pen.addOval(Rect.new(Polar.new(rad1,(y1.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*30).neg,(~a*300)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
+
+Pen.addOval(Rect.new(Polar.new(rad2,(y1.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad2).wrap((~a*30).neg,(~a*30)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
 
 
-Pen.addOval(Rect.new(Polar.new(rad3,(y2.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad3).wrap((~b*200).neg,(~b*200)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
-
-Pen.addOval(Rect.new(Polar.new(rad4,(y2.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad4).wrap((~b*200).neg,(~b*200)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
+Pen.addOval(Rect.new(Polar.new(rad3,(y2.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad3).wrap((~b*30).neg,(~b*30)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
+//
+Pen.addOval(Rect.new(Polar.new(rad4,(y2.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad4).wrap((~b*30).neg,(~b*30)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
 
 	//Pen.addOval(Rect.new(Polar.new(rad3,y.theta).asPoint.x,Polar.new(rad3,y1.theta).asPoint.y,~a*5,~a*5));
 
 		//Pen.addOval(Rect.new(Polar.new(rad4,y.theta).asPoint.x,Polar.new(rad4,y2.theta).asPoint.y,~b*5,~b*5));
 
+//Pen.addOval(Rect.new(Polar.new(rad,(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*30).neg,(~a*30)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
 
-Pen.addOval(Rect.new(Polar.new(rad,(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*200).neg,(~a*200)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
-
-Pen.addOval(Rect.new(Polar.new(rad0,(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad2).wrap((~a*200).neg,(~a*200)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
+//Pen.addOval(Rect.new(Polar.new(rad0,(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad2).wrap((~a*30).neg,(~a*30)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
 
 
-Pen.addOval(Rect.new(Polar.new(rad,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad3).wrap((~b*200).neg,(~b*200)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
+//Pen.addOval(Rect.new(Polar.new(rad,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad3).wrap((~b*30).neg,(~b*30)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
 
-Pen.addOval(Rect.new(Polar.new(rad0,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad4).wrap((~b*200).neg,(~b*200)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
+//Pen.addOval(Rect.new(Polar.new(rad0,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad4).wrap((~b*30).neg,(~b*00)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
 
 
 //Pen.line(Point.new(Polar.new(rad1,/(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*300).neg,(~a*300)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a*1,~a*1));
@@ -918,5 +918,5 @@ Pen.addOval(Rect.new(Polar.new(rad0,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Pola
 			};
 
 };
-{ while { run } {~v.background_(Color.green); ~v.refresh; (1/100).wait } }.fork(AppClock);
+{ while { run } {~v.background_(Color.green); ~v.refresh; (1/1000).wait } }.fork(AppClock);
 )
