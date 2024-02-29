@@ -36,7 +36,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 	freq1 = fund*6;
 
 //env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
-env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:10);
+env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:100);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 	osc1=BBandPass.ar(InFeedback.ar(8,2),freq1*2*pitch1,In.kr(0,1),mul:1);
@@ -69,7 +69,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 	freq1 = fund*8;
 
 //env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
-env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:10);
+env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:100);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 		osc1=BBandPass.ar(InFeedback.ar(8,2),freq1*2*pitch1,In.kr(0,1),mul:1);
@@ -101,7 +101,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 	freq1 = fund*9;
 
 //env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
-env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:10);
+env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:100);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 		osc1=BBandPass.ar(InFeedback.ar(8,2),freq1*2*pitch1,In.kr(0,1),mul:1);
@@ -134,7 +134,7 @@ env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:10);
 fund=(((4*t)-1)*((4*t)/2))/2;
 	freq1 = fund*12;
 //env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
-env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:10);
+env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:100);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
@@ -210,7 +210,7 @@ k=Pdef(\8, Pbind(\instrument, \ok,
 ));
 )
 
-~k= Buffer.read(s,"/Users/petrostatsiopoulos/Dokuments/sounds/16/SC_220527_054238.aiff");
+~k= Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/untitled.wav");
 ({Out.ar(4,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:inf))}.play)
 
 (
@@ -483,7 +483,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 	bank.do{
 
-env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/2);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1);
 //env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
@@ -523,7 +523,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 	freq1 = fund*8;
 
 	bank.do{
-env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/2);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1);
 //env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
@@ -565,7 +565,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 	bank.do{
 
-env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/2);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1);
 //env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
@@ -606,7 +606,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 	bank.do{
 
-env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/2);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1);
 //env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
@@ -707,17 +707,17 @@ s.record(numChannels:4)
 // )
 
 (
-{Out.kr(0,(0.01*SinOsc.ar(MouseY.kr(0.01,0.02),phase:90.neg.degrad,mul:32).dbamp))}.play;
+{Out.kr(0,(0.1*SinOsc.ar(MouseY.kr(0.02,0.02),phase:90.neg.degrad,mul:40).dbamp).poll)}.play;
 //{Out.kr(1,(1000*SinOsc.ar(0.02,phase:90.degrad,mul:32).dbamp))}.play;
-{Out.ar(8,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:inf)*8)}.play;
+{Out.ar(8,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:0)*10)}.play;
 a.play;
 b.play;
 c.play;
 d.play;
-l.play;
-m.play;
-n.play;
-o.play;
+//l.play;
+//m.play;
+//n.play;
+//o.play;
 e.play;
 f.play;
 g.play;
@@ -726,12 +726,12 @@ k.play;
 //{Out.ar(0,BPF.ar(InFeedback.ar(2,2),800,1,3/4))}.play;
 //{Out.ar(0,BPF.ar(InFeedback.ar(2,2),900,1,2/3))}.play;
 //{Out.ar(0,BPF.ar(InFeedback.ar(2,2),1200,1,1/2)}.play;
-{Out.ar(0,PanAz.ar(1,InFeedback.ar(2,1),level:(100*SinOsc.kr(MouseY.kr(0.01,0.02),mul:32,phase:90.degrad).dbamp).poll))}.play;
-{Out.ar(1,PanAz.ar(1,InFeedback.ar(3,1),level:100*SinOsc.kr(MouseY.kr(0.01,0.02),mul:32,phase:90.degrad).dbamp))}.play;
-{Out.ar(0,PanAz.ar(1,InFeedback.ar(4,1),level:(100*SinOsc.kr(MouseY.kr(0.01,0.02),mul:32,phase:90.degrad).dbamp)))}.play;
-{Out.ar(1,PanAz.ar(1,InFeedback.ar(5,1),level:100*SinOsc.kr(MouseY.kr(0.01,0.02),mul:32,phase:90.degrad).dbamp))}.play;
-{Out.ar(0,PanAz.ar(1,InFeedback.ar(6,1),level:0.1*SinOsc.kr(MouseY.kr(0.01,0.02),mul:32,phase:90.degrad).dbamp))}.play;
-{Out.ar(1,PanAz.ar(1,InFeedback.ar(7,1),level:(0.1*(SinOsc.kr(MouseY.kr(0.01,0.02),mul:32,phase:90.degrad).dbamp))))}.play;
+{Out.ar(0,PanAz.ar(1,InFeedback.ar(2,1),level:(100*SinOsc.kr(MouseY.kr(0.02,0.02),mul:20,phase:90.degrad).dbamp)))}.play;
+{Out.ar(1,PanAz.ar(1,InFeedback.ar(3,1),level:100*SinOsc.kr(MouseY.kr(0.02,0.02),mul:20,phase:90.degrad).dbamp))}.play;
+//{Out.ar(0,PanAz.ar(1,InFeedback.ar(4,1),level:(100*SinOsc.kr(MouseY.kr(00.05,0.0.05),mul:32,phase:90.degrad).dbamp)))}.play;
+//{Out.ar(1,PanAz.ar(1,InFeedback.ar(5,1),level:100*SinOsc.kr(MouseY.kr(0.0.05,0.0.05),mul:32,phase:90.degrad).dbamp))}.play;0.01
+{Out.ar(0,PanAz.ar(1,InFeedback.ar(6,1),level:0.1*SinOsc.kr(MouseY.kr(0.02,0.02),mul:20,phase:90.degrad).dbamp))}.play;
+{Out.ar(1,PanAz.ar(1,InFeedback.ar(7,1),level:(0.1*(SinOsc.kr(MouseY.kr(0.02,0.02),mul:20,phase:90.degrad).dbamp).poll)))}.play;
 )
 
 ////MouseY.kr(1,0.00001,1),mul:MouseY.kr(10,10000,1));
