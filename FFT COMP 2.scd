@@ -210,7 +210,7 @@ k=Pdef(\8, Pbind(\instrument, \ok,
 ));
 )
 
-~k= Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/sounds selection/SC_210702_004930.aiff");
+~k= Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/SC_230213_003638.wav");
 ({Out.ar(4,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:inf))}.play)
 
 (
@@ -709,10 +709,10 @@ s.record(numChannels:4)
 
 (
 {Out.kr(0,(0.01*SinOsc.ar(MouseY.kr(0.03,0.03),phase:90.neg.degrad,mul:40).dbamp).poll)}.play;
-{Out.kr(1,(80*SinOsc.kr(MouseY.kr(0.03,0.03),mul:30,phase:90.degrad).dbamp).poll)}.play;
-{Out.kr(2,(0.1*SinOsc.kr(MouseY.kr(0.03,0.03),mul:20,phase:90.degrad).dbamp))}.play;
+{Out.kr(1,(80*SinOsc.kr(MouseY.kr(0.03,0.03),mul:30,phase:90.degrad).dbamp))}.play;
+{Out.kr(2,(0.01*SinOsc.kr(MouseY.kr(0.03,0.03),mul:40,phase:90.degrad).dbamp).poll)}.play;
 //{Out.kr(1,(1000*SinOsc.ar(0.02,phase:90.degrad,mul:32).dbamp))}.play;
-{Out.ar(8,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:0))}.play;
+{Out.ar(8,PanAz.ar(2,PlayBuf.ar(1,0,BufRateScale.kr(0),loop:0)))}.play;
 a.play;
 b.play;
 c.play;
