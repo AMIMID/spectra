@@ -712,7 +712,7 @@ s.record(numChannels:4)
 {Out.kr(1,(80*SinOsc.kr(MouseY.kr(0.02,0.02),mul:30,phase:90.degrad).dbamp))}.play;
 {Out.kr(2,(0.1*SinOsc.kr(MouseY.kr(0.02,0.02),mul:40,phase:90.degrad).dbamp).poll)}.play;
 //{Out.kr(1,(1000*SinOsc.ar(0.02,phase:90.degrad,mul:32).dbamp))}.play;
-{Out.ar(8,PanAz.ar(2,PlayBuf.ar(1,0,BufRateScale.kr(0),loop:inf)))}.play;
+{Out.ar(8,PanAz.ar(2,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:inf)))}.play;
 a.play;
 b.play;
 c.play;
