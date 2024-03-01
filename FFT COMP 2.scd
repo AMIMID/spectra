@@ -44,7 +44,7 @@ env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:100);
 
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	Out.ar(2,LeakDC.ar(osc1*env1*TExpRand.ar(0.01,1,Dust.kr(5))));
+	Out.ar(0,LeakDC.ar(osc1*env1*TExpRand.ar(0.01,1,Dust.kr(5))));
 
 
 }).add;);
@@ -77,7 +77,7 @@ env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:100);
 
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	Out.ar(2,LeakDC.ar(osc1*env1*TExpRand.ar(0.01,1,Dust.kr(5))));
+	Out.ar(0,LeakDC.ar(osc1*env1*TExpRand.ar(0.01,1,Dust.kr(5))));
 
 }).add;);
 (SynthDef.new(\og, {
@@ -109,7 +109,7 @@ env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:100);
 
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	Out.ar(2,LeakDC.ar(osc1*env1*TExpRand.ar(0.01,1,Dust.kr(5))));
+	Out.ar(0,LeakDC.ar(osc1*env1*TExpRand.ar(0.01,1,Dust.kr(5))));
 
 
 }).add;);
@@ -143,7 +143,7 @@ env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:100);
 
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	Out.ar(2,LeakDC.ar(osc1*env1*TExpRand.ar(0.01,1,Dust.kr(5))));
+	Out.ar(0,LeakDC.ar(osc1*env1*TExpRand.ar(0.01,1,Dust.kr(5))));
 
 
 }).add;);
@@ -210,7 +210,7 @@ k=Pdef(\8, Pbind(\instrument, \ok,
 ));
 )
 
-~k= Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/SC_230213_003638.wav");
+~k= Buffer.read(s,"/Users/petrostatsiopoulos/Dokuments/sounds/sounds selection/Dreamspace_codenamesitar_5.aiff");
 ({Out.ar(4,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:inf))}.play)
 
 (
@@ -473,9 +473,9 @@ s.record(numChannels:4)
 		Out.ar(pair[0], pair[1])
 	}
 };
-	var out = NamedControl.kr(\out, [6, 7]);  // multiple buses!
+	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=16;
+	bank=8;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2))/2;
@@ -514,9 +514,9 @@ m=m+1;
 		Out.ar(pair[0], pair[1])
 	}
 };
-	var out = NamedControl.kr(\out, [6, 7]);  // multiple buses!
+	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=16;
+	bank=8;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2))/2;
@@ -555,9 +555,9 @@ m=m+1;
 		Out.ar(pair[0], pair[1])
 	}
 };
-	var out = NamedControl.kr(\out, [6, 7]);  // multiple buses!
+	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=16;
+	bank=8;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2))/2;
@@ -596,9 +596,9 @@ m=m+1;
 		Out.ar(pair[0], pair[1])
 	}
 };
-	var out = NamedControl.kr(\out, [6, 7]);  // multiple buses!
+	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=16;
+	bank=8;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2))/2;
@@ -637,7 +637,7 @@ a=Pdef(\1, Pbind(\instrument, \oa,
 0,5,7,12],inf),
 
 	\cutt,Pbrown(220*2,220*16,100,inf),
-		\out,Pn(Pshuf([6, 7], 1), inf).clump(2).collect([_]),
+		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1,2,3], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	\angle1,Pexprand(0.0001,360,inf),
@@ -650,7 +650,7 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 0,5,7,12],inf),
 
 	\cutt,Pbrown(220*2,220*16,100,inf),
-		\out,Pn(Pshuf([6, 7], 1), inf).clump(2).collect([_]),
+		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1,2,3], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	\angle1,Pexprand(0.0001,360,inf),
@@ -663,7 +663,7 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 0,5,7,12],inf),
 
 	\cutt,Pbrown(220*2,220*16,100,inf),
-		\out,Pn(Pshuf([6, 7], 1), inf).clump(2).collect([_]),
+		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1,2,3], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	\angle1,Pexprand(0.0001,360,inf),
@@ -676,7 +676,7 @@ d=Pdef(\4, Pbind(\instrument, \od,
 0,5,7,12],inf),
 
 	\cutt,Pbrown(220*2,220*16,100,inf),
-		\out,Pn(Pshuf([6, 7], 1), inf).clump(2).collect([_]),
+		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1,2,3], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	\angle1,Pexprand(0.0001,360,inf),
@@ -708,11 +708,11 @@ s.record(numChannels:4)
 
 
 (
-{Out.kr(0,(0.01*SinOsc.ar(MouseY.kr(0.03,0.03),phase:90.neg.degrad,mul:40).dbamp).poll)}.play;
-{Out.kr(1,(80*SinOsc.kr(MouseY.kr(0.03,0.03),mul:30,phase:90.degrad).dbamp))}.play;
-{Out.kr(2,(0.01*SinOsc.kr(MouseY.kr(0.03,0.03),mul:40,phase:90.degrad).dbamp).poll)}.play;
+{Out.kr(0,(0.01*SinOsc.ar(MouseY.kr(0.02,0.02),phase:90.neg.degrad,mul:40).dbamp).poll)}.play;
+{Out.kr(1,(80*SinOsc.kr(MouseY.kr(0.02,0.02),mul:30,phase:90.degrad).dbamp))}.play;
+{Out.kr(2,(0.1*SinOsc.kr(MouseY.kr(0.02,0.02),mul:40,phase:90.degrad).dbamp).poll)}.play;
 //{Out.kr(1,(1000*SinOsc.ar(0.02,phase:90.degrad,mul:32).dbamp))}.play;
-{Out.ar(8,PanAz.ar(2,PlayBuf.ar(1,0,BufRateScale.kr(0),loop:0)))}.play;
+{Out.ar(8,PanAz.ar(2,PlayBuf.ar(1,0,BufRateScale.kr(0),loop:inf)))}.play;
 a.play;
 b.play;
 c.play;
@@ -729,18 +729,18 @@ k.play;
 //{Out.ar(0,BPF.ar(InFeedback.ar(2,2),800,1,3/4))}.play;
 //{Out.ar(0,BPF.ar(InFeedback.ar(2,2),900,1,2/3))}.play;
 //{Out.ar(0,BPF.ar(InFeedback.ar(2,2),1200,1,1/2)}.play;
-{Out.ar(0,PanAz.ar(1,InFeedback.ar(2,1),level:1))}.play;
-{Out.ar(1,PanAz.ar(1,InFeedback.ar(3,1),level:1))}.play;
+//{Out.ar(0,PanAz.ar(1,InFeedback.ar(2,1),level:1))}.play;
+//{Out.ar(1,PanAz.ar(1,InFeedback.ar(3,1),level:1))}.play;
 //{Out.ar(0,PanAz.ar(1,InFeedback.ar(4,1),level:(100*SinOsc.kr(MouseY.kr(00.05,0.0.05),mul:32,phase:90.degrad).dbamp)))}.play;
 //{Out.ar(1,PanAz.ar(1,InFeedback.ar(5,1),level:100*SinOsc.kr(MouseY.kr(0.0.05,0.0.05),mul:32,phase:90.degrad).dbamp))}.play;0.01
-{Out.ar(0,PanAz.ar(1,InFeedback.ar(6,1),level:1))}.play;
-{Out.ar(1,PanAz.ar(1,InFeedback.ar(7,1),level:1))}.play;
+//{Out.ar(0,PanAz.ar(1,InFeedback.ar(6,1),level:1))}.play;
+//{Out.ar(1,PanAz.ar(1,InFeedback.ar(7,1),level:1))}.play;
 )
 
 ////MouseY.kr(1,0.00001,1),mul:MouseY.kr(10,10000,1));
 
-~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240301_140741.wav",channels:0 );
-~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240301_140741.wav",channels:1 );
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240301_163146.wav",channels:0 );
+~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240301_163146.wav",channels:1 );
 
 (
 {
@@ -778,8 +778,8 @@ k.play;
 
 
 (
-~e1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240301_141148.wav",channels:0);
-~e2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240301_141148.wav",channels:1);
+~e1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240301_163841.wav",channels:0);
+~e2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240301_163841.wav",channels:1);
 )
 
 (
@@ -875,32 +875,32 @@ Pen.translate(400,400);
 		   // rad6=y3.imag*300;
 		   // rad7=y4.real*300;
 		   // rad8=y4.imag*300;
-Pen.width=1;
+Pen.width=1.5;
 
 			//Color(red:0.9999.rand,green:0.9999.rand,blue:0.9999.rand).set;
 //Color(red:1,green:1,blue:1,alpha:1).set;
 		Color.white.set;
-Pen.addOval(Rect.new(Polar.new(rad1,(y1.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*50).neg,(~a*50)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
+//Pen.addOval(Rect.new(Polar.new(rad1,(y1.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*50).neg,(~a*50)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
 
-Pen.addOval(Rect.new(Polar.new(rad2,(y1.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad2).wrap((~a*10).neg,(~a*50)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
+//Pen.addOval(Rect.new(Polar.new(rad2,(y1.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad2).wrap((~a*50).neg,(~a*50)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
 
 
-Pen.addOval(Rect.new(Polar.new(rad3,(y2.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad3).wrap((~b*50).neg,(~b*50)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
+//Pen.addOval(Rect.new(Polar.new(rad3,(y2.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad3).wrap((~b*50).neg,(~b*50)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
 //
-Pen.addOval(Rect.new(Polar.new(rad4,(y2.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad4).wrap((~b*50).neg,(~b*50)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
+//Pen.addOval(Rect.new(Polar.new(rad4,(y2.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad4).wrap((~b*50).neg,(~b*50)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
 
 	//Pen.addOval(Rect.new(Polar.new(rad3,y.theta).asPoint.x,Polar.new(rad3,y1.theta).asPoint.y,~a*5,~a*5));
 
 		//Pen.addOval(Rect.new(Polar.new(rad4,y.theta).asPoint.x,Polar.new(rad4,y2.theta).asPoint.y,~b*5,~b*5));
 
-//Pen.addOval(Rect.new(Polar.new(rad,(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*50).neg,(~a*50)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
+Pen.addOval(Rect.new(Polar.new(rad,(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*50).neg,(~a*50)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
 
-//Pen.addOval(Rect.new(Polar.new(rad0,(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad2).wrap((~a*50).neg,(~a*50)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
+Pen.addOval(Rect.new(Polar.new(rad0,(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad2).wrap((~a*50).neg,(~a*50)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
 
 
-//Pen.addOval(Rect.new(Polar.new(rad,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad3).wrap((~b*50).neg,(~b*50)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
+Pen.addOval(Rect.new(Polar.new(rad,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad3).wrap((~b*50).neg,(~b*50)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
 
-//Pen.addOval(Rect.new(Polar.new(rad0,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad4).wrap((~b*50).neg,(~b*50)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
+Pen.addOval(Rect.new(Polar.new(rad0,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad4).wrap((~b*50).neg,(~b*50)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
 
 
 //Pen.line(Point.new(Polar.new(rad1,/(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*300).neg,(~a*300)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a*1,~a*1));
