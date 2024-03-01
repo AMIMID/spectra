@@ -488,7 +488,7 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:TExpRand.ar(0.01,1,Dust.kr(5))*In.kr(2,1),
-		 	phase:(detune1.theta+TExpRand.kr(1,10,Dust.kr(1))).wrap(pi.neg,pi))),
+		 	phase:(detune1.theta+TExpRand.kr(1,10,Dust.kr(5))).wrap(pi.neg,pi))),
 	(detune1.real.round(0.0001)+TExpRand.kr(1,10,Dust.kr(5))).wrap(1.neg,1));
 
 
@@ -529,7 +529,7 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:TExpRand.ar(0.01,1,Dust.kr(5))*In.kr(2,1),
-		 	phase:(detune1.theta+TExpRand.kr(1,10,Dust.kr(1))).wrap(pi.neg,pi))),
+		 	phase:(detune1.theta+TExpRand.kr(1,10,Dust.kr(5))).wrap(pi.neg,pi))),
 		(detune1.real.round(0.0001)+TExpRand.kr(1,10,Dust.kr(5))).wrap(1.neg,1));
 
 
@@ -570,7 +570,7 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:TExpRand.ar(0.01,1,Dust.kr(5))*In.kr(2,1),
-		 	phase:(detune1.theta+TExpRand.kr(1,10,Dust.kr(1))).wrap(pi.neg,pi))),
+		 	phase:(detune1.theta+TExpRand.kr(1,10,Dust.kr(5))).wrap(pi.neg,pi))),
 		(detune1.real.round(0.0001)+TExpRand.kr(1,10,Dust.kr(5))).wrap(1.neg,1));
 
 
@@ -612,7 +612,7 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:TExpRand.ar(0.01,1,Dust.kr(5))*In.kr(2,1),
-		 	phase:(detune1.theta+TExpRand.kr(1,10,Dust.kr(1))).wrap(pi.neg,pi))),
+		 	phase:(detune1.theta+TExpRand.kr(1,10,Dust.kr(5))).wrap(pi.neg,pi))),
 		(detune1.real.round(0.0001)+TExpRand.kr(1,10,Dust.kr(5))).wrap(1.neg,1));
 
 
@@ -709,7 +709,7 @@ s.record(numChannels:4)
 
 (
 {Out.kr(0,(0.01*SinOsc.ar(MouseY.kr(0.02,0.02),phase:90.neg.degrad,mul:40).dbamp).poll)}.play;
-{Out.kr(1,(100*SinOsc.kr(MouseY.kr(0.02,0.02),mul:30,phase:90.degrad).dbamp).poll)}.play;
+{Out.kr(1,(80*SinOsc.kr(MouseY.kr(0.02,0.02),mul:30,phase:90.degrad).dbamp).poll)}.play;
 {Out.kr(2,(0.1*SinOsc.kr(MouseY.kr(0.02,0.02),mul:20,phase:90.degrad).dbamp))}.play;
 //{Out.kr(1,(1000*SinOsc.ar(0.02,phase:90.degrad,mul:32).dbamp))}.play;
 {Out.ar(8,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:0))}.play;
