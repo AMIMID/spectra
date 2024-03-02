@@ -723,8 +723,8 @@ env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=PanAz.kr(8,0.1*SinOsc.kr(10*(freq1)*pitch1,mul:20/**(0.1*LFNoise1.kr(5,mul:20).dbamp)*/,
-			phase:(detune1.theta+(0.1*LFNoise1.kr(5,mul:20).dbamp).wrap(pi.neg,pi))).dbamp,
+		osc1=PanAz.kr(8,(1*SinOsc.kr(1*(freq1)*pitch1,mul:20*(0.1*LFNoise1.kr(5,mul:20).dbamp),
+			phase:(detune1.theta+(0.1*LFNoise1.kr(5,mul:20).dbamp).wrap(pi.neg,pi))).dbamp).poll,
 		(detune1.real.round(0.0001)+(0.1*LFNoise1.kr(5,mul:20).dbamp).wrap(1.neg,1))/*SinOsc.ar(0.9999.rand)*/);
 
 
@@ -802,8 +802,8 @@ z.play;
 
 ////MouseY.kr(1,0.00001,1),mul:MouseY.kr(10,10000,1));
 
-~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240301_163146.wav",channels:0 );
-~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240301_163146.wav",channels:1 );
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240302_131306.wav",channels:0 );
+~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240302_131306.wav",channels:1 );
 
 (
 {
@@ -832,8 +832,8 @@ z.play;
 	b=b+1;
 		angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-		Out.ar(0,PanAz.ar(2,IFFT(chainL),(detune1.real.round(0.0001)+(0.1*LFNoise1.kr(5,mul:20).dbamp).wrap(1.neg,1)));
-		Out.ar(0,PanAz.ar(2,IFFT(chainR),(detune1.imag.round(0.0001)+(0.1*LFNoise1.kr(5,mul:20).dbamp).wrap(1.neg,1)));
+		Out.ar(0,PanAz.ar(2,IFFT(chainL),(detune1.real.round(0.0001)+(0.1*LFNoise1.kr(1,mul:20).dbamp).wrap(1.neg,1))));
+		Out.ar(0,PanAz.ar(2,IFFT(chainR),(detune1.imag.round(0.0001)+(0.1*LFNoise1.kr(1,mul:20).dbamp).wrap(1.neg,1))));
 	}
 }.play
 )
@@ -841,8 +841,8 @@ z.play;
 
 
 (
-~e1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240301_163841.wav",channels:0);
-~e2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240301_163841.wav",channels:1);
+~e1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240302_132147.wav",channels:0);
+~e2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240302_132147.wav",channels:1);
 )
 
 (
@@ -938,32 +938,32 @@ Pen.translate(400,400);
 		   // rad6=y3.imag*300;
 		   // rad7=y4.real*300;
 		   // rad8=y4.imag*300;
-Pen.width=1.5;
+Pen.width=1;
 
 			//Color(red:0.9999.rand,green:0.9999.rand,blue:0.9999.rand).set;
 //Color(red:1,green:1,blue:1,alpha:1).set;
 		Color.white.set;
-//Pen.addOval(Rect.new(Polar.new(rad1,(y1.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*50).neg,(~a*50)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
+Pen.addOval(Rect.new(Polar.new(rad1,(y1.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*50).neg,(~a*50)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
 
-//Pen.addOval(Rect.new(Polar.new(rad2,(y1.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad2).wrap((~a*50).neg,(~a*50)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
+Pen.addOval(Rect.new(Polar.new(rad2,(y1.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad2).wrap((~a*50).neg,(~a*50)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
 
 
-//Pen.addOval(Rect.new(Polar.new(rad3,(y2.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad3).wrap((~b*50).neg,(~b*50)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
+Pen.addOval(Rect.new(Polar.new(rad3,(y2.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad3).wrap((~b*50).neg,(~b*50)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
 //
-//Pen.addOval(Rect.new(Polar.new(rad4,(y2.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad4).wrap((~b*50).neg,(~b*50)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
+Pen.addOval(Rect.new(Polar.new(rad4,(y2.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad4).wrap((~b*50).neg,(~b*50)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
 
 	//Pen.addOval(Rect.new(Polar.new(rad3,y.theta).asPoint.x,Polar.new(rad3,y1.theta).asPoint.y,~a*5,~a*5));
 
 		//Pen.addOval(Rect.new(Polar.new(rad4,y.theta).asPoint.x,Polar.new(rad4,y2.theta).asPoint.y,~b*5,~b*5));
 
-Pen.addOval(Rect.new(Polar.new(rad,(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*50).neg,(~a*50)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
+//Pen.addOval(Rect.new(Polar.new(rad,(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*50).neg,(~a*50)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
 
-Pen.addOval(Rect.new(Polar.new(rad0,(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad2).wrap((~a*50).neg,(~a*50)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
+//Pen.addOval(Rect.new(Polar.new(rad0,(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad2).wrap((~a*50).neg,(~a*50)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
 
 
-Pen.addOval(Rect.new(Polar.new(rad,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad3).wrap((~b*50).neg,(~b*50)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
+//Pen.addOval(Rect.new(Polar.new(rad,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad3).wrap((~b*50).neg,(~b*50)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
 
-Pen.addOval(Rect.new(Polar.new(rad0,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad4).wrap((~b*50).neg,(~b*50)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
+//Pen.addOval(Rect.new(Polar.new(rad0,(y.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad4).wrap((~b*50).neg,(~b*50)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
 
 
 //Pen.line(Point.new(Polar.new(rad1,/(y.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*300).neg,(~a*300)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a*1,~a*1));
