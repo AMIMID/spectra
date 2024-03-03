@@ -769,18 +769,18 @@ z.play;
 
 
 (
-{Out.kr(0,(0.01*SinOsc.ar(MouseY.kr(0.02,1),phase:90.neg.degrad,mul:40).dbamp))}.play;
-{Out.kr(1,(80*SinOsc.kr(MouseY.kr(0.02,1),mul:30,phase:90.degrad).dbamp))}.play;
-{Out.kr(2,(0.1*SinOsc.kr(MouseY.kr(0.02,1),mul:40,phase:90.degrad).dbamp))}.play;
+{Out.kr(0,(0.01*SinOsc.ar(MouseY.kr(0.02,100,1),phase:90.neg.degrad,mul:40).dbamp))}.play;
+{Out.kr(1,(80*SinOsc.kr(MouseY.kr(0.02,100,1),mul:30,phase:90.degrad).dbamp))}.play;
+{Out.kr(2,(0.1*SinOsc.kr(MouseY.kr(0.02,100,1),mul:40,phase:90.degrad).dbamp))}.play;
 
-{Out.kr(3,LFPulse.kr(10,width:1,mul:(0.1*SinOsc.kr(MouseY.kr(0.02,1),mul:20,phase:90.degrad).dbamp)).abs)}.play;
-{Out.kr(3,BrownNoise.kr((0.1*SinOsc.kr(MouseY.kr(0.02,1),mul:20,phase:90.neg.degrad).dbamp)).abs)}.play;
-{Out.kr(4,LFPulse.kr(10,width:1,mul:(0.1*SinOsc.kr(MouseY.kr(0.02,1),mul:20,phase:90.degrad).dbamp)).abs)}.play;
-{Out.kr(4,BrownNoise.kr((0.1*SinOsc.kr(MouseY.kr(0.02,1),mul:20,phase:90.neg.degrad).dbamp)).abs)}.play;
-{Out.kr(5,LFPulse.kr(10,width:1,mul:(0.1*SinOsc.kr(MouseY.kr(0.02,1),mul:20,phase:90.degrad).dbamp)).abs)}.play;
-{Out.kr(5,BrownNoise.kr((0.1*SinOsc.kr(MouseY.kr(0.02,1),mul:20,phase:90.neg.degrad).dbamp)).abs)}.play;
-{Out.kr(6,LFPulse.kr(10,width:1,mul:(0.1*SinOsc.kr(MouseY.kr(0.02,1),mul:20,phase:90.degrad).dbamp)).abs)}.play;
-{Out.kr(6,BrownNoise.kr((0.1*SinOsc.kr(MouseY.kr(0.02,1),mul:20,phase:90.neg.degrad).dbamp)).abs)}.play;
+{Out.kr(3,LFPulse.kr(10,width:1,mul:(0.1*SinOsc.kr(MouseY.kr(0.02,100,1),mul:20,phase:90.degrad).dbamp)).abs)}.play;
+{Out.kr(3,BrownNoise.kr((0.1*SinOsc.kr(MouseY.kr(0.02,100,1),mul:20,phase:90.neg.degrad).dbamp)).abs)}.play;
+{Out.kr(4,LFPulse.kr(10,width:1,mul:(0.1*SinOsc.kr(MouseY.kr(0.02,100,1),mul:20,phase:90.degrad).dbamp)).abs)}.play;
+{Out.kr(4,BrownNoise.kr((0.1*SinOsc.kr(MouseY.kr(0.02,100,1),mul:20,phase:90.neg.degrad).dbamp)).abs)}.play;
+{Out.kr(5,LFPulse.kr(10,width:1,mul:(0.1*SinOsc.kr(MouseY.kr(0.02,100,1),mul:20,phase:90.degrad).dbamp)).abs)}.play;
+{Out.kr(5,BrownNoise.kr((0.1*SinOsc.kr(MouseY.kr(0.02,100,1),mul:20,phase:90.neg.degrad).dbamp)).abs)}.play;
+{Out.kr(6,LFPulse.kr(10,width:1,mul:(0.1*SinOsc.kr(MouseY.kr(0.02,100,1),mul:20,phase:90.degrad).dbamp)).abs)}.play;
+{Out.kr(6,BrownNoise.kr((0.1*SinOsc.kr(MouseY.kr(0.02,100,1),mul:20,phase:90.neg.degrad).dbamp)).abs)}.play;
 //{Out.kr(1,(1000*SinOsc.ar(0.02,phase:90.degrad,mul:32).dbamp))}.play;
 {Out.ar(8,PanAz.ar(2,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:0)))}.play;
 a.play;
