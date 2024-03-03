@@ -28,7 +28,7 @@
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2))/2;
-	freq1 = fund*6;
+	freq1 = fund*6+WhiteNoise.kr(1).abs;
 
 	bank.do{
 
@@ -37,8 +37,8 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:BrownNoise.kr(1).abs,
-			phase:(detune1.theta+BrownNoise.kr(1).abs.wrap(pi.neg,pi)))),
-		(detune1.real.round(0.0001)+(0.1*LFNoise1.kr(5,mul:20).dbamp).wrap(1.neg,1)));
+			phase:(detune1.theta+BrownNoise.kr(1).abs).wrap(pi.neg,pi))),
+		(detune1.real.round(0.0001)+BrownNoise.kr(1).abs).wrap(1.neg,1));
 
 
 m=m+1;
@@ -69,7 +69,7 @@ m=m+1;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2))/2;
-	freq1 = fund*8;
+	freq1 = (fund*8)+WhiteNoise.kr(1).abs;
 
 	bank.do{
 env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/2);
@@ -78,8 +78,8 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:BrownNoise.kr(1).abs,
-			phase:(detune1.theta+BrownNoise.kr(1).abs.wrap(pi.neg,pi)))),
-		(detune1.real.round(0.0001)+(0.1*LFNoise1.kr(5,mul:20).dbamp).wrap(1.neg,1)));
+			phase:(detune1.theta+BrownNoise.kr(1).abs).wrap(pi.neg,pi))),
+		(detune1.real.round(0.0001)+BrownNoise.kr(1).abs).wrap(1.neg,1));
 
 
 m=m+1;
@@ -110,7 +110,7 @@ m=m+1;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2))/2;
-	freq1 = fund*9;
+	freq1 = (fund*9)+WhiteNoise.kr(1).abs;
 
 	bank.do{
 
@@ -119,8 +119,8 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:BrownNoise.kr(1).abs,
-			phase:(detune1.theta+BrownNoise.kr(1).abs.wrap(pi.neg,pi)))),
-		(detune1.real.round(0.0001)+(0.1*LFNoise1.kr(5,mul:20).dbamp).wrap(1.neg,1)));
+			phase:(detune1.theta+BrownNoise.kr(1).abs).wrap(pi.neg,pi))),
+		(detune1.real.round(0.0001)+BrownNoise.kr(1).abs).wrap(1.neg,1));
 
 m=m+1;
 	//m.postln;
@@ -150,7 +150,7 @@ m=m+1;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2))/2;
-	freq1 = fund*12;
+	freq1 = (fund*12)+WhiteNoise.kr(1).abs;
 
 	bank.do{
 
@@ -160,8 +160,8 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:BrownNoise.kr(1).abs,
-			phase:(detune1.theta+BrownNoise.kr(1).abs.wrap(pi.neg,pi)))),
-		(detune1.real.round(0.0001)+(0.1*LFNoise1.kr(5,mul:20).dbamp).wrap(1.neg,1)));
+			phase:(detune1.theta+BrownNoise.kr(1).abs).wrap(pi.neg,pi))),
+		(detune1.real.round(0.0001)+BrownNoise.kr(1).abs).wrap(1.neg,1));
 
 
 m=m+1;
