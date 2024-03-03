@@ -210,7 +210,7 @@ k=Pdef(\8, Pbind(\instrument, \ok,
 ));
 )
 
-~k= Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/untitled.wav");
+~k= Buffer.read(s,);
 ({Out.ar(4,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:inf))}.play)
 
 (
@@ -483,7 +483,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 	bank.do{
 
-env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/2);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/1);
 //env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
@@ -523,7 +523,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 	freq1 = fund*8;
 
 	bank.do{
-env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/2);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/1);
 //env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
@@ -565,7 +565,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 	bank.do{
 
-env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/2);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/1);
 //env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
@@ -605,7 +605,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 	bank.do{
 
-env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/2);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/1);
 //env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
@@ -775,12 +775,12 @@ z.play;
 
 {Out.kr(3,LFPulse.kr(10,width:1,mul:(0.1*SinOsc.kr(MouseY.kr(0.02,1),mul:20,phase:90.degrad).dbamp)).abs)}.play;
 {Out.kr(3,BrownNoise.kr((0.1*SinOsc.kr(MouseY.kr(0.02,1),mul:20,phase:90.neg.degrad).dbamp)).abs)}.play;
-{Out.kr(4,LFPulse.ar(10,width:1,mul:(0.1*SinOsc.kr(MouseY.kr(0.02,1),mul:20,phase:90.degrad).dbamp)).abs)}.play;
+{Out.kr(4,LFPulse.kr(10,width:1,mul:(0.1*SinOsc.kr(MouseY.kr(0.02,1),mul:20,phase:90.degrad).dbamp)).abs)}.play;
 {Out.kr(4,BrownNoise.kr((0.1*SinOsc.kr(MouseY.kr(0.02,1),mul:20,phase:90.neg.degrad).dbamp)).abs)}.play;
-{Out.kr(5,LFPulse.ar(10,width:1,mul:(0.1*SinOsc.kr(MouseY.kr(0.02,1),mul:20,phase:90.degrad).dbamp)).abs)}.play;
+{Out.kr(5,LFPulse.kr(10,width:1,mul:(0.1*SinOsc.kr(MouseY.kr(0.02,1),mul:20,phase:90.degrad).dbamp)).abs)}.play;
 {Out.kr(5,BrownNoise.kr((0.1*SinOsc.kr(MouseY.kr(0.02,1),mul:20,phase:90.neg.degrad).dbamp)).abs)}.play;
-{Out.kr(6,LFPulse.ar(10,width:1,mul:(0.1*SinOsc.kr(MouseY.kr(0.02,1),mul:20,phase:90.degrad).dbamp).poll).abs)}.play;
-{Out.kr(6,BrownNoise.kr((0.1*SinOsc.kr(MouseY.kr(0.02,1),mul:20,phase:90.neg.degrad).dbamp).poll).abs)}.play;
+{Out.kr(6,LFPulse.kr(10,width:1,mul:(0.1*SinOsc.kr(MouseY.kr(0.02,1),mul:20,phase:90.degrad).dbamp)).abs)}.play;
+{Out.kr(6,BrownNoise.kr((0.1*SinOsc.kr(MouseY.kr(0.02,1),mul:20,phase:90.neg.degrad).dbamp)).abs)}.play;
 //{Out.kr(1,(1000*SinOsc.ar(0.02,phase:90.degrad,mul:32).dbamp))}.play;
 {Out.ar(8,PanAz.ar(2,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:0)))}.play;
 a.play;
