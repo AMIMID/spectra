@@ -210,7 +210,7 @@ k=Pdef(\8, Pbind(\instrument, \ok,
 ));
 )
 
-~k= Buffer.read(s,);
+~k= Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/693481__jakobgille__rainvege_forest-light-rain-cars-tram_gille_graz_zylia_binaural1o.wav");
 ({Out.ar(4,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:inf))}.play)
 
 (
@@ -483,7 +483,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 	bank.do{
 
-env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/1);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/4);
 //env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
@@ -523,7 +523,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 	freq1 = fund*8+WhiteNoise.kr(1).abs;
 
 	bank.do{
-env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/1);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/4);
 //env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
@@ -565,7 +565,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 	bank.do{
 
-env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/1);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/4);
 //env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
@@ -605,7 +605,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 	bank.do{
 
-env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/1);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/4);
 //env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
