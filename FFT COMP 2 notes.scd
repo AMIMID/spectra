@@ -1,9 +1,9 @@
 {(Out.kr(0,Dust.kr(100000,10).poll))}.play
 
-{(Out.ar(0,LFPulse.ar(1000,width:1).abs.poll))}.play
+{(Out.ar(0,LFPulse.ar(0.01,width:100).abs.poll))}.play
 
 
-{(Out.kr(0,SinOsc.kr(0.02).abs.poll))}.play
+{(Out.kr(0,LFNoise2.kr(10,mul:1).poll))}.play
 
 
 
@@ -36,16 +36,16 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:
 //env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:BrownNoise.kr(1).abs,
-			phase:(detune1.theta+BrownNoise.kr(1).abs).wrap(pi.neg,pi))),
-		(detune1.real.round(0.0001)+BrownNoise.kr(1).abs).wrap(1.neg,1));
+		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(10,m.reciprocal).abs,
+			phase:(detune1.theta+BrownNoise.kr(1)).wrap(pi.neg,pi))),
+		(detune1.real.round(0.0001)+BrownNoise.kr(1)).wrap(1.neg,1));
 
 
 m=m+1;
 	//m.postln;
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*BrownNoise.kr(1).abs),cutt));
+	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*LFNoise2.kr(10,2).abs),cutt));
 
 		//trig = TDelay.ar(trig, 0.1);
 	};
@@ -77,16 +77,16 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:BrownNoise.kr(1).abs,
-			phase:(detune1.theta+BrownNoise.kr(1).abs).wrap(pi.neg,pi))),
-		(detune1.real.round(0.0001)+BrownNoise.kr(1).abs).wrap(1.neg,1));
+		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(10,m.reciprocal).abs,
+			phase:(detune1.theta+BrownNoise.kr(1)).wrap(pi.neg,pi))),
+		(detune1.real.round(0.0001)+BrownNoise.kr(1)).wrap(1.neg,1));
 
 
 m=m+1;
 	//m.postln;
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*BrownNoise.kr(1).abs),cutt));
+	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*LFNoise2.kr(10,3/4).abs),cutt));
 
 		//trig = TDelay.ar(trig, 0.1);
 	};
@@ -118,15 +118,15 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:
 //env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:BrownNoise.kr(1).abs,
-			phase:(detune1.theta+BrownNoise.kr(1).abs).wrap(pi.neg,pi))),
-		(detune1.real.round(0.0001)+BrownNoise.kr(1).abs).wrap(1.neg,1));
+		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(10,m.reciprocal).abs,
+			phase:(detune1.theta+BrownNoise.kr(1)).wrap(pi.neg,pi))),
+		(detune1.real.round(0.0001)+BrownNoise.kr(1)).wrap(1.neg,1));
 
 m=m+1;
 	//m.postln;
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*BrownNoise.kr(1).abs),cutt));
+	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*LFNoise2.kr(10,2/3).abs),cutt));
 
 		//trig = TDelay.ar(trig, 0.1);
 	};
@@ -159,16 +159,16 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:BrownNoise.kr(1).abs,
-			phase:(detune1.theta+BrownNoise.kr(1).abs).wrap(pi.neg,pi))),
-		(detune1.real.round(0.0001)+BrownNoise.kr(1).abs).wrap(1.neg,1));
+		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(10,m.reciprocal).abs,
+			phase:(detune1.theta+BrownNoise.kr(1)).wrap(pi.neg,pi))),
+		(detune1.real.round(0.0001)+BrownNoise.kr(1)).wrap(1.neg,1));
 
 
 m=m+1;
 	//m.postln;
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*BrownNoise.kr(1).abs),cutt));
+	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*LFNoise2.kr(10,1).abs),cutt));
 
 		//trig = TDelay.ar(trig, 0.1);
 	};

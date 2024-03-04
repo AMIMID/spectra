@@ -39,12 +39,12 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:100);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-	osc1=BBandPass.ar(InFeedback.ar(8,2),freq1*2*pitch1,In.kr(0,1),mul:In.kr(1,1));
+	osc1=BBandPass.ar(InFeedback.ar(8,2),freq1*pitch1,In.kr(0,1),mul:In.kr(1,1));
 
 
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	Out.ar(0,LeakDC.ar(osc1*env1*In.kr(3)));
+	Out.ar(0,LeakDC.ar(osc1*env1*2/**In.kr(3)*/));
 
 
 }).add;);
@@ -72,12 +72,12 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:100);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=BBandPass.ar(InFeedback.ar(8,2),freq1*2*pitch1,In.kr(0,1),mul:In.kr(1,1));
+		osc1=BBandPass.ar(InFeedback.ar(8,2),freq1*pitch1,In.kr(0,1),mul:In.kr(1,1));
 
 
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	Out.ar(0,LeakDC.ar(osc1*env1*In.kr(4)));
+	Out.ar(0,LeakDC.ar(osc1*env1*(3/4)/**In.kr(4)*/));
 
 }).add;);
 (SynthDef.new(\og, {
@@ -104,12 +104,12 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:100);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=BBandPass.ar(InFeedback.ar(8,2),freq1*2*pitch1,In.kr(0,1),mul:In.kr(1,1));
+		osc1=BBandPass.ar(InFeedback.ar(8,2),freq1*pitch1,In.kr(0,1),mul:In.kr(1,1));
 
 
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	Out.ar(0,LeakDC.ar(osc1*env1*In.kr(5)));
+	Out.ar(0,LeakDC.ar(osc1*env1*(2/3)/**In.kr(5)*/));
 
 
 }).add;);
@@ -138,12 +138,12 @@ env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:100);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=BBandPass.ar(InFeedback.ar(8,2),freq1*2*pitch1,In.kr(0,1),mul:In.kr(1,1));
+		osc1=BBandPass.ar(InFeedback.ar(8,2),freq1*pitch1,In.kr(0,1),mul:In.kr(1,1));
 
 
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	Out.ar(0,LeakDC.ar(osc1*env1*In.kr(6)));
+	Out.ar(0,LeakDC.ar(osc1*env1*2/**In.kr(6)*/));
 
 
 }).add;);
@@ -210,7 +210,7 @@ k=Pdef(\8, Pbind(\instrument, \ok,
 ));
 )
 
-~k= Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/693481__jakobgille__rainvege_forest-light-rain-cars-tram_gille_graz_zylia_binaural1o.wav");
+~k= Buffer.read(s,);
 ({Out.ar(4,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:inf))}.play)
 
 (
@@ -241,7 +241,7 @@ s.record(numChannels:4)
 };
 	var out = NamedControl.kr(\out, [4, 5]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=8;
+	bank=12;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2))/2;
@@ -283,7 +283,7 @@ m=m+1;
 };
 	var out = NamedControl.kr(\out, [4, 5]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=8;
+	bank=12;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2))/2;
@@ -323,7 +323,7 @@ m=m+1;
 };
 	var out = NamedControl.kr(\out, [4, 5]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=8;
+	bank=12;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2))/2;
@@ -366,7 +366,7 @@ m=m+1;
 };
 	var out = NamedControl.kr(\out, [4, 5]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=8;
+	bank=12;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2))/2;
@@ -475,7 +475,7 @@ s.record(numChannels:4)
 };
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=8;
+	bank=12;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2))/2;
@@ -483,11 +483,11 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 	bank.do{
 
-env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/4);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/2);
 //env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:BrownNoise.kr(1)*In.kr(2,1),
+		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(10,m.reciprocal).abs*In.kr(2,1),
 			phase:(detune1.theta+BrownNoise.kr(1)).wrap(pi.neg,pi))),
 		(detune1.real.round(0.0001)+BrownNoise.kr(1)).wrap(1.neg,1));
 
@@ -496,7 +496,7 @@ m=m+1;
 	//m.postln;
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*BrownNoise.kr(1).abs),cutt));
+	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*LFNoise2.kr(10,2).abs),cutt));
 
 		//trig = TDelay.ar(trig, 0.1);
 	};
@@ -516,19 +516,19 @@ m=m+1;
 };
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=8;
+	bank=12;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2))/2;
 	freq1 = fund*8+WhiteNoise.kr(1).abs;
 
 	bank.do{
-env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/4);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/2);
 //env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:BrownNoise.kr(1)*In.kr(2,1),
+		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(10,m.reciprocal).abs*In.kr(2,1),
 			phase:(detune1.theta+BrownNoise.kr(1)).wrap(pi.neg,pi))),
 		(detune1.real.round(0.0001)+BrownNoise.kr(1)).wrap(1.neg,1));
 
@@ -537,7 +537,7 @@ m=m+1;
 	//m.postln;
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*BrownNoise.kr(1).abs),cutt));
+	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*LFNoise2.kr(10,3/4).abs),cutt));
 
 		//trig = TDelay.ar(trig, 0.1);
 	};
@@ -557,7 +557,7 @@ m=m+1;
 };
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=8;
+	bank=12;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2))/2;
@@ -565,11 +565,11 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 	bank.do{
 
-env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/4);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/2);
 //env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:BrownNoise.kr(1)*In.kr(2,1),
+		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(10,m.reciprocal).abs*In.kr(2,1),
 			phase:(detune1.theta+BrownNoise.kr(1)).wrap(pi.neg,pi))),
 		(detune1.real.round(0.0001)+BrownNoise.kr(1)).wrap(1.neg,1));
 
@@ -577,7 +577,7 @@ m=m+1;
 	//m.postln;
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*BrownNoise.kr(1).abs),cutt));
+	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*LFNoise2.kr(10,2/3).abs),cutt));
 
 		//trig = TDelay.ar(trig, 0.1);
 	};
@@ -597,7 +597,7 @@ m=m+1;
 };
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=8;
+	bank=12;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2))/2;
@@ -605,12 +605,12 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 	bank.do{
 
-env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/4);
+env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/2);
 //env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:BrownNoise.kr(1)*In.kr(2,1),
+		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(10,m.reciprocal).abs*In.kr(2,1),
 			phase:(detune1.theta+BrownNoise.kr(1)).wrap(pi.neg,pi))),
 		(detune1.real.round(0.0001)+BrownNoise.kr(1)).wrap(1.neg,1));
 
@@ -619,7 +619,7 @@ m=m+1;
 	//m.postln;
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*BrownNoise.kr(1).abs),cutt));
+	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*LFNoise2.kr(10,1).abs),cutt));
 
 		//trig = TDelay.ar(trig, 0.1);
 	};
@@ -769,18 +769,24 @@ z.play;
 MouseY.kr(0.01,100,1)
 
 (
-{Out.kr(0,(0.01*SinOsc.ar(0.01+MouseY.kr(0.01,100,1),phase:90.neg.degrad,mul:40).dbamp))}.play;
-{Out.kr(1,(80*SinOsc.kr(0.01+MouseY.kr(0.01,100,1),mul:30,phase:90.degrad).dbamp))}.play;
-{Out.kr(2,(0.1*SinOsc.kr(0.01+MouseY.kr(0.01,100,1),mul:40,phase:90.degrad).dbamp))}.play;
+{Out.kr(0,(0.01*SinOsc.ar(0.01+MouseY.kr(0.01,10,1),phase:90.neg.degrad,mul:40).dbamp))}.play;
+{Out.kr(1,(80*SinOsc.kr(0.01+MouseY.kr(0.01,10,1),mul:30,phase:90.degrad).dbamp))}.play;
+{Out.kr(2,(0.1*SinOsc.kr(0.01+MouseY.kr(0.01,10,1),mul:40,phase:90.degrad).dbamp))}.play;
 
-{Out.kr(3,LFPulse.kr(0.01,width:100,mul:(0.1*SinOsc.kr(0.01+MouseY.kr(0.01,100,1),mul:20,phase:90.degrad).dbamp)).abs)}.play;
-{Out.kr(3,BrownNoise.kr((0.1*SinOsc.kr(0.01+MouseY.kr(0.01,100,1),mul:20,phase:90.neg.degrad).dbamp)).abs)}.play;
-{Out.kr(4,LFPulse.kr(0.01,width:100,mul:(0.1*SinOsc.kr(0.01+MouseY.kr(0.01,100,1),mul:20,phase:90.degrad).dbamp)).abs)}.play;
-{Out.kr(4,BrownNoise.kr((0.1*SinOsc.kr(0.01+MouseY.kr(0.01,100,1),mul:20,phase:90.neg.degrad).dbamp)).abs)}.play;
-{Out.kr(5,LFPulse.kr(0.01,width:100,mul:(0.1*SinOsc.kr(0.01+MouseY.kr(0.01,100,1),mul:20,phase:90.degrad).dbamp)).abs)}.play;
-{Out.kr(5,BrownNoise.kr((0.1*SinOsc.kr(0.01+MouseY.kr(0.01,100,1),mul:20,phase:90.neg.degrad).dbamp)).abs)}.play;
-{Out.kr(6,LFPulse.kr(0.01,width:100,mul:(0.1*SinOsc.kr(0.01+MouseY.kr(0.01,100,1),mul:20,phase:90.degrad).dbamp)).abs)}.play;
-{Out.kr(6,BrownNoise.kr((0.1*SinOsc.kr(0.01+MouseY.kr(0.01,100,1),mul:20,phase:90.neg.degrad).dbamp)).abs)}.play;
+//{Out.kr(3,LFPulse.kr(0.01,width:100,mul:(0.1*SinOsc.kr(0.01+MouseY.kr(0.01,100,1),mul:20,phase:90.degrad).dbamp)).abs)}.play;
+//{Out.kr(3,LFNoise2.kr(10,(0.1*SinOsc.kr(0.01+MouseY.kr(0.01,100,1),mul:20,phase:90.neg.degrad).dbamp)).abs)}.play;
+
+//{Out.kr(4,LFPulse.kr(0.01,width:100,mul:(0.1*SinOsc.kr(0.01+MouseY.kr(0.01,100,1),mul:20,phase:90.degrad).dbamp)).abs)}.play;
+//{Out.kr(4,LFNoise2.kr(10,(0.1*SinOsc.kr(0.01+MouseY.kr(0.01,100,1),mul:20,phase:90.neg.degrad).dbamp)).abs)}.play;
+
+
+//{Out.kr(5,LFPulse.kr(0.01,width:100,mul:(0.1*SinOsc.kr(0.01+MouseY.kr(0.01,100,1),mul:20,phase:90.degrad).dbamp)).abs)}.play;
+//{Out.kr(5,LFNoise2.kr(10,(0.1*SinOsc.kr(0.01+MouseY.kr(0.01,100,1),mul:20,phase:90.neg.degrad).dbamp)).abs)}.play;
+
+
+//{Out.kr(6,LFPulse.kr(0.01,width:100,mul:(0.1*SinOsc.kr(0.01+MouseY.kr(0.01,100,1),mul:20,phase:90.degrad).dbamp)).abs)}.play;
+//{Out.kr(6,LFNoise2.kr(10,(0.1*SinOsc.kr(0.01+MouseY.kr(0.01,100,1),mul:20,phase:90.neg.degrad).dbamp)).abs)}.play;
+
 //{Out.kr(1,(1000*SinOsc.ar(0.02,phase:90.degrad,mul:32).dbamp))}.play;
 {Out.ar(8,PanAz.ar(2,PlayBuf.ar(2,0,BufRateScale.kr(0),loop:0)))}.play;
 a.play;
