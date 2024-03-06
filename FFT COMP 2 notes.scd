@@ -37,8 +37,8 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(10,m.reciprocal).abs,
-			phase:(detune1.theta+BrownNoise.kr(1)).wrap(pi.neg,pi))),
-		(detune1.real.round(0.0001)+BrownNoise.kr(1)).wrap(1.neg,1));
+			phase:(detune1.theta+LFNoise2.kr(10,1)).wrap(pi.neg,pi))),
+		(detune1.real.round(0.0001)+LFSaw.kr(1/2)).wrap(1.neg,1));
 
 
 m=m+1;
@@ -78,8 +78,8 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(10,m.reciprocal).abs,
-			phase:(detune1.theta+BrownNoise.kr(1)).wrap(pi.neg,pi))),
-		(detune1.real.round(0.0001)+BrownNoise.kr(1)).wrap(1.neg,1));
+			phase:(detune1.theta+LFNoise2.kr(10,1)).wrap(pi.neg,pi))),
+		(detune1.real.round(0.0001)+LFSaw.kr(1/2)).wrap(1.neg,1));
 
 
 m=m+1;
@@ -119,8 +119,8 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(10,m.reciprocal).abs,
-			phase:(detune1.theta+BrownNoise.kr(1)).wrap(pi.neg,pi))),
-		(detune1.real.round(0.0001)+BrownNoise.kr(1)).wrap(1.neg,1));
+			phase:(detune1.theta+LFNoise2.kr(10,1)).wrap(pi.neg,pi))),
+		(detune1.real.round(0.0001)+LFSaw.kr(1/2)).wrap(1.neg,1));
 
 m=m+1;
 	//m.postln;
@@ -160,8 +160,8 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
 		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(10,m.reciprocal).abs,
-			phase:(detune1.theta+BrownNoise.kr(1)).wrap(pi.neg,pi))),
-		(detune1.real.round(0.0001)+BrownNoise.kr(1)).wrap(1.neg,1));
+			phase:(detune1.theta+LFNoise2.kr(10,1)).wrap(pi.neg,pi))),
+		(detune1.real.round(0.0001)+LFSaw.kr(1/2)).wrap(1.neg,1));
 
 
 m=m+1;
