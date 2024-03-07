@@ -848,7 +848,7 @@ k.play;
 		angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
 		Out.ar(0,PanAz.ar(2,IFFT(chainL),(detune1.real.round(0.0001)+LFNoise2.kr(10,1)).wrap(1.neg,1)));
-		Out.ar(0,PanAz.ar(2,IFFT(chainR),(detune1.real.round(0.0001)+LFNoise2.kr(10,1)).wrap(1.neg,1)));
+		Out.ar(0,PanAz.ar(2,IFFT(chainR),(detune1.imag.round(0.0001)+LFNoise2.kr(10,1)).wrap(1.neg,1)));
 	}
 }.play
 )
