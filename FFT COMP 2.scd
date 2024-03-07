@@ -925,9 +925,11 @@ Pen.translate(400,400);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////points
 2000.do{
 
-		x1=x1+(1*(~a*0.000001));
+			x1=x1+(1*(~a*0.000001));
+		//x1=x1+(1*(1));
 		p1= (x1)/1;
 		x2=x2+(1*(~b*0.000001));
+		//x2=x2+(1*(1));
 		p2= (x2)/1;
 		//x3=x3+(1*(~c*0.001));
 		//p3= (x3)/1;
@@ -937,8 +939,8 @@ Pen.translate(400,400);
 		ray=(ray+(360-(360/1.61803398874989484820458683436563811772030917980576)));
 		angle=ray.wrap(0,360);
 		y=exp(Complex(0,1)*(angle.degrad));
-		y1=exp(Complex(0,1)*(angle.degrad+p1));
-		y2=exp(Complex(0,1)*(angle.degrad+p2));
+		y1=exp(Complex(0,1)*((angle.degrad+p1).wrap(pi.neg,pi)));
+	y2=exp(Complex(0,1)*((angle.degrad+p2).wrap(pi.neg,pi)));
 		//y3=exp(Complex(0,1)*(angle.degrad+p3));
 		//y4=exp(Complex(0,1)*(angle.degrad+p4));
 
@@ -958,14 +960,14 @@ Pen.width=2;
 			//Color(red:0.9999.rand,green:0.9999.rand,blue:0.9999.rand).set;
 //Color(red:1,green:1,blue:1,alpha:1).set;
 		Color.white.set;
-Pen.addOval(Rect.new(Polar.new(rad1,(y1.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*10).neg,(~a*10)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
+//Pen.addOval(Rect.new(Polar.new(rad1,(y1.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad1).wrap((~a*10).neg,(~a*10)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
 
-Pen.addOval(Rect.new(Polar.new(rad2,(y1.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad2).wrap((~a*10).neg,(~a*10)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
+//Pen.addOval(Rect.new(Polar.new(rad2,(y1.theta*~a).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad2).wrap((~a*10).neg,(~a*10)),(y1.theta*~a).wrap(pi.neg,pi)).asPoint.y,~a/~a,~a/~a));
 
 
-Pen.addOval(Rect.new(Polar.new(rad3,(y2.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad3).wrap((~b*10).neg,(~b*10)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
+//Pen.addOval(Rect.new(Polar.new(rad3,(y2.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad3).wrap((~b*10).neg,(~b*10)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
 //
-Pen.addOval(Rect.new(Polar.new(rad4,(y2.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad4).wrap((~b*10).neg,(~b*10)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
+//Pen.addOval(Rect.new(Polar.new(rad4,(y2.theta*~b).wrap(pi.neg,pi)).asPoint.x,Polar.new((rad4).wrap((~b*10).neg,(~b*10)),(y2.theta*~b).wrap(pi.neg,pi)).asPoint.y,~b/~b,~b/~b));
 
 	//Pen.addOval(Rect.new(Polar.new(rad3,y.theta).asPoint.x,Polar.new(rad3,y1.theta).asPoint.y,~a*5,~a*5));
 
