@@ -479,7 +479,7 @@ s.record(numChannels:4)
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2));
-	freq1 = fund*6+WhiteNoise.kr(1).abs;
+	freq1 = fund*6+WhiteNoise.kr(6).abs;
 
 	bank.do{
 
@@ -520,7 +520,7 @@ m=m+1;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2));
-	freq1 = fund*8+WhiteNoise.kr(1).abs;
+	freq1 = fund*8+WhiteNoise.kr(6).abs;
 
 	bank.do{
 env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1/1);
@@ -561,7 +561,7 @@ m=m+1;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2));
-	freq1 = fund*9+WhiteNoise.kr(1).abs;
+	freq1 = fund*9+WhiteNoise.kr(6).abs;
 
 	bank.do{
 
@@ -601,7 +601,7 @@ m=m+1;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2));
-	freq1 = fund*12+WhiteNoise.kr(1).abs;
+	freq1 = fund*12+WhiteNoise.kr(6).abs;
 
 	bank.do{
 
