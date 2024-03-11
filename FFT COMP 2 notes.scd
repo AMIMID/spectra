@@ -3,14 +3,14 @@
 {(Out.ar(0,LFPulse.ar(0.01,width:100).abs.poll))}.play
 
 
-{(Out.kr(0,LFNoise2.kr(10,mul:1).poll))}.play
+{(Out.kr(0,LFNoise2.kr(1,mul:1).abs.poll))}.play
 
 
 
 
 (
 (SynthDef.new(\oa, {
-	arg  n1=1,n2=1, cutt=1300,decay=6,t=2,attack=0.01,angle1;
+	arg  n1=1,n2=1, cutt=2300,decay=6,t=2,attack=0.01,angle1;
 	var amps,tf,tfBuf=0;
 	var detune1, osc1;
 	var freq1, env1,m=1,x=0;
@@ -27,7 +27,7 @@
 	bank=12;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
-fund=(((4*t)-1)*((4*t)/2))/2;
+fund=(((4*t)-1)*((4*t)/2));
 	freq1 = fund*6+WhiteNoise.kr(1).abs;
 
 	bank.do{
@@ -36,8 +36,8 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:
 //env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(10,m.reciprocal).abs,
-			phase:(detune1.theta+LFNoise2.kr(10,1)).wrap(pi.neg,pi))),
+		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1+SinOsc.kr(m),mul:LFNoise2.kr(1,m.reciprocal).abs,
+			phase:(detune1.theta+LFNoise2.kr(1,1)).wrap(pi.neg,pi))),
 		(detune1.real.round(0.0001)+LFSaw.kr(1/2)).wrap(1.neg,1));
 
 
@@ -45,13 +45,13 @@ m=m+1;
 	//m.postln;
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*LFNoise2.kr(10,2).abs),cutt));
+	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*LFNoise2.kr(1,2).abs),cutt));
 
 		//trig = TDelay.ar(trig, 0.1);
 	};
 }).add;);
 (SynthDef.new(\ob, {
-	arg  n1=1,n2=1, cutt=1300,decay=6,t=2,attack=0.01,angle1;
+	arg  n1=1,n2=1, cutt=2300,decay=6,t=2,attack=0.01,angle1;
 	var amps,tf,tfBuf=0;
 	var detune1, osc1;
 	var freq1, env1,m=1,x=0;
@@ -68,7 +68,7 @@ m=m+1;
 	bank=12;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
-fund=(((4*t)-1)*((4*t)/2))/2;
+fund=(((4*t)-1)*((4*t)/2));
 	freq1 = (fund*8)+WhiteNoise.kr(1).abs;
 
 	bank.do{
@@ -77,8 +77,8 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(10,m.reciprocal).abs,
-			phase:(detune1.theta+LFNoise2.kr(10,1)).wrap(pi.neg,pi))),
+		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1+SinOsc.kr(m),mul:LFNoise2.kr(1,m.reciprocal).abs,
+			phase:(detune1.theta+LFNoise2.kr(1,1)).wrap(pi.neg,pi))),
 		(detune1.real.round(0.0001)+LFSaw.kr(1/2)).wrap(1.neg,1));
 
 
@@ -86,13 +86,13 @@ m=m+1;
 	//m.postln;
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*LFNoise2.kr(10,3/4).abs),cutt));
+	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*LFNoise2.kr(1,3/4).abs),cutt));
 
 		//trig = TDelay.ar(trig, 0.1);
 	};
 }).add;);
 (SynthDef.new(\oc, {
-	arg  n1=1,n2=1, cutt=1300,decay=6,t=2,attack=0.01,angle1;
+	arg  n1=1,n2=1, cutt=2300,decay=6,t=2,attack=0.01,angle1;
 	var amps,tf,tfBuf=0;
 	var detune1, osc1;
 	var freq1, env1,m=1,x=0;
@@ -109,7 +109,7 @@ m=m+1;
 	bank=12;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
-fund=(((4*t)-1)*((4*t)/2))/2;
+fund=(((4*t)-1)*((4*t)/2));
 	freq1 = (fund*9)+WhiteNoise.kr(1).abs;
 
 	bank.do{
@@ -118,21 +118,21 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:
 //env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(10,m.reciprocal).abs,
-			phase:(detune1.theta+LFNoise2.kr(10,1)).wrap(pi.neg,pi))),
+		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1+SinOsc.kr(m),mul:LFNoise2.kr(1,m.reciprocal).abs,
+			phase:(detune1.theta+LFNoise2.kr(1,1)).wrap(pi.neg,pi))),
 		(detune1.real.round(0.0001)+LFSaw.kr(1/2)).wrap(1.neg,1));
 
 m=m+1;
 	//m.postln;
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*LFNoise2.kr(10,2/3).abs),cutt));
+	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*LFNoise2.kr(1,2/3).abs),cutt));
 
 		//trig = TDelay.ar(trig, 0.1);
 	};
 }).add;);
 (SynthDef.new(\od, {
-	arg  n1=1,n2=1, cutt=1300,decay=6,t=2,attack=0.01,angle1;
+	arg  n1=1,n2=1, cutt=2300,decay=6,t=2,attack=0.01,angle1;
 	var amps,tf,tfBuf=0;
 	var detune1, osc1;
 	var freq1, env1,m=1,x=0;
@@ -149,7 +149,7 @@ m=m+1;
 	bank=12;
 	angle1=45;
 	pitch1=2.pow(n1/(2*6));
-fund=(((4*t)-1)*((4*t)/2))/2;
+fund=(((4*t)-1)*((4*t)/2));
 	freq1 = (fund*12)+WhiteNoise.kr(1).abs;
 
 	bank.do{
@@ -159,8 +159,8 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:
 
 		detune1=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(10,m.reciprocal).abs,
-			phase:(detune1.theta+LFNoise2.kr(10,1)).wrap(pi.neg,pi))),
+		osc1=PanAz.ar(2,FreeVerb.ar(SinOsc.ar((freq1*m)*pitch1+SinOsc.kr(m),mul:LFNoise2.kr(1,m.reciprocal).abs,
+			phase:(detune1.theta+LFNoise2.kr(1,1)).wrap(pi.neg,pi))),
 		(detune1.real.round(0.0001)+LFSaw.kr(1/2)).wrap(1.neg,1));
 
 
@@ -168,7 +168,7 @@ m=m+1;
 	//m.postln;
 				angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*LFNoise2.kr(10,1).abs),cutt));
+	wrappedOut.value(out, LPF.ar(LeakDC.ar(((osc1)*env1)*LFNoise2.kr(1,1).abs),cutt));
 
 		//trig = TDelay.ar(trig, 0.1);
 	};
