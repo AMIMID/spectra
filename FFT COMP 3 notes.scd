@@ -3,7 +3,7 @@
 s.options.numWireBufs = 1024*16;
 s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=0;
-TempoClock.default.tempo_(120/120);
+TempoClock.default.tempo_(60/120);
 s.options.memSize = 8192*16;
 s.waitForBoot
 )
@@ -40,7 +40,7 @@ exp(Complex(0,1)*0.degrad).real.linlin(1.neg,1,360.neg,360)
 
 (
 {
-var freqs, audiox,audioy, amp, m=0, fund=100, phasex,phasey,anglex=0,angley=0,x=0,y=0;
+var freqs, audiox,audioy,audioj,audiok, amp, m=0, fund=100, phasex,phasey,phasej,phasek,anglex=0,angley=0,anglej=90,anglek=90,x=0,y=0,j=0,k=0;
 
 	freqs = 100.collect{m=m+1};
     amp  = freqs.reciprocal;
@@ -54,14 +54,28 @@ var freqs, audiox,audioy, amp, m=0, fund=100, phasex,phasey,anglex=0,angley=0,x=
 		y=exp(Complex(0,1)*(angley.degrad));
 		y=y.imag.linlin(1.neg,1,0,2);
 	};
+	phasej = 100.collect{
+		anglej=(anglej+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		j=exp(Complex(0,1)*(anglej.degrad));
+		j=j.real.linlin(1.neg,1,0,2);
+	};
+	phasek = 100.collect{
+		anglek=(anglek+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		k=exp(Complex(0,1)*(anglek.degrad));
+		k=k.imag.linlin(1.neg,1,0,2);
+	};
 
 
 
-	audiox = PanAz.ar(2,SinOsc.ar( fund*freqs,0.degrad,mul:amp),LFSaw.ar(0.1,phasex));
-	audioy = PanAz.ar(2,SinOsc.ar( fund*freqs,90.degrad,mul:amp),LFSaw.ar(0.1,phasey));
+	audiox = PanAz.ar(4,SinOsc.ar( fund*freqs,0.degrad,mul:amp),LFSaw.ar(1,phasex));
+	audioy = PanAz.ar(4,SinOsc.ar( fund*freqs,90.degrad,mul:amp),LFSaw.ar(1,phasey));
+	audioj = PanAz.ar(4,SinOsc.ar( fund*freqs,90.degrad,mul:amp),LFSaw.ar(1,phasej));
+	audiok = PanAz.ar(4,SinOsc.ar( fund*freqs,90.degrad,mul:amp),LFSaw.ar(1,phasek));
 
-	audiox = Out.ar(0,Mix(audiox));
-	audioy = Out.ar(0,Mix(audioy));
+	audiox = Out.ar(0,Mix(LPF.ar(audiox),440));
+	audioy = Out.ar(0,Mix(LPF.ar(audioy),440));
+	//audioj = Out.ar(0,Mix(LPF.ar(audioj),440));
+	//audiok = Out.ar(0,Mix(LPF.ar(audiok),440));
 
 
 }.play
@@ -125,7 +139,7 @@ SynthDef.new(\oa, {
 };
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=12;
+	bank=24;
 	//n1=WhiteNoise.ar(12);
 	pitch1=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
@@ -166,7 +180,7 @@ SynthDef.new(\ob, {
 };
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=12;
+	bank=24;
 	//n1=WhiteNoise.ar(12);
 	pitch1=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
@@ -207,7 +221,7 @@ SynthDef.new(\oc, {
 };
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=12;
+	bank=24;
 	//n1=WhiteNoise.ar(12);
 	pitch1=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
@@ -248,7 +262,7 @@ SynthDef.new(\od, {
 };
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=12;
+	bank=24;
 	//n1=WhiteNoise.ar(12);
 	pitch1=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
