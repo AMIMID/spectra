@@ -3,11 +3,12 @@
 s.options.numWireBufs = 1024*16;
 s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=0;
-TempoClock.default.tempo_(120/120);
+TempoClock.default.tempo_(60/120);
 s.options.memSize = 8192*16;
+s.options.blockSize = 64/4
 s.waitForBoot
 )
-
+s.options.postln
 (
 {Out.ar(0,PanAz.ar(2,SinOsc.ar(220,SinOsc.ar(0.0220,0.degrad,360).degrad),SinOsc.ar(0.220,0.degrad)))}.play;
 {Out.ar(0,PanAz.ar(2,SinOsc.ar(220,SinOsc.ar(0.0220,90.degrad,360).degrad),SinOsc.ar(0.220,90.degrad)))}.play;
@@ -139,7 +140,7 @@ SynthDef.new(\oa, {
 };
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=12;
+	bank=24;
 	//n1=WhiteNoise.ar(12);
 	pitch1=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
@@ -181,7 +182,7 @@ SynthDef.new(\oa, {
 };
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=12;
+	bank=24;
 	//n1=WhiteNoise.ar(12);
 	pitch1=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
@@ -222,7 +223,7 @@ SynthDef.new(\ob, {
 };
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=12;
+	bank=24;
 	//n1=WhiteNoise.ar(12);
 	pitch1=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
@@ -263,7 +264,7 @@ SynthDef.new(\oc, {
 };
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=12;
+	bank=24;
 	//n1=WhiteNoise.ar(12);
 	pitch1=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
@@ -304,7 +305,7 @@ SynthDef.new(\od, {
 };
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	//var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
-	bank=12;
+	bank=24;
 	//n1=WhiteNoise.ar(12);
 	pitch1=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
