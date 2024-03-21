@@ -3,27 +3,26 @@
 s.options.numWireBufs = 1024*16;
 s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=0;
-TempoClock.default.tempo_(60/120);
+TempoClock.default.tempo_(120/120);
 s.options.memSize = 8192*16;
 s.waitForBoot
 )
-
 
 (
 {Out.ar(0,PanAz.ar(2,SinOsc.ar(220,SinOsc.ar(0.0220,0.degrad,360).degrad),SinOsc.ar(0.220,0.degrad)))}.play;
 {Out.ar(0,PanAz.ar(2,SinOsc.ar(220,SinOsc.ar(0.0220,90.degrad,360).degrad),SinOsc.ar(0.220,90.degrad)))}.play;
 )
 (
-{Out.ar(0,PanAz.ar(2,SinOsc.ar(220,0.degrad),LFSaw.ar(0.220,0)))}.play;
-{Out.ar(0,PanAz.ar(2,SinOsc.ar(220,90.degrad),LFSaw.ar(0.220,1)))}.play;
+{Out.ar(0,PanAz.ar(2,SinOsc.ar(220,0.degrad),LFSaw.ar(0.1,0)))}.play;
+{Out.ar(0,PanAz.ar(2,SinOsc.ar(220,90.degrad),LFSaw.ar(0.1,1)))}.play;
 )
 
 (
-{Out.ar(0,SinOsc.ar(100,LFSaw.ar(0.0220,0,360).degrad))}.play;
-{Out.ar(1,SinOsc.ar(100,LFSaw.ar(0.0220,1,360).degrad))}.play;
+{Out.ar(0,SinOsc.ar(100,LFSaw.kr(0.022,0,2pi)))}.play;
+{Out.ar(1,SinOsc.ar(100,LFSaw.kr(0.022,0.5,2pi)))}.play;
 )
 
-
+//
 (
 {Out.ar(0,SinOsc.ar(220,SinOsc.kr(0.022,SinOsc.kr(0.022,0.degrad,360).abs.degrad,360).abs.degrad))}.play;
 {Out.ar(1,SinOsc.ar(220,SinOsc.kr(0.022,SinOsc.kr(0.022,90.degrad,360).abs.degrad,360).abs.degrad))}.play;
@@ -47,30 +46,30 @@ var freqs, audiox,audioy,audioj,audiok, amp, m=0, fund=100, phasex,phasey,phasej
 	phasex = 100.collect{
 		anglex=(anglex+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 		x=exp(Complex(0,1)*(anglex.degrad));
-		x=x.real.linlin(1.neg,1,0,2);
+		x=x.real.round(0.00001);
 	};
 	phasey = 100.collect{
 		angley=(angley+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 		y=exp(Complex(0,1)*(angley.degrad));
-		y=y.imag.linlin(1.neg,1,0,2);
+		y=y.imag.round(0.00001);
 	};
 	phasej = 100.collect{
 		anglej=(anglej+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 		j=exp(Complex(0,1)*(anglej.degrad));
-		j=j.real.linlin(1.neg,1,0,2);
+		j=j.theta;
 	};
-	phasek = 100.collect{
+	phasek = 50.collect{
 		anglek=(anglek+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 		k=exp(Complex(0,1)*(anglek.degrad));
-		k=k.imag.linlin(1.neg,1,0,2);
+		k=k.theta;
 	};
 
 
 
-	audiox = PanAz.ar(4,SinOsc.ar( fund*freqs,0.degrad,mul:amp),LFSaw.ar(1,phasex));
-	audioy = PanAz.ar(4,SinOsc.ar( fund*freqs,90.degrad,mul:amp),LFSaw.ar(1,phasey));
-	audioj = PanAz.ar(4,SinOsc.ar( fund*freqs,90.degrad,mul:amp),LFSaw.ar(1,phasej));
-	audiok = PanAz.ar(4,SinOsc.ar( fund*freqs,90.degrad,mul:amp),LFSaw.ar(1,phasek));
+	audiox = PanAz.ar(2,SinOsc.ar( fund,0.degrad+phasej,mul:amp),LFSaw.ar(0.1,phasex));
+	audioy = PanAz.ar(2,SinOsc.ar( fund,90.degrad+phasek,mul:amp),LFSaw.ar(0.1,phasey));
+	//audioj = PanAz.ar(4,SinOsc.ar( fund*freqs,90.degrad,mul:amp),LFSaw.ar(1,phasej));
+	//audiok = PanAz.ar(4,SinOsc.ar( fund*freqs,90.degrad,mul:amp),LFSaw.ar(1,phasek));
 
 	audiox = Out.ar(0,Mix(LPF.ar(audiox),440));
 	audioy = Out.ar(0,Mix(LPF.ar(audioy),440));
@@ -81,7 +80,8 @@ var freqs, audiox,audioy,audioj,audiok, amp, m=0, fund=100, phasex,phasey,phasej
 }.play
 )
 
-
+{ LFSaw.ar(20, [0, 0.5]) }.plot(0.1);
+{ SinOsc.ar(20, [0.degrad,-90.degrad]) }.plot(0.1)
 
 
 
@@ -107,12 +107,12 @@ var freqs, audiox,audioy,audioj,audiok, amp, m=0, fund=100, phasex,phasey,phasej
 // 	phasex = bank.collect{
 // 		anglex=(anglex+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 // 		x=exp(Complex(0,1)*(anglex.degrad));
-// 		x=x.real.linlin(1.neg,1,0,2);
+// 		x=x.real.round(0.0001);
 // 	};
 // 	phasey = bank.collect{
 // 		angley=(angley+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 // 		y=exp(Complex(0,1)*(angley.degrad));
-// 		y=y.imag.linlin(1.neg,1,0,2);
+// 		y=y.imag.round(0.0001);
 // 	};
 //
 // 	osc1 = PanAz.ar(2,SinOsc.ar(freq1*freqs*pitch1,0.degrad,mul:amp),LFSaw.ar(1,phasex));
@@ -127,7 +127,7 @@ var freqs, audiox,audioy,audioj,audiok, amp, m=0, fund=100, phasex,phasey,phasej
 
 (
 SynthDef.new(\oa, {
-	arg  n1=1, cutt=1200,decay=6,t=2,attack=0.01,angle1=0;
+	arg  n1=1, cutt=1200,decay=6,t=2,attack=0.01,angle1=137.5;
 	var tf, detune1, osc1,osc2;
 	var freq1, env,m=1,bank, pitch1, fund;
 	var wrappedOut = { |busArray, signalArray|
@@ -148,9 +148,9 @@ SynthDef.new(\oa, {
 
 detune1=exp(Complex(0,1)*(angle1.degrad));
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:0.degrad), LFSaw.kr(pitch1,detune1.real.linlin(1.neg,1,0,2)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:0.degrad), LFSaw.kr(1,detune1.real.round(0.0001)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:90.degrad), LFSaw.kr(pitch1,detune1.imag.linlin(1.neg,1,0,2)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:90.degrad), LFSaw.kr(1,detune1.imag.round(0.0001)));
 
 
 m=m+1;
@@ -193,9 +193,9 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:2
 
 detune1=exp(Complex(0,1)*(angle1.degrad));
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(1,m.reciprocal).abs,phase:0.degrad), LFSaw.kr(m*pitch1,detune1.real.linlin(1.neg,1,0,2)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(1,m.reciprocal).abs,phase:0.degrad+detune1.theta), LFSaw.kr(1,detune1.real.round(0.0001)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(1,m.reciprocal).abs,phase:90.degrad), LFSaw.kr(m*pitch1,detune1.imag.linlin(1.neg,1,0,2)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(1,m.reciprocal).abs,phase:90.degrad+detune1.theta), LFSaw.kr(1,detune1.imag.round(0.0001)));
 
 
 m=m+1;
@@ -234,9 +234,9 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:3
 
 detune1=exp(Complex(0,1)*(angle1.degrad));
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(1,m.reciprocal).abs,phase:0.degrad), LFSaw.kr(m*pitch1,detune1.real.linlin(1.neg,1,0,2)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(1,m.reciprocal).abs,phase:0.degrad+detune1.theta), LFSaw.kr(1,detune1.real.round(0.0001)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(1,m.reciprocal).abs,phase:90.degrad), LFSaw.kr(m*pitch1,detune1.imag.linlin(1.neg,1,0,2)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(1,m.reciprocal).abs,phase:90.degrad+detune1.theta), LFSaw.kr(1,detune1.imag.round(0.0001)));
 
 
 m=m+1;
@@ -275,9 +275,9 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:2
 
 detune1=exp(Complex(0,1)*(angle1.degrad));
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(1,m.reciprocal).abs,phase:0.degrad), LFSaw.kr(m*pitch1,detune1.real.linlin(1.neg,1,0,2)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(1,m.reciprocal).abs,phase:0.degrad+detune1.theta), LFSaw.kr(1,detune1.real.round(0.0001)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(1,m.reciprocal).abs,phase:90.degrad), LFSaw.kr(m*pitch1,detune1.imag.linlin(1.neg,1,0,2)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(1,m.reciprocal).abs,phase:90.degrad+detune1.theta), LFSaw.kr(1,detune1.imag.round(0.0001)));
 
 
 m=m+1;
@@ -316,9 +316,9 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1
 
 detune1=exp(Complex(0,1)*(angle1.degrad));
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(1,m.reciprocal).abs,phase:0.degrad), LFSaw.kr(m*pitch1,detune1.real.linlin(1.neg,1,0,2)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(1,m.reciprocal).abs,phase:0.degrad+detune1.theta), LFSaw.kr(1,detune1.real.round(0.0001)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(1,m.reciprocal).abs,phase:90.degrad), LFSaw.kr(m*pitch1,detune1.imag.linlin(1.neg,1,0,2)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(1,m.reciprocal).abs,phase:90.degrad+detune1.theta), LFSaw.kr(1,detune1.imag.round(0.0001)));
 
 
 m=m+1;
