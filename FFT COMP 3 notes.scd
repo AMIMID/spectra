@@ -5,7 +5,7 @@ s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=0;
 TempoClock.default.tempo_(60/120);
 s.options.memSize = 8192*16;
-s.options.blockSize = 64/4
+s.options.blockSize = 64/4;
 s.waitForBoot
 )
 s.options.postln
@@ -150,9 +150,9 @@ SynthDef.new(\oa, {
 
 detune1=exp(Complex(0,1)*(angle1.degrad));
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:0.degrad), LFSaw.kr(WhiteNoise.ar(fund),detune1.real.round(0.0001)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:0.degrad), LFSaw.kr(WhiteNoise.ar(2).abs,detune1.real.round(0.0001)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:90.degrad), LFSaw.kr(WhiteNoise.ar(fund),detune1.imag.round(0.0001)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:90.degrad), LFSaw.kr(WhiteNoise.ar(2).abs,detune1.imag.round(0.0001)));
 
 
 m=m+1;
@@ -195,9 +195,9 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:2
 
 detune1=exp(Complex(0,1)*(angle1.degrad));
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2),m.reciprocal).abs,phase:0.degrad), LFSaw.kr(WhiteNoise.ar(fund),detune1.real.round(0.0001)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs,phase:0.degrad), LFSaw.kr(WhiteNoise.ar(fund),detune1.real.round(0.0001)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2),m.reciprocal).abs,phase:90.degrad), LFSaw.kr(WhiteNoise.ar(fund),detune1.imag.round(0.0001)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs,phase:90.degrad), LFSaw.kr(WhiteNoise.ar(fund),detune1.imag.round(0.0001)));
 
 
 m=m+1;
@@ -206,8 +206,8 @@ angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576)))
 	//wrappedOut.value(out, LPF.ar(LeakDC.ar(osc1*2),cutt));
 	//wrappedOut.value(out, LPF.ar(LeakDC.ar(osc2*2),cutt));
 
-			Out.ar(0,LPF.ar(LeakDC.ar((osc1)*env*LFNoise2.ar(WhiteNoise.ar(2),1).abs),cutt));
-			Out.ar(0,LPF.ar(LeakDC.ar((osc2)*env*LFNoise2.ar(WhiteNoise.ar(2),1).abs),cutt));
+			Out.ar(0,LPF.ar(LeakDC.ar((osc1)*env*LFNoise2.ar(WhiteNoise.ar(2).abs,1).abs),cutt));
+			Out.ar(0,LPF.ar(LeakDC.ar((osc2)*env*LFNoise2.ar(WhiteNoise.ar(2).abs,1).abs),cutt));
 	};
 }).add;
 
@@ -236,9 +236,9 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:3
 
 detune1=exp(Complex(0,1)*(angle1.degrad));
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2),m.reciprocal).abs,phase:0.degrad), LFSaw.kr(WhiteNoise.ar(fund),detune1.real.round(0.0001)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs,phase:0.degrad), LFSaw.kr(WhiteNoise.ar(fund),detune1.real.round(0.0001)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2),m.reciprocal).abs,phase:90.degrad), LFSaw.kr(WhiteNoise.ar(fund),detune1.imag.round(0.0001)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs,phase:90.degrad), LFSaw.kr(WhiteNoise.ar(fund),detune1.imag.round(0.0001)));
 
 
 m=m+1;
@@ -247,8 +247,8 @@ angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576)))
 	//wrappedOut.value(out, LPF.ar(LeakDC.ar(osc1*2),cutt));
 	//wrappedOut.value(out, LPF.ar(LeakDC.ar(osc2*2),cutt));
 
-			Out.ar(0,LPF.ar(LeakDC.ar((osc1)*env*LFNoise2.ar(WhiteNoise.ar(2),1).abs),cutt));
-			Out.ar(0,LPF.ar(LeakDC.ar((osc2)*env*LFNoise2.ar(WhiteNoise.ar(2),1).abs),cutt));
+			Out.ar(0,LPF.ar(LeakDC.ar((osc1)*env*LFNoise2.ar(WhiteNoise.ar(2).abs,1).abs),cutt));
+			Out.ar(0,LPF.ar(LeakDC.ar((osc2)*env*LFNoise2.ar(WhiteNoise.ar(2).abs,1).abs),cutt));
 	};
 }).add;
 
@@ -277,9 +277,9 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:2
 
 detune1=exp(Complex(0,1)*(angle1.degrad));
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2),m.reciprocal).abs,phase:0.degrad), LFSaw.kr(WhiteNoise.ar(fund),detune1.real.round(0.0001)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs,phase:0.degrad), LFSaw.kr(WhiteNoise.ar(fund),detune1.real.round(0.0001)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2),m.reciprocal).abs,phase:90.degrad), LFSaw.kr(WhiteNoise.ar(fund),detune1.imag.round(0.0001)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs,phase:90.degrad), LFSaw.kr(WhiteNoise.ar(fund),detune1.imag.round(0.0001)));
 
 
 m=m+1;
@@ -288,8 +288,8 @@ angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576)))
 	//wrappedOut.value(out, LPF.ar(LeakDC.ar(osc1*2),cutt));
 	//wrappedOut.value(out, LPF.ar(LeakDC.ar(osc2*2),cutt));
 
-			Out.ar(0,LPF.ar(LeakDC.ar((osc1)*env*LFNoise2.ar(WhiteNoise.ar(2),1).abs),cutt));
-			Out.ar(0,LPF.ar(LeakDC.ar((osc2)*env*LFNoise2.ar(WhiteNoise.ar(2),1).abs),cutt));
+			Out.ar(0,LPF.ar(LeakDC.ar((osc1)*env*LFNoise2.ar(WhiteNoise.ar(2).abs,1).abs),cutt));
+			Out.ar(0,LPF.ar(LeakDC.ar((osc2)*env*LFNoise2.ar(WhiteNoise.ar(2).abs,1).abs),cutt));
 	};
 }).add;
 
@@ -318,9 +318,9 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1
 
 detune1=exp(Complex(0,1)*(angle1.degrad));
 
-	osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2),m.reciprocal).abs,phase:0.degrad), LFSaw.kr(WhiteNoise.ar(fund),detune1.real.round(0.0001)));
+	osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs,phase:0.degrad), LFSaw.kr(WhiteNoise.ar(fund),detune1.real.round(0.0001)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2),m.reciprocal).abs,phase:90.degrad), LFSaw.kr(WhiteNoise.ar(fund),detune1.imag.round(0.0001)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs,phase:90.degrad), LFSaw.kr(WhiteNoise.ar(fund),detune1.imag.round(0.0001)));
 
 
 m=m+1;
@@ -329,8 +329,8 @@ angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576)))
 	//wrappedOut.value(out, LPF.ar(LeakDC.ar(osc1*2),cutt));
 	//wrappedOut.value(out, LPF.ar(LeakDC.ar(osc2*2),cutt));
 
-			Out.ar(0,LPF.ar(LeakDC.ar((osc1)*env*LFNoise2.ar(WhiteNoise.ar(2),1).abs),cutt));
-			Out.ar(0,LPF.ar(LeakDC.ar((osc2)*env*LFNoise2.ar(WhiteNoise.ar(2),1).abs),cutt));
+			Out.ar(0,LPF.ar(LeakDC.ar((osc1)*env*LFNoise2.ar(WhiteNoise.ar(2).abs,1).abs),cutt));
+			Out.ar(0,LPF.ar(LeakDC.ar((osc2)*env*LFNoise2.ar(WhiteNoise.ar(2).abs,1).abs),cutt));
 	};
 }).add;
 

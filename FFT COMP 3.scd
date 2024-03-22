@@ -243,7 +243,7 @@ SynthDef.new(\oa, {
 	//n1=WhiteNoise.ar(12);
 	pitch1=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
-	freq1 = (fund*6)+WhiteNoise.kr(2);
+	freq1 = (fund*6)+WhiteNoise.ar(2);
 
 env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:2);
 //env=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
@@ -252,9 +252,9 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:2
 
 detune1=exp(Complex(0,1)*(angle1.degrad));
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(1,m.reciprocal).abs,phase:0.degrad), LFSaw.kr(m*pitch1,detune1.real.linlin(1.neg,1,0,2)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2),m.reciprocal).abs,phase:0.degrad+detune1.theta), LFSaw.kr(WhiteNoise.ar(fund),detune1.real.round(0.0001)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(1,m.reciprocal).abs,phase:90.degrad), LFSaw.kr(m*pitch1,detune1.imag.linlin(1.neg,1,0,2)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2),m.reciprocal).abs,phase:90.degrad+detune1.theta), LFSaw.kr(WhiteNoise.ar(fund),detune1.imag.round(0.0001)));
 
 
 m=m+1;
@@ -263,8 +263,8 @@ angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576)))
 	//wrappedOut.value(out, LPF.ar(LeakDC.ar(osc1*2),cutt));
 	//wrappedOut.value(out, LPF.ar(LeakDC.ar(osc2*2),cutt));
 
-			Out.ar(0,LPF.ar(LeakDC.ar((osc1)*env*LFNoise2.kr(1,1).abs),cutt));
-			Out.ar(0,LPF.ar(LeakDC.ar((osc2)*env*LFNoise2.kr(1,1).abs),cutt));
+			Out.ar(0,LPF.ar(LeakDC.ar((osc1)*env*LFNoise2.ar(WhiteNoise.ar(2),1).abs),cutt));
+			Out.ar(0,LPF.ar(LeakDC.ar((osc2)*env*LFNoise2.ar(WhiteNoise.ar(2),1).abs),cutt));
 	};
 }).add;
 
@@ -284,7 +284,7 @@ SynthDef.new(\ob, {
 	//n1=WhiteNoise.ar(12);
 	pitch1=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
-	freq1 = (fund*8)+WhiteNoise.kr(2);
+	freq1 = (fund*8)+WhiteNoise.ar(2);
 
 env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:3/4);
 //env=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
@@ -293,9 +293,9 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:3
 
 detune1=exp(Complex(0,1)*(angle1.degrad));
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(1,m.reciprocal).abs,phase:0.degrad), LFSaw.kr(m*pitch1,detune1.real.linlin(1.neg,1,0,2)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2),m.reciprocal).abs,phase:0.degrad+detune1.theta), LFSaw.kr(WhiteNoise.ar(fund),detune1.real.round(0.0001)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(1,m.reciprocal).abs,phase:90.degrad), LFSaw.kr(m*pitch1,detune1.imag.linlin(1.neg,1,0,2)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2),m.reciprocal).abs,phase:90.degrad+detune1.theta), LFSaw.kr(WhiteNoise.ar(fund),detune1.imag.round(0.0001)));
 
 
 m=m+1;
@@ -304,8 +304,8 @@ angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576)))
 	//wrappedOut.value(out, LPF.ar(LeakDC.ar(osc1*2),cutt));
 	//wrappedOut.value(out, LPF.ar(LeakDC.ar(osc2*2),cutt));
 
-			Out.ar(0,LPF.ar(LeakDC.ar((osc1)*env*LFNoise2.kr(1,1).abs),cutt));
-			Out.ar(0,LPF.ar(LeakDC.ar((osc2)*env*LFNoise2.kr(1,1).abs),cutt));
+			Out.ar(0,LPF.ar(LeakDC.ar((osc1)*env*LFNoise2.ar(WhiteNoise.ar(2),1).abs),cutt));
+			Out.ar(0,LPF.ar(LeakDC.ar((osc2)*env*LFNoise2.ar(WhiteNoise.ar(2),1).abs),cutt));
 	};
 }).add;
 
@@ -325,7 +325,7 @@ SynthDef.new(\oc, {
 	//n1=WhiteNoise.ar(12);
 	pitch1=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
-	freq1 = (fund*9)+WhiteNoise.kr(2);
+	freq1 = (fund*9)+WhiteNoise.ar(2);
 
 env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:2/3);
 //env=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
@@ -334,9 +334,9 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:2
 
 detune1=exp(Complex(0,1)*(angle1.degrad));
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(1,m.reciprocal).abs,phase:0.degrad), LFSaw.kr(m*pitch1,detune1.real.linlin(1.neg,1,0,2)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2),m.reciprocal).abs,phase:0.degrad+detune1.theta), LFSaw.kr(WhiteNoise.ar(fund),detune1.real.round(0.0001)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(1,m.reciprocal).abs,phase:90.degrad), LFSaw.kr(m*pitch1,detune1.imag.linlin(1.neg,1,0,2)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2),m.reciprocal).abs,phase:90.degrad+detune1.theta), LFSaw.kr(WhiteNoise.ar(fund),detune1.imag.round(0.0001)));
 
 
 m=m+1;
@@ -345,8 +345,8 @@ angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576)))
 	//wrappedOut.value(out, LPF.ar(LeakDC.ar(osc1*2),cutt));
 	//wrappedOut.value(out, LPF.ar(LeakDC.ar(osc2*2),cutt));
 
-			Out.ar(0,LPF.ar(LeakDC.ar((osc1)*env*LFNoise2.kr(1,1).abs),cutt));
-			Out.ar(0,LPF.ar(LeakDC.ar((osc2)*env*LFNoise2.kr(1,1).abs),cutt));
+			Out.ar(0,LPF.ar(LeakDC.ar((osc1)*env*LFNoise2.ar(WhiteNoise.ar(2),1).abs),cutt));
+			Out.ar(0,LPF.ar(LeakDC.ar((osc2)*env*LFNoise2.ar(WhiteNoise.ar(2),1).abs),cutt));
 	};
 }).add;
 
@@ -366,7 +366,7 @@ SynthDef.new(\od, {
 	//n1=WhiteNoise.ar(12);
 	pitch1=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
-	freq1 = (fund*12)+WhiteNoise.kr(2);
+	freq1 = (fund*12)+WhiteNoise.ar(2);
 
 env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1);
 //env=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2);
@@ -375,9 +375,9 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1
 
 detune1=exp(Complex(0,1)*(angle1.degrad));
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(1,m.reciprocal).abs,phase:0.degrad), LFSaw.kr(m*pitch1,detune1.real.linlin(1.neg,1,0,2)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2),m.reciprocal).abs,phase:0.degrad+detune1.theta), LFSaw.kr(WhiteNoise.ar(fund),detune1.real.round(0.0001)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.kr(1,m.reciprocal).abs,phase:90.degrad), LFSaw.kr(m*pitch1,detune1.imag.linlin(1.neg,1,0,2)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2),m.reciprocal).abs,phase:90.degrad+detune1.theta), LFSaw.kr(WhiteNoise.ar(fund),detune1.imag.round(0.0001)));
 
 
 m=m+1;
@@ -386,8 +386,8 @@ angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576)))
 	//wrappedOut.value(out, LPF.ar(LeakDC.ar(osc1*2),cutt));
 	//wrappedOut.value(out, LPF.ar(LeakDC.ar(osc2*2),cutt));
 
-			Out.ar(0,LPF.ar(LeakDC.ar((osc1)*env*LFNoise2.kr(1,1).abs),cutt));
-			Out.ar(0,LPF.ar(LeakDC.ar((osc2)*env*LFNoise2.kr(1,1).abs),cutt));
+			Out.ar(0,LPF.ar(LeakDC.ar((osc1)*env*LFNoise2.ar(WhiteNoise.ar(2),1).abs),cutt));
+			Out.ar(0,LPF.ar(LeakDC.ar((osc2)*env*LFNoise2.ar(WhiteNoise.ar(2),1).abs),cutt));
 	};
 }).add;
 
@@ -401,9 +401,9 @@ a=Pdef(\1, Pbind(\instrument, \oa,
 	//\dur,1/2,
 	\dur,Pbrown(1/2,1,1/8,inf),
 \n1,Prand([
-0,5,7,12],inf),
+0,5,7,12,17,19,24],inf),
 
-	\cutt,Pbrown(220*2,220*16,100,inf),
+	\cutt,Pbrown(220*2,220*8,100,inf),
 		//\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	\out,Pn(Pshuf([0, 1,2,3], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
@@ -414,9 +414,9 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 	//\dur,1/2,
 	\dur,Pbrown(1/2,1,1/8,inf),
 \n1,Prand([
-0,5,7,12],inf),
+0,5,7,12,17,19,24],inf),
 
-	\cutt,Pbrown(220*2,220*16,100,inf),
+	\cutt,Pbrown(220*2,220*8,100,inf),
 		//\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 \out,Pn(Pshuf([0, 1,2,3], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
@@ -427,9 +427,9 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 	//\dur,1/2,
 	\dur,Pbrown(1/2,1,1/8,inf),
 \n1,Prand([
-0,5,7,12],inf),
+0,5,7,12,17,19,24],inf),
 
-	\cutt,Pbrown(220*2,220*16,100,inf),
+	\cutt,Pbrown(220*2,220*8,100,inf),
 		//\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	\out,Pn(Pshuf([0, 1,2,3], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
@@ -440,9 +440,9 @@ d=Pdef(\4, Pbind(\instrument, \od,
 	//\dur,1/2,
 	\dur,Pbrown(1/2,1,1/8,inf),
 \n1,Prand([
-0,5,7,12],inf),
+0,5,7,12,17,19,24],inf),
 
-	\cutt,Pbrown(220*2,220*16,100,inf),
+	\cutt,Pbrown(220*2,220*8,100,inf),
 		//\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 \out,Pn(Pshuf([0, 1,2,3], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
