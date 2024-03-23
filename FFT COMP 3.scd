@@ -257,9 +257,9 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1
 detune1=exp(Complex(0,1)*(SinOsc.ar(0.1,angle1.degrad)));
 
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs*In.kr(2,1),phase:SinOsc.ar(0.1,detune1.real.linlin(1.neg,1,pi.neg,pi),180).degrad), LFSaw.kr(1,detune1.real.round(0.0001)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs*In.kr(2,1),phase:SinOsc.ar(0.1,detune1.real.linlin(1.neg,1,pi.neg,pi),180).degrad), LFSaw.ar(1,detune1.real.round(0.0001)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs*In.kr(2,1),phase:SinOsc.ar(0.1,detune1.imag.linlin(1.neg,1,pi.neg,pi),180).degrad), LFSaw.kr(1,detune1.imag.round(0.0001)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs*In.kr(2,1),phase:SinOsc.ar(0.1,detune1.imag.linlin(1.neg,1,pi.neg,pi),180).degrad), LFSaw.ar(1,detune1.imag.round(0.0001)));
 
 
 m=m+1;
@@ -299,9 +299,9 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1
 detune1=exp(Complex(0,1)*(SinOsc.ar(0.1,angle1.degrad)));
 
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs*In.kr(2,1),phase:SinOsc.ar(0.1,detune1.real.linlin(1.neg,1,pi.neg,pi),180).degrad), LFSaw.kr(1,detune1.real.round(0.0001)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs*In.kr(2,1),phase:SinOsc.ar(0.1,detune1.real.linlin(1.neg,1,pi.neg,pi),180).degrad), LFSaw.ar(1,detune1.real.round(0.0001)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs*In.kr(2,1),phase:SinOsc.ar(0.1,detune1.imag.linlin(1.neg,1,pi.neg,pi),180).degrad), LFSaw.kr(1,detune1.imag.round(0.0001)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs*In.kr(2,1),phase:SinOsc.ar(0.1,detune1.imag.linlin(1.neg,1,pi.neg,pi),180).degrad), LFSaw.ar(1,detune1.imag.round(0.0001)));
 
 
 m=m+1;
@@ -341,9 +341,9 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1
 detune1=exp(Complex(0,1)*(SinOsc.ar(0.1,angle1.degrad)));
 
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs*In.kr(2,1),phase:SinOsc.ar(0.1,detune1.real.linlin(1.neg,1,pi.neg,pi),180).degrad), LFSaw.kr(1,detune1.real.round(0.0001)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs*In.kr(2,1),phase:SinOsc.ar(0.1,detune1.real.linlin(1.neg,1,pi.neg,pi),180).degrad), LFSaw.ar(1,detune1.real.round(0.0001)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs*In.kr(2,1),phase:SinOsc.ar(0.1,detune1.imag.linlin(1.neg,1,pi.neg,pi),180).degrad), LFSaw.kr(1,detune1.imag.round(0.0001)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs*In.kr(2,1),phase:SinOsc.ar(0.1,detune1.imag.linlin(1.neg,1,pi.neg,pi),180).degrad), LFSaw.ar(1,detune1.imag.round(0.0001)));
 
 
 m=m+1;
@@ -383,9 +383,9 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1
 detune1=exp(Complex(0,1)*(SinOsc.ar(0.1,angle1.degrad)));
 
 
-	osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs*In.kr(2,1),phase:SinOsc.ar(0.1,detune1.real.linlin(1.neg,1,pi.neg,pi),180).degrad), LFSaw.kr(1,detune1.real.round(0.0001)));
+	osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs*In.kr(2,1),phase:SinOsc.ar(0.1,detune1.real.linlin(1.neg,1,pi.neg,pi),180).degrad), LFSaw.ar(1,detune1.real.round(0.0001)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs*In.kr(2,1),phase:SinOsc.ar(0.1,detune1.imag.linlin(1.neg,1,pi.neg,pi),180).degrad), LFSaw.kr(1,detune1.imag.round(0.0001)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs*In.kr(2,1),phase:SinOsc.ar(0.1,detune1.imag.linlin(1.neg,1,pi.neg,pi),180).degrad), LFSaw.ar(1,detune1.imag.round(0.0001)));
 
 
 m=m+1;
