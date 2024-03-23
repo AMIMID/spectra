@@ -18,8 +18,10 @@ s.waitForBoot
 
 //detune=exp(Complex(0,1)*(SinOsc.kr(0.1,mul:pi)));
 
-{Out.ar(0,PanAz.ar(2,SinOsc.ar(220,SinOsc.ar(0.1,exp(Complex(0,1)*(SinOsc.kr(0.1,mul:pi))).real,180).degrad),LFSaw.ar(0.1,exp(Complex(0,1)*(SinOsc.kr(0.1,mul:pi))).real)))}.play;
-{Out.ar(0,PanAz.ar(2,SinOsc.ar(220,SinOsc.ar(0.1,exp(Complex(0,1)*(SinOsc.kr(0.1,mul:pi))).imag,180).degrad),LFSaw.ar(0.1,exp(Complex(0,1)*(SinOsc.kr(0.1,mul:pi))).imag)))}.play;
+{Out.ar(0,PanAz.ar(2,
+SinOsc.ar(220,exp(Complex(0,1)*(SinOsc.kr(0.1,mul:pi))).real),LFSaw.ar(0.1,exp(Complex(0,1)*(SinOsc.kr(0.1,mul:1))).real)))}.play;
+{Out.ar(0,PanAz.ar(2,
+SinOsc.ar(220,exp(Complex(0,1)*(SinOsc.kr(0.1,mul:pi))).imag),LFSaw.ar(0.1,exp(Complex(0,1)*(SinOsc.kr(0.1,mul:1))).imag)))}.play;
 )
 
 (
@@ -154,9 +156,9 @@ SynthDef.new(\oa, {
 
 		detune1=exp(Complex(0,1)*(SinOsc.ar(0.1,angle1.degrad)));
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:SinOsc.ar(0.1,detune1.real.linlin(1.neg,1,pi.neg,pi),180).degrad), LFSaw.kr(0.1,detune1.real.round(0.0001)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:detune1.real.linlin(1.neg,1,pi.neg,pi)), LFSaw.kr(0.1,detune1.real.round(0.0001)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:SinOsc.ar(0.1,detune1.imag.linlin(1.neg,1,pi.neg,pi),180).degrad), LFSaw.kr(0.1,detune1.imag.round(0.0001)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:detune1.imag.linlin(1.neg,1,pi.neg,pi)), LFSaw.kr(0.1,detune1.imag.round(0.0001)));
 
 
 m=m+1;
