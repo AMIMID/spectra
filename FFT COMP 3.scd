@@ -36,7 +36,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 //env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
 env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:100);
-		detune1=exp(Complex(0,1)*(SinOsc.ar(0.1,angle1.degrad,2pi).abs));
+		detune1=exp(Complex(0,1)*(SinOsc.ar(0.01,angle1.degrad,2pi).abs));
 
 
 	osc1=BBandPass.ar(InFeedback.ar(8,2),freq1*pitch1,In.kr(0,1),mul:In.kr(1,1));
@@ -70,7 +70,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 //env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
 env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:100);
-		detune1=exp(Complex(0,1)*(SinOsc.ar(0.1,angle1.degrad,2pi).abs));
+		detune1=exp(Complex(0,1)*(SinOsc.ar(0.01,angle1.degrad,2pi).abs));
 
 
 		osc1=BBandPass.ar(InFeedback.ar(8,2),freq1*pitch1,In.kr(0,1),mul:In.kr(1,1));
@@ -103,7 +103,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 
 //env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
 env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:100);
-		detune1=exp(Complex(0,1)*(SinOsc.ar(0.1,angle1.degrad,2pi).abs));
+		detune1=exp(Complex(0,1)*(SinOsc.ar(0.01,angle1.degrad,2pi).abs));
 
 
 		osc1=BBandPass.ar(InFeedback.ar(8,2),freq1*pitch1,In.kr(0,1),mul:In.kr(1,1));
@@ -138,7 +138,7 @@ fund=(((4*t)-1)*((4*t)/2))/2;
 //env1=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2);
 env1=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:100);
 
-		detune1=exp(Complex(0,1)*(SinOsc.ar(0.1,angle1.degrad,2pi).abs));
+		detune1=exp(Complex(0,1)*(SinOsc.ar(0.01,angle1.degrad,2pi).abs));
 
 
 		osc1=BBandPass.ar(InFeedback.ar(8,2),freq1*pitch1,In.kr(0,1),mul:In.kr(1,1));
@@ -254,7 +254,7 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1
 
 	bank.do{
 
-detune1=exp(Complex(0,1)*(SinOsc.ar(0.1,angle1.degrad,2pi).abs));
+detune1=exp(Complex(0,1)*(SinOsc.ar(0.01,angle1.degrad,2pi).abs));
 
 
 osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs*In.kr(2,1),phase:SinOsc.ar(0.1,detune1.real.linlin(1.neg,1,pi.neg,pi),180).degrad), LFSaw.ar(1,detune1.real.round(0.0001)));
@@ -296,7 +296,7 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1
 
 	bank.do{
 
-detune1=exp(Complex(0,1)*(SinOsc.ar(0.1,angle1.degrad,2pi).abs));
+detune1=exp(Complex(0,1)*(SinOsc.ar(0.01,angle1.degrad,2pi).abs));
 
 
 osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs*In.kr(2,1),phase:SinOsc.ar(0.1,detune1.real.linlin(1.neg,1,pi.neg,pi),180).degrad), LFSaw.ar(1,detune1.real.round(0.0001)));
@@ -338,7 +338,7 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1
 
 	bank.do{
 
-detune1=exp(Complex(0,1)*(SinOsc.ar(0.1,angle1.degrad,2pi).abs));
+detune1=exp(Complex(0,1)*(SinOsc.ar(0.01,angle1.degrad,2pi).abs));
 
 
 osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs*In.kr(2,1),phase:SinOsc.ar(0.1,detune1.real.linlin(1.neg,1,pi.neg,pi),180).degrad), LFSaw.ar(1,detune1.real.round(0.0001)));
@@ -380,7 +380,7 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1
 
 	bank.do{
 
-detune1=exp(Complex(0,1)*(SinOsc.ar(0.1,angle1.degrad,2pi).abs));
+detune1=exp(Complex(0,1)*(SinOsc.ar(0.01,angle1.degrad,2pi).abs));
 
 
 	osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:LFNoise2.ar(WhiteNoise.ar(2).abs,m.reciprocal).abs*In.kr(2,1),phase:SinOsc.ar(0.1,detune1.real.linlin(1.neg,1,pi.neg,pi),180).degrad), LFSaw.ar(1,detune1.real.round(0.0001)));
@@ -545,7 +545,7 @@ s.record;
    250.do{  chainL = FFT(LocalBuf(1024), in1);
 		chainR = FFT(LocalBuf(1024), in2);
 
-		detune1=exp(Complex(0,1)*(SinOsc.ar(0.1,angle1.degrad,2pi).abs));
+		detune1=exp(Complex(0,1)*(SinOsc.ar(0.01,angle1.degrad,2pi).abs));
 
 
    chainL = chainL.pvcollect(1024, {|mag, phase, index|
