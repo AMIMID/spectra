@@ -38,10 +38,11 @@ s.waitForBoot
 	//var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
 	var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
 	bank=12;
+	n1=WhiteNoise.ar(12);
 	angle1=SinOsc.kr(0.1,mul:360).abs;
 	pitch1=2.pow(n1/(2*6));
 fund=(((4*t)-1)*((4*t)/2));
-	freq1 = (fund*6)+WhiteNoise.kr(3);
+	freq1 = (fund*6);
 
 	bank.do{
 
