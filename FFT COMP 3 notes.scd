@@ -9,6 +9,29 @@ s.options.blockSize = 64/4;
 s.waitForBoot
 )
 
+
+(
+{
+	var detune2,angle1=0,osc1,osc2,freq1=100;
+
+21.do{
+
+		detune2=exp(Complex(0,1)*(angle1.degrad));
+
+		osc1=SinOsc.ar((freq1*detune2.real.abs.reciprocal),mul:detune2.real.abs,phase:0.degrad);
+		osc2=SinOsc.ar((freq1*detune2.real.abs.reciprocal),mul:detune2.real.abs,phase:90.degrad);
+
+
+angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+
+			Out.ar(0,LeakDC.ar(osc1));
+		Out.ar(1,LeakDC.ar(osc2));
+	};
+}.play
+)
+
+
+
 (
 {Out.ar(0,PanAz.ar(2,SinOsc.ar(220,SinOsc.ar(0.0220,0.degrad,360).degrad),SinOsc.ar(0.220,0.degrad)))}.play;
 {Out.ar(0,PanAz.ar(2,SinOsc.ar(220,SinOsc.ar(0.0220,90.degrad,360).degrad),SinOsc.ar(0.220,90.degrad)))}.play;
@@ -136,7 +159,7 @@ var freqs, audiox,audioy,audioj,audiok, amp, m=0, fund=100, phasex,phasey,phasej
 2.sqrt
 (
 SynthDef.new(\oa, {
-	arg  n1=1, cutt=1200,decay=6,t=2,attack=0.01,angle1=137.5;
+	arg  n1=1, cutt=1200,decay=6,t=2,attack=0.01,angle1=0;
 	var tf, detune1,detune2, osc1,osc2;
 	var freq1, env,m=1,bank, pitch1, fund;
 	var wrappedOut = { |busArray, signalArray|
@@ -155,12 +178,12 @@ SynthDef.new(\oa, {
 
 	bank.do{
 
-		detune1=exp(Complex(0,1)*(SinOsc.ar(1,angle1.degrad,2pi).abs));
+		detune1=exp(Complex(0,1)*(SinOsc.ar(0.01,angle1.degrad,2pi).abs));
 		detune2=exp(Complex(0,1)*(angle1.degrad));
 
-		osc1=PanAz.ar(2,SinOsc.ar((freq1*detune2.real.abs.reciprocal)*pitch1,mul:detune2.real.abs,phase:SinOsc.ar(0.1,detune1.real.linlin(1.neg,1,2pi.neg,2pi),360).degrad), LFSaw.ar(0.1,detune1.real.round(0.0001)));
+		osc1=PanAz.ar(4,SinOsc.ar((freq1*detune2.real.abs.reciprocal)*pitch1,mul:detune2.real.abs,phase:detune1.real.linlin(1.neg,1,2pi.neg,2pi)), LFSaw.ar(0.1,detune1.real.round(0.0001)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*detune2.imag.abs.reciprocal)*pitch1,mul:detune2.imag.abs,phase:SinOsc.ar(0.1,detune1.imag.linlin(1.neg,1,2pi.neg,2pi),360).degrad), LFSaw.ar(0.1,detune1.imag.round(0.0001)));
+osc2=PanAz.ar(4,SinOsc.ar((freq1*detune2.imag.abs.reciprocal)*pitch1,mul:detune2.imag.abs,phase:detune1.imag.linlin(1.neg,1,2pi.neg,2pi)), LFSaw.ar(0.1,detune1.imag.round(0.0001)));
 
 
 m=m+1;
@@ -169,13 +192,13 @@ angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576)))
 	//wrappedOut.value(out, LPF.ar(LeakDC.ar(osc1*2),cutt));
 	//wrappedOut.value(out, LPF.ar(LeakDC.ar(osc2*2),cutt));
 
-			Out.ar(0,LPF.ar(LeakDC.ar((osc1)),cutt));
-			Out.ar(0,LPF.ar(LeakDC.ar((osc2)),cutt));
+			Out.ar(0,LeakDC.ar((osc1)));
+			Out.ar(0,LeakDC.ar((osc2)));
 	};
 }).add;
 
 )
-Synth.new(\oa)
+Synth.new(\oa);
 (
 SynthDef.new(\oa, {
 	arg  n1=1, cutt=1200,decay=6,t=2,attack=0.01,angle1=137.5;
