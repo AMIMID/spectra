@@ -3,7 +3,7 @@
 s.options.numWireBufs = 1024*16;
 s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=0;
-TempoClock.default.tempo_(240/120);
+TempoClock.default.tempo_(200/120);
 s.options.memSize = 8192*16;
 s.options.blockSize = 64/4;
 s.waitForBoot
@@ -490,7 +490,7 @@ a=Pdef(\1, Pbind(\instrument, \oa,
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	//\angle1,Pexprand(0.0001,360,inf),
-	\decay,Pbrown(4,8,1,inf);
+	\decay,Pbrown(2,8,1,inf);
 ));
 b=Pdef(\2, Pbind(\instrument, \ob,
 	//\dur,1/2,
@@ -518,7 +518,7 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	//\angle1,Pexprand(0.0001,360,inf),
-	\decay,Pbrown(4,8,1,inf);
+	\decay,Pbrown(2,8,1,inf);
 ));
 d=Pdef(\4, Pbind(\instrument, \od,
 	//\dur,1/2,
@@ -532,7 +532,7 @@ d=Pdef(\4, Pbind(\instrument, \od,
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	//\angle1,Pexprand(0.0001,360,inf),
-	\decay,Pbrown(4,8,1,inf);
+	\decay,Pbrown(2,8,1,inf);
 ));
 )
 
@@ -609,7 +609,7 @@ a=Pdef(\1, Pbind(\instrument, \oa,
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	//\angle1,Pexprand(0.0001,360,inf),
-	\decay,Pbrown(4,8,1,inf);
+	\decay,Pbrown(2,8,1,inf);
 ));
 )
 
@@ -882,7 +882,7 @@ a=Pdef(\1, Pbind(\instrument, \oa,
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	//\angle1,Pexprand(0.0001,360,inf),
-	//\decay,Pbrown(4,8,1,inf);
+	//\decay,Pbrown(2,8,1,inf);
 ));
 b=Pdef(\2, Pbind(\instrument, \ob,
 	//\dur,1/2,
@@ -910,7 +910,7 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	//\angle1,Pexprand(0.0001,360,inf),
-	//\decay,Pbrown(4,8,1,inf);
+	//\decay,Pbrown(2,8,1,inf);
 ));
 d=Pdef(\4, Pbind(\instrument, \od,
 	//\dur,1/2,
@@ -924,7 +924,7 @@ d=Pdef(\4, Pbind(\instrument, \od,
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	//\angle1,Pexprand(0.0001,360,inf),
-	//\decay,Pbrown(4,8,1,inf);
+	//\decay,Pbrown(2,8,1,inf);
 ));
 )
 
@@ -972,9 +972,9 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1
 
 detune1=exp(Complex(0,1)*(SinOsc.ar(0.01,angle1.degrad,2pi).abs));
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:detune1.real.linlin(1.neg,1,2pi.neg,2pi)), LFSaw.ar(0.1,detune1.real.round(0.0001)));
+		osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:SinOsc.ar(0.1,detune1.real.linlin(1.neg,1,2pi.neg,2pi),2pi)), LFSaw.ar(0.1,detune1.real.round(0.0001)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:detune1.imag.linlin(1.neg,1,2pi.neg,2pi)), LFSaw.ar(0.1,detune1.imag.round(0.0001)));
+		osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:SinOsc.ar(0.1,detune1.real.linlin(1.neg,1,2pi.neg,2pi),2pi)), LFSaw.ar(0.1,detune1.imag.round(0.0001)));
 
 
 m=m+1;
@@ -1019,9 +1019,9 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1
 
 detune1=exp(Complex(0,1)*(SinOsc.ar(0.01,angle1.degrad,2pi).abs));
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:detune1.real.linlin(1.neg,1,2pi.neg,2pi)), LFSaw.ar(0.1,detune1.real.round(0.0001)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:SinOsc.ar(0.1,detune1.real.linlin(1.neg,1,2pi.neg,2pi),2pi)), LFSaw.ar(0.1,detune1.real.round(0.0001)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:detune1.imag.linlin(1.neg,1,2pi.neg,2pi)), LFSaw.ar(0.1,detune1.imag.round(0.0001)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:SinOsc.ar(0.1,detune1.real.linlin(1.neg,1,2pi.neg,2pi),2pi)), LFSaw.ar(0.1,detune1.imag.round(0.0001)));
 
 
 m=m+1;
@@ -1067,9 +1067,9 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1
 
 detune1=exp(Complex(0,1)*(SinOsc.ar(0.01,angle1.degrad,2pi).abs));
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:detune1.real.linlin(1.neg,1,2pi.neg,2pi)), LFSaw.ar(0.1,detune1.real.round(0.0001)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:SinOsc.ar(0.1,detune1.real.linlin(1.neg,1,2pi.neg,2pi),2pi)), LFSaw.ar(0.1,detune1.real.round(0.0001)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:detune1.imag.linlin(1.neg,1,2pi.neg,2pi)), LFSaw.ar(0.1,detune1.imag.round(0.0001)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:SinOsc.ar(0.1,detune1.real.linlin(1.neg,1,2pi.neg,2pi),2pi)), LFSaw.ar(0.1,detune1.imag.round(0.0001)));
 
 
 m=m+1;
@@ -1115,9 +1115,9 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1
 
 detune1=exp(Complex(0,1)*(SinOsc.ar(0.01,angle1.degrad,2pi).abs));
 
-	osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:detune1.real.linlin(1.neg,1,2pi.neg,2pi)), LFSaw.ar(0.1,detune1.real.round(0.0001)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:SinOsc.ar(0.1,detune1.real.linlin(1.neg,1,2pi.neg,2pi),2pi)), LFSaw.ar(0.1,detune1.real.round(0.0001)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:detune1.imag.linlin(1.neg,1,2pi.neg,2pi)), LFSaw.ar(0.1,detune1.imag.round(0.0001)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,phase:SinOsc.ar(0.1,detune1.real.linlin(1.neg,1,2pi.neg,2pi),2pi)), LFSaw.ar(0.1,detune1.imag.round(0.0001)));
 
 
 m=m+1;
@@ -1161,7 +1161,7 @@ a=Pdef(\1, Pbind(\instrument, \oa,
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	//\angle1,Pexprand(0.0001,360,inf),
-	\decay,Pbrown(4,8,1,inf);
+	\decay,Pbrown(2,8,1,inf);
 ));
 b=Pdef(\2, Pbind(\instrument, \ob,
 	//\dur,1/2,
@@ -1189,7 +1189,7 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	//\angle1,Pexprand(0.0001,360,inf),
-	\decay,Pbrown(4,8,1,inf);
+	\decay,Pbrown(2,8,1,inf);
 ));
 d=Pdef(\4, Pbind(\instrument, \od,
 	//\dur,1/2,
@@ -1203,7 +1203,7 @@ d=Pdef(\4, Pbind(\instrument, \od,
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	//\angle1,Pexprand(0.0001,360,inf),
-	\decay,Pbrown(4,8,1,inf);
+	\decay,Pbrown(2,8,1,inf);
 ));
 )
 
@@ -1506,7 +1506,7 @@ a=Pdef(\1, Pbind(\instrument, \oa,
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	//\angle1,Pexprand(0.0001,360,inf),
-	\decay,Pbrown(4,8,1,inf);
+	\decay,Pbrown(2,8,1,inf);
 ));
 b=Pdef(\2, Pbind(\instrument, \ob,
 	//\dur,1/2,
@@ -1534,7 +1534,7 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	//\angle1,Pexprand(0.0001,360,inf),
-	\decay,Pbrown(4,8,1,inf);
+	\decay,Pbrown(2,8,1,inf);
 ));
 d=Pdef(\4, Pbind(\instrument, \od,
 	//\dur,1/2,
@@ -1548,7 +1548,7 @@ d=Pdef(\4, Pbind(\instrument, \od,
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	//\angle1,Pexprand(0.0001,360,inf),
-	\decay,Pbrown(4,8,1,inf);
+	\decay,Pbrown(2,8,1,inf);
 ));
 )
 
@@ -2416,7 +2416,7 @@ a=Pdef(\1, Pbind(\instrument, \oa,
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	//\angle1,Pexprand(0.0001,360,inf),
-	\decay,Pbrown(4,8,1,inf);
+	\decay,Pbrown(2,8,1,inf);
 ));
 b=Pdef(\2, Pbind(\instrument, \oaa,
 	//\dur,1/2,
@@ -2442,7 +2442,7 @@ c=Pdef(\3, Pbind(\instrument, \ob,
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	//\angle1,Pexprand(0.0001,360,inf),
-	\decay,Pbrown(4,8,1,inf);
+	\decay,Pbrown(2,8,1,inf);
 ));
 d=Pdef(\4, Pbind(\instrument, \obb,
 	//\dur,1/2,
@@ -2455,7 +2455,7 @@ d=Pdef(\4, Pbind(\instrument, \obb,
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	//\angle1,Pexprand(0.0001,360,inf),
-	\decay,Pbrown(4,8,1,inf);
+	\decay,Pbrown(2,8,1,inf);
 ));
 e=Pdef(\5, Pbind(\instrument, \oc,
 	//\dur,1/2,
@@ -2468,7 +2468,7 @@ e=Pdef(\5, Pbind(\instrument, \oc,
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	//\angle1,Pexprand(0.0001,360,inf),
-	\decay,Pbrown(4,8,1,inf);
+	\decay,Pbrown(2,8,1,inf);
 ));
 f=Pdef(\6, Pbind(\instrument, \occ,
 	//\dur,1/2,
@@ -2494,7 +2494,7 @@ g=Pdef(\7, Pbind(\instrument, \od,
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	//\angle1,Pexprand(0.0001,360,inf),
-	\decay,Pbrown(4,8,1,inf);
+	\decay,Pbrown(2,8,1,inf);
 ));
 k=Pdef(\8, Pbind(\instrument, \odd,
 	//\dur,1/2,
@@ -2507,7 +2507,7 @@ k=Pdef(\8, Pbind(\instrument, \odd,
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 		//\attack,Pbrown(0.01,0.5,0.1,inf),
 	//\angle1,Pexprand(0.0001,360,inf),
-	\decay,Pbrown(4,8,1,inf);
+	\decay,Pbrown(2,8,1,inf);
 ));
 )
 
