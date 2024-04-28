@@ -40,14 +40,37 @@ var i = Quaternion(0, 0, 0, 0),j = Quaternion(0, 0, 0, 0),k = Quaternion(0, 0, 0
 
 
 1.do{
-	angle=(angle+(90)).wrap(0,360);
+	angle=(angle+(180)).wrap(0,360);
+ 	q1=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
+ 	q2=q1.conjugate;
+	v=Quaternion(0,1,0,0);
+	v=q1*v;
+	//v=v*q2 opposite direction rotation
+	//v=v*q2;
+ 	v.coordinates.round(0.0001).postln
+ }
+
+)
+
+(
+var i = Quaternion(0, 0, 0, 0),j = Quaternion(0, 0, 0, 0),k = Quaternion(0, 0, 0, 1),q1,q2,v,angle=0,phx,phy,phz;
+
+
+1.do{
+	angle=(angle+(0)).wrap(0,360);
  	q1=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
  	q2=q1.conjugate;
 	v=Quaternion(0,1,1,1);
 	v=q1*v;
 	//v=v*q2 opposite direction rotation
 	//v=v*q2;
- 	v.coordinates.round(0.0001).postln
+ 	v.coordinates.round(0.0001).postln;
+	phx=Complex(v.a.round(0.0001),v.b.round(0.0001)).theta;
+	phy=Complex(v.a.round(0.0001),v.c.round(0.0001)).phase;
+	phz=Complex(v.a.round(0.0001),v.d.round(0.0001)).phase;
+	phx.postln;
+	phy.postln;
+	phz.postln;
  }
 
 )
