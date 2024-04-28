@@ -27,9 +27,110 @@ var  anglex=0,angley=0,x=0,y=0;
 
 )
 
+exp(Complex(0,1)*(180.degrad)).real;
+
+
+(cos(67.degrad)+(sin(67.degrad)*Complex(0,1))).round(0.0001)
+
+(cos(67.degrad)+(sin(67.degrad)*Quaternion(0,0,1,0))).coordinates.round(0.0001)
+
+
+(
+var i = Quaternion(0, 0, 0, 0),j = Quaternion(0, 0, 0, 0),k = Quaternion(0, 0, 0, 1),q1,q2,v,angle=0;
+
+
+1.do{
+	angle=(angle+(90)).wrap(0,360);
+ 	q1=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
+ 	q2=q1.conjugate;
+	v=Quaternion(0,1,1,1);
+	v=q1*v;
+	//v=v*q2 opposite direction rotation
+	//v=v*q2;
+ 	v.coordinates.round(0.0001).postln
+ }
+
+)
+
+(
+var i = (1/3).sqrt,j = (1/3).sqrt,k = (1/3).sqrt;
+
+(i*i)+(j*j)+(k*k);
+
+)
+
+
+0.5.pow(2)*4
+
+Quaternion(1,0,0,0).norm
+Quaternion(0,0.5774,0.5774,0.5774).norm
+(
+var  anglex=0,angley=0,anglez=0,x=0,y=0,z=0;
+
+
+	~x = 10000.collect{
+		anglex=(anglex+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		x=(cos(anglex.degrad)+(sin(anglex.degrad)*Quaternion(0,1,1,1)));
+	x=x.b;
+	};
+	~y = 10000.collect{
+		angley=(angley+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		y=(cos(angley.degrad)+(sin(angley.degrad)*Quaternion(0,1,1,1)));
+	y=y.c;
+	};
+	~z = 10000.collect{
+		anglez=(anglez+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		z=(cos(anglez.degrad)+(sin(anglez.degrad)*Quaternion(0,1,1,1)));
+	z=z.d;
+	};
+
+
+)
+~x
 Env.new(~x,[1],\sine).plot
 
-{SinOsc.ar(440,add:1.neg)}.play
+{SinOsc.ar(440,phase:0.degrad)}.play;
+{SinOsc.ar(440*2,phase:0.degrad)}.play;
+{SinOsc.ar(440*3,phase:0.degrad)}.play;
+{SinOsc.ar(440*4,phase:0.degrad)}.play;
+
+{SinOsc.ar(440,phase:0.degrad)+
+SinOsc.ar(440*2,phase:0.degrad)+
+SinOsc.ar(440*3,phase:0.degrad)+
+SinOsc.ar(440*4,phase:0.degrad)}.play;
+
+(
+{
+var m=1,sig,part,anglex=0,x;
+
+		x=exp(Complex(0,1)*(anglex.degrad));
+	part=Pan2.ar(SinOsc.ar(220*m,mul:m.reciprocal),x.imag);
+
+100.do{
+	m=m+1;
+	anglex=(anglex+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		x=exp(Complex(0,1)*(anglex.degrad));
+		part=part+Pan2.ar(SinOsc.ar(220*m,mul:m.reciprocal),x.imag);
+};
+Out.ar(0,part);
+}.play
+
+)
+
+(
+{
+var m=1,sig,part;
+
+
+100.do{
+	part=SinOsc.ar(220*m,mul:m.reciprocal);
+		m=m+1;
+		Out.ar(0,part);
+};
+}.play
+
+)
+
 
 (
 var freq = 440;
@@ -42,6 +143,10 @@ var freq = 440;
 {Out.ar(1,Pan2.ar(SinOsc.ar(freq,0.degrad),EnvGen.ar(Env.new(~y,[freq.reciprocal],\sine),doneAction:2)))}.play;
 {Out.ar(0,Pan2.ar(SinOsc.ar(freq,0.degrad),EnvGen.ar(Env.new(~x,[freq.reciprocal],\sine),doneAction:2)))}.play;
 )
+
+
+
+
 
 (
 SynthDef.new(\oa, {
@@ -76,8 +181,8 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:2
 detune1=exp(Complex(0,1)*(SinOsc.ar(0.01,angle1.degrad,2pi).abs));
 detune2=exp(Complex(0,1)*(SinOsc.ar(0.01,angle2.degrad,2pi).abs));
 
-w1=EnvGen.ar(Env.new(~x,[(freq1*m).reciprocal/3],\sine));
-w2=EnvGen.ar(Env.new(~y,[(freq1*m).reciprocal/3],\sine));
+w1=EnvGen.ar(Env.new(~x,[(freq1*m).reciprocal/2],\sine));
+w2=EnvGen.ar(Env.new(~y,[(freq1*m).reciprocal/2],\sine));
 
 osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,add:w1,phase:SinOsc.ar(0.1,detune1.theta,2pi)), LFSaw.ar(0.1,detune1.theta.linlin(2pi.neg,2pi,1.neg,1)));
 
@@ -125,8 +230,8 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:3
 detune1=exp(Complex(0,1)*(SinOsc.ar(0.01,angle1.degrad,2pi).abs));
 detune2=exp(Complex(0,1)*(SinOsc.ar(0.01,angle2.degrad,2pi).abs));
 
-w1=EnvGen.ar(Env.new(~x,[(freq1*m).reciprocal/3],\sine));
-w2=EnvGen.ar(Env.new(~y,[(freq1*m).reciprocal/3],\sine));
+w1=EnvGen.ar(Env.new(~x,[(freq1*m).reciprocal/2],\sine));
+w2=EnvGen.ar(Env.new(~y,[(freq1*m).reciprocal/2],\sine));
 
 osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,add:w1,phase:SinOsc.ar(0.1,detune1.theta,2pi)), LFSaw.ar(0.1,detune1.theta.linlin(2pi.neg,2pi,1.neg,1)));
 
@@ -173,8 +278,8 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:2
 detune1=exp(Complex(0,1)*(SinOsc.ar(0.01,angle1.degrad,2pi).abs));
 detune2=exp(Complex(0,1)*(SinOsc.ar(0.01,angle2.degrad,2pi).abs));
 
-w1=EnvGen.ar(Env.new(~x,[(freq1*m).reciprocal/3],\sine));
-w2=EnvGen.ar(Env.new(~y,[(freq1*m).reciprocal/3],\sine));
+w1=EnvGen.ar(Env.new(~x,[(freq1*m).reciprocal/2],\sine));
+w2=EnvGen.ar(Env.new(~y,[(freq1*m).reciprocal/2],\sine));
 
 osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,add:w1,phase:SinOsc.ar(0.1,detune1.theta,2pi)), LFSaw.ar(0.1,detune1.theta.linlin(2pi.neg,2pi,1.neg,1)));
 
@@ -222,8 +327,8 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch1.reciprocal),doneAction:2,levelScale:1
 detune1=exp(Complex(0,1)*(SinOsc.ar(0.01,angle1.degrad,2pi).abs));
 detune2=exp(Complex(0,1)*(SinOsc.ar(0.01,angle2.degrad,2pi).abs));
 
-w1=EnvGen.ar(Env.new(~x,[(freq1*m).reciprocal/3],\sine));
-w2=EnvGen.ar(Env.new(~y,[(freq1*m).reciprocal/3],\sine));
+w1=EnvGen.ar(Env.new(~x,[(freq1*m).reciprocal/2],\sine));
+w2=EnvGen.ar(Env.new(~y,[(freq1*m).reciprocal/2],\sine));
 
 osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:m.reciprocal,add:w1,phase:SinOsc.ar(0.1,detune1.theta,2pi)), LFSaw.ar(0.1,detune1.theta.linlin(2pi.neg,2pi,1.neg,1)));
 
@@ -344,8 +449,8 @@ arg  n1=0, cutt=1200,decay=6,t=2,attack=0.01,angle1=0,angle2=90;
 detune1=exp(Complex(0,1)*(SinOsc.ar(0.01,angle1.degrad,2pi).abs));
 detune2=exp(Complex(0,1)*(SinOsc.ar(0.01,angle2.degrad,2pi).abs));
 
-w1=EnvGen.ar(Env.new(~x,[(freq1*m).reciprocal/3],\sine),levelScale:m.reciprocal);
-w2=EnvGen.ar(Env.new(~y,[(freq1*m).reciprocal/3],\sine),levelScale:m.reciprocal);
+w1=EnvGen.ar(Env.new(~x,[(freq1*m).reciprocal/2],\sine),levelScale:m.reciprocal);
+w2=EnvGen.ar(Env.new(~y,[(freq1*m).reciprocal/2],\sine),levelScale:m.reciprocal);
 
 osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:w1,phase:SinOsc.ar(0.1,detune1.theta,2pi)), LFSaw.ar(0.1,detune1.theta.linlin(2pi.neg,2pi,1.neg,1)));
 
@@ -375,8 +480,8 @@ arg  n1=0,t=2;
 	fund=(((4*t)-1)*((4*t)/2));
 		freq1 = (fund*12)*pitch1;
 
-w1=EnvGen.ar(Env.new(~x,[freq1.reciprocal/3],\sine));
-w2=EnvGen.ar(Env.new(~y,[freq1.reciprocal/3],\sine));
+w1=EnvGen.ar(Env.new(~x,[freq1.reciprocal/2],\sine));
+w2=EnvGen.ar(Env.new(~y,[freq1.reciprocal/2],\sine));
 
 	osc1=SinOsc.ar((freq1)*pitch1,phase:0.degrad,add:w1);
 
