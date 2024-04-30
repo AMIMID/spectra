@@ -82,7 +82,86 @@ var i = (1/3).sqrt,j = (1/3).sqrt,k = (1/3).sqrt;
 Quaternion(1,0,0,0).norm
 Quaternion(0,0.5774,0.5774,0.5774).norm
 
+(
+SynthDef.new(\oa, {
+	arg  n1=1, cutt=1200,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25;
+	var q,i,j,k,v1,v2,v3,ph_v1_x,ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_v3_x,ph_v3_y,ph_v3_z;
+	var osc1,osc2,osc3,freq, env,m=1,bank, pitch, fund, angle=0;
+	var osc1_x,osc1_y,osc1_z,osc2_x,osc2_y,osc2_z,osc3_x,osc3_y,osc3_z;
+	var wrappedOut1 = { |busArray, signalArray|
+	[busArray, signalArray].flop.do { |pair|
+		Out.ar(pair[0], pair[1])}};
+	var wrappedOut2 = { |busArray, signalArray|
+	[busArray, signalArray].flop.do { |pair|
+		Out.ar(pair[0], pair[1])}};
+	var wrappedOut3 = { |busArray, signalArray|
+	[busArray, signalArray].flop.do { |pair|
+		Out.ar(pair[0], pair[1])}};
 
+	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
+
+	i = Quaternion(0, (1/3).sqrt, 0, 0);
+	j = Quaternion(0, 0, (1/3).sqrt, 0);
+	k = Quaternion(0, 0, 0, (1/3).sqrt);
+	v1=Quaternion(0,x,y,z);
+	v2=Quaternion(0,0,1,0);
+	v3=Quaternion(0,0,0,1);
+	bank=32;
+	pitch=2.pow(n1/(2*6));
+	fund=(((4*t)-1)*((4*t)/2));
+	freq = (fund*6)*pitch;
+
+	bank.do{
+
+	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
+	v1=q*v1;
+	v2=q*v2;
+	v3=q*v3;
+
+	ph_v1_x=Complex(v1.a.round(0.0001),v1.b.round(0.0001)).phase;
+	ph_v1_y=Complex(v1.a.round(0.0001),v1.c.round(0.0001)).phase;
+	ph_v1_z=Complex(v1.a.round(0.0001),v1.d.round(0.0001)).phase;
+	ph_v2_x=Complex(v2.a.round(0.0001),v2.b.round(0.0001)).phase;
+	ph_v2_y=Complex(v2.a.round(0.0001),v2.c.round(0.0001)).phase;
+	ph_v2_z=Complex(v2.a.round(0.0001),v2.d.round(0.0001)).phase;
+	ph_v3_x=Complex(v3.a.round(0.0001),v3.b.round(0.0001)).phase;
+	ph_v3_y=Complex(v3.a.round(0.0001),v3.c.round(0.0001)).phase;
+	ph_v3_z=Complex(v3.a.round(0.0001),v3.d.round(0.0001)).phase;
+
+osc1_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_x,2pi)), LFSaw.ar(1,ph_v1_x.linlin(2pi.neg,2pi,1.neg,1)));
+
+osc1_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_y,2pi)), LFSaw.ar(1,ph_v1_y.linlin(2pi.neg,2pi,1.neg,1)));
+
+osc1_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_z,2pi)), LFSaw.ar(1,ph_v1_z.linlin(2pi.neg,2pi,1.neg,1)));
+
+/*osc2_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_x,2pi)), LFSaw.ar(1,ph_v2_x.linlin(2pi.neg,2pi,1.neg,1)));
+
+osc2_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_y,2pi)), LFSaw.ar(1,ph_v2_y.linlin(2pi.neg,2pi,1.neg,1)));
+
+osc2_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_z,2pi)), LFSaw.ar(1,ph_v2_z.linlin(2pi.neg,2pi,1.neg,1)));
+
+osc3_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_x,2pi)), LFSaw.ar(1,ph_v3_x.linlin(2pi.neg,2pi,1.neg,1)));
+
+osc3_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_y,2pi)), LFSaw.ar(1,ph_v3_y.linlin(2pi.neg,2pi,1.neg,1)));
+
+osc3_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_z,2pi)), LFSaw.ar(1,ph_v3_z.linlin(2pi.neg,2pi,1.neg,1)));*/
+
+//osc1=osc1_x+osc1_y+osc1_z;
+//osc2=osc2_x+osc2_y+osc2_z;
+//osc3=osc3_x+osc3_y+osc3_z;
+
+m=m+1;
+angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+
+	wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)),cutt));
+	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc1_y)),cutt));
+	wrappedOut3.value(out, LPF.ar(LeakDC.ar((osc1_z)),cutt));
+
+	};
+}).add;
+)
+
+Synth.new(\oa,[\out,[0,1]]);
 
 
 
@@ -111,7 +190,7 @@ SynthDef.new(\oa, {
 	v1=Quaternion(0,x,y,z);
 	v2=Quaternion(0,0,1,0);
 	v3=Quaternion(0,0,0,1);
-	bank=8;
+	bank=16;
 	pitch=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
 	freq = (fund*6)*pitch;
@@ -136,23 +215,23 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:2)
 	ph_v3_y=Complex(v3.a.round(0.0001),v3.c.round(0.0001)).phase;
 	ph_v3_z=Complex(v3.a.round(0.0001),v3.d.round(0.0001)).phase;
 
-osc1_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_x,2pi)), LFSaw.ar(0.1,ph_v1_x.linlin(2pi.neg,2pi,1.neg,1)));
+osc1_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_x,2pi)), LFSaw.ar(1,ph_v1_x.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc1_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_y,2pi)), LFSaw.ar(0.1,ph_v1_y.linlin(2pi.neg,2pi,1.neg,1)));
+osc1_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_y,2pi)), LFSaw.ar(1,ph_v1_y.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc1_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_z,2pi)), LFSaw.ar(0.1,ph_v1_z.linlin(2pi.neg,2pi,1.neg,1)));
+osc1_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_z,2pi)), LFSaw.ar(1,ph_v1_z.linlin(2pi.neg,2pi,1.neg,1)));
 
-/*osc2_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_x,2pi)), LFSaw.ar(0.1,ph_v2_x.linlin(2pi.neg,2pi,1.neg,1)));
+/*osc2_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_x,2pi)), LFSaw.ar(1,ph_v2_x.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc2_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_y,2pi)), LFSaw.ar(0.1,ph_v2_y.linlin(2pi.neg,2pi,1.neg,1)));
+osc2_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_y,2pi)), LFSaw.ar(1,ph_v2_y.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc2_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_z,2pi)), LFSaw.ar(0.1,ph_v2_z.linlin(2pi.neg,2pi,1.neg,1)));
+osc2_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_z,2pi)), LFSaw.ar(1,ph_v2_z.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc3_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_x,2pi)), LFSaw.ar(0.1,ph_v3_x.linlin(2pi.neg,2pi,1.neg,1)));
+osc3_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_x,2pi)), LFSaw.ar(1,ph_v3_x.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc3_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_y,2pi)), LFSaw.ar(0.1,ph_v3_y.linlin(2pi.neg,2pi,1.neg,1)));
+osc3_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_y,2pi)), LFSaw.ar(1,ph_v3_y.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc3_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_z,2pi)), LFSaw.ar(0.1,ph_v3_z.linlin(2pi.neg,2pi,1.neg,1)));*/
+osc3_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_z,2pi)), LFSaw.ar(1,ph_v3_z.linlin(2pi.neg,2pi,1.neg,1)));*/
 
 //osc1=osc1_x+osc1_y+osc1_z;
 //osc2=osc2_x+osc2_y+osc2_z;
@@ -161,7 +240,7 @@ osc3_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_
 m=m+1;
 angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
+		wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
 	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
 	wrappedOut3.value(out, LPF.ar(LeakDC.ar((osc1_z)*env),cutt));
 
@@ -192,7 +271,7 @@ SynthDef.new(\ob, {
 	v1=Quaternion(0,x,y,z);
 	v2=Quaternion(0,0,1,0);
 	v3=Quaternion(0,0,0,1);
-	bank=8;
+	bank=16;
 	pitch=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
 	freq = (fund*8)*pitch;
@@ -217,23 +296,23 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:3/
 	ph_v3_y=Complex(v3.a.round(0.0001),v3.c.round(0.0001)).phase;
 	ph_v3_z=Complex(v3.a.round(0.0001),v3.d.round(0.0001)).phase;
 
-osc1_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_x,2pi)), LFSaw.ar(0.1,ph_v1_x.linlin(2pi.neg,2pi,1.neg,1)));
+osc1_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_x,2pi)), LFSaw.ar(1,ph_v1_x.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc1_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_y,2pi)), LFSaw.ar(0.1,ph_v1_y.linlin(2pi.neg,2pi,1.neg,1)));
+osc1_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_y,2pi)), LFSaw.ar(1,ph_v1_y.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc1_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_z,2pi)), LFSaw.ar(0.1,ph_v1_z.linlin(2pi.neg,2pi,1.neg,1)));
+osc1_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_z,2pi)), LFSaw.ar(1,ph_v1_z.linlin(2pi.neg,2pi,1.neg,1)));
 
-/*osc2_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_x,2pi)), LFSaw.ar(0.1,ph_v2_x.linlin(2pi.neg,2pi,1.neg,1)));
+/*osc2_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_x,2pi)), LFSaw.ar(1,ph_v2_x.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc2_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_y,2pi)), LFSaw.ar(0.1,ph_v2_y.linlin(2pi.neg,2pi,1.neg,1)));
+osc2_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_y,2pi)), LFSaw.ar(1,ph_v2_y.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc2_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_z,2pi)), LFSaw.ar(0.1,ph_v2_z.linlin(2pi.neg,2pi,1.neg,1)));
+osc2_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_z,2pi)), LFSaw.ar(1,ph_v2_z.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc3_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_x,2pi)), LFSaw.ar(0.1,ph_v3_x.linlin(2pi.neg,2pi,1.neg,1)));
+osc3_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_x,2pi)), LFSaw.ar(1,ph_v3_x.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc3_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_y,2pi)), LFSaw.ar(0.1,ph_v3_y.linlin(2pi.neg,2pi,1.neg,1)));
+osc3_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_y,2pi)), LFSaw.ar(1,ph_v3_y.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc3_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_z,2pi)), LFSaw.ar(0.1,ph_v3_z.linlin(2pi.neg,2pi,1.neg,1)));*/
+osc3_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_z,2pi)), LFSaw.ar(1,ph_v3_z.linlin(2pi.neg,2pi,1.neg,1)));*/
 
 //osc1=osc1_x+osc1_y+osc1_z;
 //osc2=osc2_x+osc2_y+osc2_z;
@@ -242,7 +321,7 @@ osc3_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_
 m=m+1;
 angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
-	wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
+		wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
 	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
 	wrappedOut3.value(out, LPF.ar(LeakDC.ar((osc1_z)*env),cutt));
 
@@ -273,7 +352,7 @@ SynthDef.new(\oc, {
 	v1=Quaternion(0,x,y,z);
 	v2=Quaternion(0,0,1,0);
 	v3=Quaternion(0,0,0,1);
-	bank=8;
+	bank=16;
 	pitch=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
 	freq = (fund*9)*pitch;
@@ -298,23 +377,23 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:4/
 	ph_v3_y=Complex(v3.a.round(0.0001),v3.c.round(0.0001)).phase;
 	ph_v3_z=Complex(v3.a.round(0.0001),v3.d.round(0.0001)).phase;
 
-osc1_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_x,2pi)), LFSaw.ar(0.1,ph_v1_x.linlin(2pi.neg,2pi,1.neg,1)));
+osc1_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_x,2pi)), LFSaw.ar(1,ph_v1_x.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc1_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_y,2pi)), LFSaw.ar(0.1,ph_v1_y.linlin(2pi.neg,2pi,1.neg,1)));
+osc1_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_y,2pi)), LFSaw.ar(1,ph_v1_y.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc1_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_z,2pi)), LFSaw.ar(0.1,ph_v1_z.linlin(2pi.neg,2pi,1.neg,1)));
+osc1_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_z,2pi)), LFSaw.ar(1,ph_v1_z.linlin(2pi.neg,2pi,1.neg,1)));
 
-/*osc2_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_x,2pi)), LFSaw.ar(0.1,ph_v2_x.linlin(2pi.neg,2pi,1.neg,1)));
+/*osc2_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_x,2pi)), LFSaw.ar(1,ph_v2_x.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc2_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_y,2pi)), LFSaw.ar(0.1,ph_v2_y.linlin(2pi.neg,2pi,1.neg,1)));
+osc2_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_y,2pi)), LFSaw.ar(1,ph_v2_y.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc2_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_z,2pi)), LFSaw.ar(0.1,ph_v2_z.linlin(2pi.neg,2pi,1.neg,1)));
+osc2_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_z,2pi)), LFSaw.ar(1,ph_v2_z.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc3_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_x,2pi)), LFSaw.ar(0.1,ph_v3_x.linlin(2pi.neg,2pi,1.neg,1)));
+osc3_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_x,2pi)), LFSaw.ar(1,ph_v3_x.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc3_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_y,2pi)), LFSaw.ar(0.1,ph_v3_y.linlin(2pi.neg,2pi,1.neg,1)));
+osc3_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_y,2pi)), LFSaw.ar(1,ph_v3_y.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc3_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_z,2pi)), LFSaw.ar(0.1,ph_v3_z.linlin(2pi.neg,2pi,1.neg,1)));*/
+osc3_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_z,2pi)), LFSaw.ar(1,ph_v3_z.linlin(2pi.neg,2pi,1.neg,1)));*/
 
 //osc1=osc1_x+osc1_y+osc1_z;
 //osc2=osc2_x+osc2_y+osc2_z;
@@ -326,8 +405,8 @@ angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).w
 	wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
 	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
 	wrappedOut3.value(out, LPF.ar(LeakDC.ar((osc1_z)*env),cutt));
-
 	};
+
 }).add;
 );
 (
@@ -354,7 +433,7 @@ SynthDef.new(\od, {
 	v1=Quaternion(0,x,y,z);
 	v2=Quaternion(0,0,1,0);
 	v3=Quaternion(0,0,0,1);
-	bank=8;
+	bank=16;
 	pitch=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
 	freq = (fund*12)*pitch;
@@ -379,23 +458,23 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:1)
 	ph_v3_y=Complex(v3.a.round(0.0001),v3.c.round(0.0001)).phase;
 	ph_v3_z=Complex(v3.a.round(0.0001),v3.d.round(0.0001)).phase;
 
-osc1_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_x,2pi)), LFSaw.ar(0.1,ph_v1_x.linlin(2pi.neg,2pi,1.neg,1)));
+osc1_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_x,2pi)), LFSaw.ar(1,ph_v1_x.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc1_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_y,2pi)), LFSaw.ar(0.1,ph_v1_y.linlin(2pi.neg,2pi,1.neg,1)));
+osc1_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_y,2pi)), LFSaw.ar(1,ph_v1_y.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc1_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_z,2pi)), LFSaw.ar(0.1,ph_v1_z.linlin(2pi.neg,2pi,1.neg,1)));
+osc1_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_z,2pi)), LFSaw.ar(1,ph_v1_z.linlin(2pi.neg,2pi,1.neg,1)));
 
-/*osc2_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_x,2pi)), LFSaw.ar(0.1,ph_v2_x.linlin(2pi.neg,2pi,1.neg,1)));
+/*osc2_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_x,2pi)), LFSaw.ar(1,ph_v2_x.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc2_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_y,2pi)), LFSaw.ar(0.1,ph_v2_y.linlin(2pi.neg,2pi,1.neg,1)));
+osc2_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_y,2pi)), LFSaw.ar(1,ph_v2_y.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc2_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_z,2pi)), LFSaw.ar(0.1,ph_v2_z.linlin(2pi.neg,2pi,1.neg,1)));
+osc2_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_z,2pi)), LFSaw.ar(1,ph_v2_z.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc3_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_x,2pi)), LFSaw.ar(0.1,ph_v3_x.linlin(2pi.neg,2pi,1.neg,1)));
+osc3_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_x,2pi)), LFSaw.ar(1,ph_v3_x.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc3_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_y,2pi)), LFSaw.ar(0.1,ph_v3_y.linlin(2pi.neg,2pi,1.neg,1)));
+osc3_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_y,2pi)), LFSaw.ar(1,ph_v3_y.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc3_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_z,2pi)), LFSaw.ar(0.1,ph_v3_z.linlin(2pi.neg,2pi,1.neg,1)));*/
+osc3_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v3_z,2pi)), LFSaw.ar(1,ph_v3_z.linlin(2pi.neg,2pi,1.neg,1)));*/
 
 //osc1=osc1_x+osc1_y+osc1_z;
 //osc2=osc2_x+osc2_y+osc2_z;
@@ -407,6 +486,7 @@ angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).w
 	wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
 	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
 	wrappedOut3.value(out, LPF.ar(LeakDC.ar((osc1_z)*env),cutt));
+
 
 	};
 }).add;
@@ -435,13 +515,13 @@ var  anglex=0,angley=0,x=0,y=0;
 a=Pdef(\1, Pbind(\instrument, \oa,
 	//\dur,1/2,
 	\dur,Pseq(~phasex.abs,inf),
-\n1,Pseq([0,5,7,12,17,19,24],inf),
+\n1,Prand([0,5,7,12,17,19,24],inf),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
-	\x,Pbrown(0.01,1,0.01,inf),
-	\y,Pbrown(0.01,1,0.01,inf),
-	\z,Pbrown(0.01,1,0.01,inf),
+	\x,Pexprand(0.01,1,inf),
+	\y,Pexprand(0.01,1,inf),
+	\z,Pexprand(0.01,1,inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 b=Pdef(\2, Pbind(\instrument, \ob,
@@ -451,9 +531,10 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
-\x,Pbrown(0.01,1,0.01,inf),
-	\y,Pbrown(0.01,1,0.01,inf),
-	\z,Pbrown(0.01,1,0.01,inf),
+
+\x,Pexprand(0.01,1,inf),
+	\y,Pexprand(0.01,1,inf),
+	\z,Pexprand(0.01,1,inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 c=Pdef(\3, Pbind(\instrument, \oc,
@@ -463,9 +544,9 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
-\x,Pbrown(0.01,1,0.01,inf),
-	\y,Pbrown(0.01,1,0.01,inf),
-	\z,Pbrown(0.01,1,0.01,inf),
+\x,Pexprand(0.01,1,inf),
+	\y,Pexprand(0.01,1,inf),
+	\z,Pexprand(0.01,1,inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 d=Pdef(\4, Pbind(\instrument, \od,
@@ -475,9 +556,10 @@ d=Pdef(\4, Pbind(\instrument, \od,
 	\cutt,Pbrown(220*2,220*8,100,inf),
 	\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
-	\x,Pbrown(0.01,1,0.01,inf),
-	\y,Pbrown(0.01,1,0.01,inf),
-	\z,Pbrown(0.01,1,0.01,inf),
+
+	\x,Pexprand(0.01,1,inf),
+	\y,Pexprand(0.01,1,inf),
+	\z,Pexprand(0.01,1,inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 )
@@ -624,9 +706,9 @@ w2=EnvGen.ar(Env.new(~y,[(freq1*m).reciprocal/2],\sine));
 
 		///phase1=Complex(detune1.real,detune1.r
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m),mul:m.reciprocal,add:w1,phase:SinOsc.ar(0.1,detune1.theta,2pi)), LFSaw.ar(0.1,detune1.theta.linlin(2pi.neg,2pi,1.neg,1)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m),mul:m.reciprocal,add:w1,phase:SinOsc.ar(0.1,detune1.theta,2pi)), LFSaw.ar(1,detune1.theta.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m),mul:m.reciprocal,add:w2,phase:SinOsc.ar(0.1,detune2.theta,2pi)), LFSaw.ar(0.1,detune2.theta.linlin(2pi.neg,2pi,1.neg,1)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m),mul:m.reciprocal,add:w2,phase:SinOsc.ar(0.1,detune2.theta,2pi)), LFSaw.ar(1,detune2.theta.linlin(2pi.neg,2pi,1.neg,1)));
 
 m=m+1;
 angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
@@ -673,9 +755,9 @@ detune2=exp(Complex(0,1)*(SinOsc.ar(0.01,angle2.degrad,2pi)));
 w1=EnvGen.ar(Env.new(~x,[(freq1*m).reciprocal/2],\sine));
 w2=EnvGen.ar(Env.new(~y,[(freq1*m).reciprocal/2],\sine));
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m),mul:m.reciprocal,add:w1,phase:SinOsc.ar(0.1,detune1.theta,2pi)), LFSaw.ar(0.1,detune1.theta.linlin(2pi.neg,2pi,1.neg,1)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m),mul:m.reciprocal,add:w1,phase:SinOsc.ar(0.1,detune1.theta,2pi)), LFSaw.ar(1,detune1.theta.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m),mul:m.reciprocal,add:w2,phase:SinOsc.ar(0.1,detune2.theta,2pi)), LFSaw.ar(0.1,detune2.theta.linlin(2pi.neg,2pi,1.neg,1)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m),mul:m.reciprocal,add:w2,phase:SinOsc.ar(0.1,detune2.theta,2pi)), LFSaw.ar(1,detune2.theta.linlin(2pi.neg,2pi,1.neg,1)));
 m=m+1;
 angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 angle2=(angle2+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
@@ -721,9 +803,9 @@ detune2=exp(Complex(0,1)*(SinOsc.ar(0.01,angle2.degrad,2pi)));
 w1=EnvGen.ar(Env.new(~x,[(freq1*m).reciprocal/2],\sine));
 w2=EnvGen.ar(Env.new(~y,[(freq1*m).reciprocal/2],\sine));
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m),mul:m.reciprocal,add:w1,phase:SinOsc.ar(0.1,detune1.theta,2pi)), LFSaw.ar(0.1,detune1.theta.linlin(2pi.neg,2pi,1.neg,1)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m),mul:m.reciprocal,add:w1,phase:SinOsc.ar(0.1,detune1.theta,2pi)), LFSaw.ar(1,detune1.theta.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m),mul:m.reciprocal,add:w2,phase:SinOsc.ar(0.1,detune2.theta,2pi)), LFSaw.ar(0.1,detune2.theta.linlin(2pi.neg,2pi,1.neg,1)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m),mul:m.reciprocal,add:w2,phase:SinOsc.ar(0.1,detune2.theta,2pi)), LFSaw.ar(1,detune2.theta.linlin(2pi.neg,2pi,1.neg,1)));
 
 m=m+1;
 angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
@@ -770,9 +852,9 @@ detune2=exp(Complex(0,1)*(SinOsc.ar(0.01,angle2.degrad,2pi)));
 w1=EnvGen.ar(Env.new(~x,[(freq1*m).reciprocal/2],\sine));
 w2=EnvGen.ar(Env.new(~y,[(freq1*m).reciprocal/2],\sine));
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m),mul:m.reciprocal,add:w1,phase:SinOsc.ar(0.1,detune1.theta,2pi)), LFSaw.ar(0.1,detune1.theta.linlin(2pi.neg,2pi,1.neg,1)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m),mul:m.reciprocal,add:w1,phase:SinOsc.ar(0.1,detune1.theta,2pi)), LFSaw.ar(1,detune1.theta.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m),mul:m.reciprocal,add:w2,phase:SinOsc.ar(0.1,detune2.theta,2pi)), LFSaw.ar(0.1,detune2.theta.linlin(2pi.neg,2pi,1.neg,1)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m),mul:m.reciprocal,add:w2,phase:SinOsc.ar(0.1,detune2.theta,2pi)), LFSaw.ar(1,detune2.theta.linlin(2pi.neg,2pi,1.neg,1)));
 
 m=m+1;
 angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
@@ -892,9 +974,9 @@ detune2=exp(Complex(0,1)*(SinOsc.ar(0.01,angle2.degrad,2pi).abs));
 w1=EnvGen.ar(Env.new(~x,[(freq1*m).reciprocal/2],\sine),levelScale:m.reciprocal);
 w2=EnvGen.ar(Env.new(~y,[(freq1*m).reciprocal/2],\sine),levelScale:m.reciprocal);
 
-osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:w1,phase:SinOsc.ar(0.1,detune1.theta,2pi)), LFSaw.ar(0.1,detune1.theta.linlin(2pi.neg,2pi,1.neg,1)));
+osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:w1,phase:SinOsc.ar(0.1,detune1.theta,2pi)), LFSaw.ar(1,detune1.theta.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:w2,phase:SinOsc.ar(0.1,detune2.theta,2pi)), LFSaw.ar(0.1,detune2.theta.linlin(2pi.neg,2pi,1.neg,1)));
+osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:w2,phase:SinOsc.ar(0.1,detune2.theta,2pi)), LFSaw.ar(1,detune2.theta.linlin(2pi.neg,2pi,1.neg,1)));
 
 m=m+1;
 angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
