@@ -2,7 +2,7 @@
 s.options.numWireBufs = 1024*16;
 s.options.numOutputBusChannels=2;
 s.options.numInputBusChannels=0;
-TempoClock.default.tempo_(120/120);
+TempoClock.default.tempo_(120/240);
 s.options.memSize = 8192*64;
 //s.options.blockSize = 64/4;
 s.waitForBoot
@@ -509,12 +509,49 @@ var  anglex=0,angley=0,x=0,y=0;
 
 )
 
+(
+var  angle1=0,angle2=0,angle3=0,angle4=0,q1,q2,q3,q4,v1,v2,v3,v4,ph1,ph2,ph3,ph4;
+var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt, 0),k = Quaternion(0, 0, 0, (1/3).sqrt);
+
+v1=Quaternion(0,1,2,3);
+v2=Quaternion(0,1,2,3);
+v3=Quaternion(0,1,2,3);
+v4=Quaternion(0,1,2,3);
+
+	~phase1 = 10000.collect{
+		angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		q1=(cos(angle1.degrad)+(sin(angle1.degrad)*(i+j+k)));
+	v1=q1*v1;
+	ph1=v1.a;
+	};
+~phase2 = 10000.collect{
+		angle2=(angle2+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		q2=(cos(angle2.degrad)+(sin(angle2.degrad)*(i+j+k)));
+	v2=q2*v2;
+	ph2=v2.b;
+	};
+
+~phase3 = 10000.collect{
+		angle3=(angle3+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		q3=(cos(angle3.degrad)+(sin(angle3.degrad)*(i+j+k)));
+	v3=q3*v3;
+	ph3=v3.c;
+	};
+
+~phase4 = 10000.collect{
+		angle4=(angle4+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		q4=(cos(angle4.degrad)+(sin(angle4.degrad)*(i+j+k)));
+	v4=q4*v4;
+	ph4=v4.d;
+	};
+
+)
 
 
 (
 a=Pdef(\1, Pbind(\instrument, \oa,
 	//\dur,1/2,
-	\dur,Pseq(~phasex.abs,inf),
+	\dur,Pseq(~phase1.abs,inf),
 \n1,Prand([0,5,7,12,17,19,24],inf),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
@@ -526,7 +563,7 @@ a=Pdef(\1, Pbind(\instrument, \oa,
 ));
 b=Pdef(\2, Pbind(\instrument, \ob,
 	//\dur,1/2,
-	\dur,Pseq(~phasex.abs,inf),
+	\dur,Pseq(~phase2.abs,inf),
 \n1,Prand([0,5,7,12,17,19,24],inf),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
@@ -539,7 +576,7 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 ));
 c=Pdef(\3, Pbind(\instrument, \oc,
 	//\dur,1/2,
-	\dur,Pseq(~phasex.abs,inf),
+	\dur,Pseq(~phase3.abs,inf),
 \n1,Prand([0,5,7,12,17,19,24],inf),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
@@ -551,7 +588,7 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 ));
 d=Pdef(\4, Pbind(\instrument, \od,
 	//\dur,1/2,
-	\dur,Pseq(~phasex.abs,inf),
+	\dur,Pseq(~phase4.abs,inf),
 \n1,Prand([0,5,7,12,17,19,24],inf),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 	\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
