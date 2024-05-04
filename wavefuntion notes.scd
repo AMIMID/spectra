@@ -35,25 +35,38 @@ var i = Quaternion(0, 0, 0, 0),j = Quaternion(0, 0, 0, 0),k = Quaternion(0, 0, 0
 
 )
 
+
+(
+{
+var x,y,z,ijk,r;
+x=SinOsc.ar(0.1,phase:0.degrad);
+y=SinOsc.ar(0.1,phase:90.degrad);
+z=SinOsc.ar(0.1);
+ijk=[x.pow(2),y.pow(2),z.pow(2)].normalizeSum;
+	ijk.[2].poll;
+	r=Quaternion(0,ijk.[0],0,0);
+	r.b.poll;
+}.play
+)
 (
 var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt, 0),k = Quaternion(0, 0, 0, (1/3).sqrt),q1,q2,v1,v2,v3,angle=0,ph1x,ph1y,ph1z,ph2x,ph2y,ph2z,ph3x,ph3y,ph3z;
 
 
-1.do{
-	angle=(angle+(60)).wrap(0,360);
+10.do{
+	angle=(angle+(137.5)).wrap(0,360);
  	q1=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
  	q2=q1.conjugate;
 	v1=Quaternion(0,1,2,3);
-	v2=Quaternion(0,0,1,0);
+	v2=Quaternion(0,0,(1/3).sqrt,0);
 	v3=Quaternion(0,0,0,1);
 	v1=q1*v1;
 	v2=q1*v2;
 	v3=q1*v3;
 	//v=v*q2 opposite direction rotation
 	//v=v*q2;
- 	v1.coordinates.round(0.0001).postln;
+ 	//v1.coordinates.round(0.0001).postln;
 	v2.coordinates.round(0.0001).postln;
-	v3.coordinates.round(0.0001).postln;
+	//v3.coordinates.round(0.0001).postln;
 	ph1x=Complex(v1.a.round(0.0001),v1.b.round(0.0001)).phase;
 	ph1y=Complex(v1.a.round(0.0001),v1.c.round(0.0001)).phase;
 	ph1z=Complex(v1.a.round(0.0001),v1.d.round(0.0001)).phase;
@@ -63,9 +76,9 @@ var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt, 0),k = 
 	ph3x=Complex(v3.a.round(0.0001),v3.b.round(0.0001)).phase;
 	ph3y=Complex(v3.a.round(0.0001),v3.c.round(0.0001)).phase;
 	ph3z=Complex(v3.a.round(0.0001),v3.d.round(0.0001)).phase;
-	ph1x.postln;
-	ph1y.postln;
-	ph1z.postln;
+	//ph1x.postln;
+	//ph1y.postln;
+	//ph1z.postln;
  }
 
 )
@@ -518,6 +531,7 @@ v2=Quaternion(0,1,2,3);
 v3=Quaternion(0,1,2,3);
 v4=Quaternion(0,1,2,3);
 
+
 	~phase1 = 10000.collect{
 		angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 		q1=(cos(angle1.degrad)+(sin(angle1.degrad)*(i+j+k)));
@@ -551,10 +565,11 @@ v4=Quaternion(0,1,2,3);
 var  angle1=0,angle2=0,angle3=0,angle4=0,q1,q2,q3,q4,v1,v2,v3,v4,ph1,ph2,ph3,ph4;
 var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt, 0),k = Quaternion(0, 0, 0, (1/3).sqrt);
 
-v1=Quaternion(0,6,9,12);
-v2=Quaternion(0,6,9,12);
-v3=Quaternion(0,6,9,12);
-v4=Quaternion(0,6,9,12);
+v1=Quaternion(0,5,7,12);
+v2=Quaternion(0,5,7,12);
+v3=Quaternion(0,5,7,12);
+v4=Quaternion(0,5,7,12);
+
 
 	~n1 = 10000.collect{
 		angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
@@ -584,8 +599,12 @@ v4=Quaternion(0,6,9,12);
 	};
 
 )
-
-
+(
+~n1=~n1*(3/2);
+~n2=~n2*(3/2);
+~n3=~n3*(3/2);
+~n4=~n4*(3/2);
+)
 (
 a=Pdef(\1, Pbind(\instrument, \oa,
 	//\dur,1/2,
@@ -647,9 +666,9 @@ a=Pdef(\1, Pbind(\instrument, \oa,
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
-	\x,Pexprand(0.01,1,inf),
-	\y,Pexprand(0.01,1,inf),
-	\z,Pexprand(0.01,1,inf),
+	\x,Pbrown(1.neg,1,0.1,inf),
+	\y,Pbrown(1.neg,1,0.1,inf),
+	\z,Pbrown(1.neg,1,0.1,inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 b=Pdef(\2, Pbind(\instrument, \ob,
@@ -660,9 +679,9 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 
-\x,Pexprand(0.01,1,inf),
-	\y,Pexprand(0.01,1,inf),
-	\z,Pexprand(0.01,1,inf),
+\x,Pbrown(1.neg,1,0.1,inf),
+	\y,Pbrown(1.neg,1,0.1,inf),
+	\z,Pbrown(1.neg,1,0.1,inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 c=Pdef(\3, Pbind(\instrument, \oc,
@@ -672,9 +691,9 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
-\x,Pexprand(0.01,1,inf),
-	\y,Pexprand(0.01,1,inf),
-	\z,Pexprand(0.01,1,inf),
+\x,Pbrown(1.neg,1,0.1,inf),
+	\y,Pbrown(1.neg,1,0.1,inf),
+	\z,Pbrown(1.neg,1,0.1,inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 d=Pdef(\4, Pbind(\instrument, \od,
@@ -685,9 +704,9 @@ d=Pdef(\4, Pbind(\instrument, \od,
 	\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 
-	\x,Pexprand(0.01,1,inf),
-	\y,Pexprand(0.01,1,inf),
-	\z,Pexprand(0.01,1,inf),
+	\x,Pbrown(1.neg,1,0.1,inf),
+	\y,Pbrown(1.neg,1,0.1,inf),
+	\z,Pbrown(1.neg,1,0.1,inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 )
@@ -705,7 +724,7 @@ d.play;
 
 
 
-
+///////////////////////////
 
 
 
