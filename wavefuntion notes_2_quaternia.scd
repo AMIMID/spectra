@@ -136,60 +136,57 @@ angle=MouseX.kr(2pi.neg,2pi);
 (
 var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt, 0),k = Quaternion(0, 0, 0, (1/3).sqrt);
 var q,v,angle=0,x,y,z,phx,phy,phz;
-var run=true,scale=300,m=1;
+var scale=300,m=0,n=0,s,u;
 
 ///////0//////////////////////////////////////////////////////////////////////////////////////////////////
     Window.closeAll;
     w = Window("S",Rect(400,100,800,800),scroll:false).front.alwaysOnTop_(true);
-    w.alpha = 1;  w.view.background = Color.green;
+    w.alpha = 1;  w.view.background = Color.white;
 
-~v = UserView.new(w,Rect(0,0,800,800)).background_(Color.white);
-~v.animate;
-~v.drawFunc ={
-Pen.translate(400,400);
+//~v = UserView.new(w,Rect(0,0,800,800)).background_(Color.white);
+//~v.animate;
+w.drawFunc={
+//Pen.translate(400,400);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////points
-v=Quaternion(0,1,0,0);
+v=Quaternion(0,1,2,3);
 
-2000.do{
+800.do{
+800.do{
+
+angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
 	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 		v=q*v;
-		x=v.b.round(0.0001)*scale;
-		y=v.c.round(0.0001)*scale;
-		z=v.d.round(0.0001)*scale;
-		phx=Complex(v.a.round(0.0001),v.b.round(0.0001)).phase;
-		phy=Complex(v.a.round(0.0001),v.c.round(0.0001)).phase;
-		phz=Complex(v.a.round(0.0001),v.d.round(0.0001)).phase;
+		s=v.a;
+		x=v.b;
+		y=v.c;
+		z=v.d;
+		//phx=Complex(v.a.round(0.0001),v.b.round(0.0001)).phase.linlin(2pi.neg,2pi,0,255);
+		//phy=Complex(v.a.round(0.0001),v.c.round(0.0001)).phase.linlin(2pi.neg,2pi,0,255);
+		//phz=Complex(v.a.round(0.0001),v.d.round(0.0001)).phase.linlin(2pi.neg,2pi,0,255);
+		u=[x,y,z].normalize.abs;
 
 Pen.width=0.1;
 
-			//Color(red:0.9999.rand,green:0.9999.rand,blue:0.9999.rand).set;
-//Color(red:1,green:1,blue:1,alpha:1).set;
-		Color.black.set;
+
+			//Color(red:u.[0],green:u.[1],blue:u.[2],alpha:1).set;
+			Color(red:u.[0],green:u.[1],blue:u.[2],alpha:1).set;
 
 
 
-
-//Pen.addOval(Rect.new(Polar.new(x,phx).asPoint.x,Polar.new(y,phy).asPoint.y,1,1));
-//Pen.addOval(Rect.new(Polar.new(x,phx).asPoint.x,Polar.new(z,phz).asPoint.y,1,1));
-//Pen.addOval(Rect.new(Polar.new(y,phy).asPoint.x,Polar.new(z,phz).asPoint.y,1,1));
-
-		//Pen.lineTo(Point.new(x,y));
-		Pen.arcTo(Point(x,y),Point(x,z),z);
+		Pen.fillRect(Rect.new(m,n,1,1));
 
 
-		Pen.rotate(pi/2);
 		Pen.stroke;
-		//~v.refresh;
+m=m+1;
 
-angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
-		m=m+0.00001;
+	};
+		m=0;
+		n=n+1;
+	}
 
-
-			};
 
 };
-{ while { run } {~v.background_(Color.white); ~v.refresh; (1/60).wait } }.fork(AppClock);
 )
 
 (
@@ -276,3 +273,180 @@ angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).w
 )
 
 Synth.new(\oa,[\out,[0,1]]);
+
+
+
+
+
+
+
+
+
+
+
+
+(
+var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt, 0),k = Quaternion(0, 0, 0, (1/3).sqrt);
+var q,v,angle=0,x,y,z,phx,phy,phz;
+var scale=300,m=0,n=0,s,u;
+
+///////0//////////////////////////////////////////////////////////////////////////////////////////////////
+    Window.closeAll;
+    w = Window("S",Rect(400,100,800,800),scroll:false).front.alwaysOnTop_(true);
+    w.alpha = 1;  w.view.background = Color.white;
+
+//~v = UserView.new(w,Rect(0,0,800,800)).background_(Color.white);
+//~v.animate;
+w.drawFunc={
+//Pen.translate(400,400);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////points
+v=Quaternion(0,1,2,3);
+
+800.do{
+800.do{
+
+angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+
+	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
+		v=q*v;
+		s=v.a;
+		x=v.b;
+		y=v.c;
+		z=v.d;
+		//phx=Complex(v.a.round(0.0001),v.b.round(0.0001)).phase.linlin(2pi.neg,2pi,0,255);
+		//phy=Complex(v.a.round(0.0001),v.c.round(0.0001)).phase.linlin(2pi.neg,2pi,0,255);
+		//phz=Complex(v.a.round(0.0001),v.d.round(0.0001)).phase.linlin(2pi.neg,2pi,0,255);
+		u=[x,y,z].normalize.abs;
+
+Pen.width=0.1;
+
+
+			//Color(red:u.[0],green:u.[1],blue:u.[2],alpha:1).set;
+			Color(red:u.[0],green:u.[1],blue:u.[2],alpha:1).set;
+
+
+
+		Pen.fillRect(Rect.new(m,n,1,1));
+
+
+		Pen.stroke;
+m=m+1;
+
+	};
+		m=0;
+		n=n+1;
+	}
+
+
+};
+)
+
+
+(
+~e1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240414_142504.wav",channels:0);
+~e2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240414_142504.wav",channels:1);
+)
+
+(
+SynthDef.new(\player,{
+	arg tempo;
+	var env;
+	var sig1, sig2, sig3, sig4;
+
+	//env=EnvGen.ar(Env.new([0,tempo.reciprocal,tempo.reciprocal,0],[1,50,1]), doneAction: 2);
+
+	sig1=PlayBuf.ar(1,~e1.bufnum,BufRateScale.kr(~e1.bufnum),loop:0);
+	sig2=PlayBuf.ar(1,~e2.bufnum,BufRateScale.kr(~e2.bufnum),loop:0);
+	//sig1=PlayBuf.ar(1,0,BufRateScale.kr(0),startPos:0,loop:inf,rate:1);//*env;
+	//sig2=PlayBuf.ar(1,1,BufRateScale.kr(1),startPos:0,loop:inf,rate:1);//*env;
+	//sig3=PlayBuf.ar(1,2,BufRateScale.kr(2),startPos:0,loop:inf,rate:1);//*env;
+	//sig4=PlayBuf.ar(1,3,BufRateScale.kr(3),startPos:0,loop:inf,rate:1);//*env;
+
+	~a = Amplitude.ar(sig1, 0.01, 0.25,100).poll;SendReply.ar(Impulse.ar(1000), '/a', ~a);
+	~b = Amplitude.ar(sig2, 0.01, 0.25,100);SendReply.ar(Impulse.ar(1000), '/b', ~b);
+	//~c = Amplitude.ar(sig3, 0.01, 0.25);SendReply.ar(Impulse.ar(100), '/c', ~c);
+	//~d = Amplitude.ar(sig4, 0.01, 0.25);SendReply.ar(Impulse.ar(100), '/d', ~d);
+
+Out.ar(0,sig1);
+Out.ar(1,sig2);
+//Out.ar(2,sig3);
+//Out.ar(3,sig4);
+}).add;
+);
+Synth.new(\player);
+
+
+
+
+
+
+(
+var run = true;
+var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt, 0),k = Quaternion(0, 0, 0, (1/3).sqrt);
+var q,v,angle=0,x,y,z,phx,phy,phz;
+var m=0,n=0,r,u;
+
+
+OSCdef(\amp1, { |msg|
+	~a = msg[3];
+	defer { ~v.refresh };
+}, '/a', s.addr);
+
+OSCdef(\amp2, { |msg|
+	~b = msg[3];
+	defer { ~v.refresh };
+}, '/b', s.addr);
+
+
+///////0//////////////////////////////////////////////////////////////////////////////////////////////////
+    Window.closeAll;
+    w = Window("S",Rect(400,100,800,800),scroll:false).front.alwaysOnTop_(true);
+    w.alpha = 1;  w.view.background = Color.green;
+
+~v = UserView.new(w,Rect(0,0,800,800)).background_(Color.white);
+~v.animate;
+
+~v.drawFunc ={
+
+v=Quaternion(0,1,2,3);
+
+800.do{
+800.do{
+
+angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+
+	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
+		v=q*v;
+		r=v.a;
+		x=v.b;
+		y=v.c;
+		z=v.d;
+		//phx=Complex(v.a.round(0.0001),v.b.round(0.0001)).phase.linlin(2pi.neg,2pi,0,255);
+		//phy=Complex(v.a.round(0.0001),v.c.round(0.0001)).phase.linlin(2pi.neg,2pi,0,255);
+		//phz=Complex(v.a.round(0.0001),v.d.round(0.0001)).phase.linlin(2pi.neg,2pi,0,255);
+		u=[x,y,z].normalize.abs;
+
+Pen.width=0.1;
+
+
+			//Color(red:u.[0],green:u.[1],blue:u.[2],alpha:1).set;
+			Color(red:u.[0],green:u.[1],blue:u.[2],alpha:1).set;
+
+
+
+		Pen.fillRect(Rect.new(m,n,~a,~b));
+
+
+		Pen.stroke;
+m=m+~a;
+
+	};
+		m=0;
+		n=n+~b;
+	};
+
+
+};
+
+{ while { run } {~v.background_(Color.white); ~v.refresh; (1/60).wait } }.fork(AppClock);
+)
