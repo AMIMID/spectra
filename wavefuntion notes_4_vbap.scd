@@ -7,7 +7,7 @@ s.options.memSize = 8192*64;
 //s.options.blockSize = 64/4;
 s.waitForBoot
 )
-
+Server.supernova
 
 (
 (

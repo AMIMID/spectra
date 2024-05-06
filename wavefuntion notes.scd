@@ -1,6 +1,6 @@
 (
 s.options.numWireBufs = 1024*16;
-s.options.numOutputBusChannels=2;
+s.options.numOutputBusChannels=8;
 s.options.numInputBusChannels=0;
 TempoClock.default.tempo_(120/240);
 s.options.memSize = 8192*64;
@@ -99,22 +99,27 @@ Quaternion(0,0.5774,0.5774,0.5774).norm
 
 (
 {
-var x,y,z,ijk,r;
-x=SinOsc.ar(0.1,phase:0.degrad);
-y=SinOsc.ar(0.1,phase:90.degrad);
-z=SinOsc.ar(0.1);
-ijk=[x.pow(2),y.pow(2),z.pow(2)].normalizeSum;
-	ijk.[2].poll;
-	r=Quaternion(0,ijk.[0],0,0);
-	r.b.poll;
+var x,y,z,ijk,r,rx,ry,rz;
+	x=0.1;
+y=0.2;
+z=0.3;
+	ijk=[x,y,z].normalizeSum;
+	ijk.postln;
+	//r=Quaternion(0,ijk.[0],0,0);
+	//r.b.poll;
 }.play
 )
 
+({
+	Out.kr(0,SinOsc.kr(0.1,phase:0.degrad));
+	Out.kr(1,SinOsc.kr(0.1,phase:137.5.degrad));
+	Out.kr(2,SinOsc.kr(0.1,phase:275.degrad));
+}.play)
 (
 SynthDef.new(\oa, {
-	arg  n1=1, cutt=1200,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25;
+	arg  n1=1, cutt=1200,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1, ry=1,rz=1;
 	var q,i,j,k,v1,v2,v3,ph_v1_x,ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_v3_x,ph_v3_y,ph_v3_z;
-	var osc1,osc2,osc3,freq, env,m=1,bank, pitch, fund, angle=0, rx, ry,rz, r;
+	var osc1,osc2,osc3,freq, env,m=1,bank, pitch, fund, angle=0,r;
 	var osc1_x,osc1_y,osc1_z,osc2_x,osc2_y,osc2_z,osc3_x,osc3_y,osc3_z;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -127,10 +132,6 @@ SynthDef.new(\oa, {
 		Out.ar(pair[0], pair[1])}};
 
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
-
-	rx=SinOsc.ar(0.1,phase:0.degrad);
-	ry=SinOsc.ar(0.1,phase:137.5.degrad);
-	rz=SinOsc.ar(0.1,phase:275.degrad);
 
 	r=[rx.pow(2),ry.pow(2),rz.pow(2)].normalizeSum;
 
@@ -147,7 +148,7 @@ SynthDef.new(\oa, {
 
 	bank.do{
 
-angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 	v1=q*v1;
@@ -203,9 +204,9 @@ Synth.new(\oa,[\out,[0,1]]);
 (
 (
 SynthDef.new(\oa, {
-	arg  n1=1, cutt=1200,decay=6,t=2,attack=0.05,x=1,y=1,z=1;
+	arg  n1=1, cutt=1200,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1, ry=1,rz=1;
 	var q,i,j,k,v1,v2,v3,ph_v1_x,ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_v3_x,ph_v3_y,ph_v3_z;
-	var osc1,osc2,osc3,freq, env,m=1,bank, pitch, fund, angle=0, rx, ry,rz, r;
+	var osc1,osc2,osc3,freq, env,m=1,bank, pitch, fund, angle=0,r;
 	var osc1_x,osc1_y,osc1_z,osc2_x,osc2_y,osc2_z,osc3_x,osc3_y,osc3_z;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -218,10 +219,6 @@ SynthDef.new(\oa, {
 		Out.ar(pair[0], pair[1])}};
 
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
-
-	rx=SinOsc.ar(0.1,phase:0.degrad);
-	ry=SinOsc.ar(0.1,phase:137.5.degrad);
-	rz=SinOsc.ar(0.1,phase:275.degrad);
 
 	r=[rx.pow(2),ry.pow(2),rz.pow(2)].normalizeSum;
 
@@ -255,7 +252,7 @@ osc1_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_
 
 
 m=m+1;
-angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 		wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
 	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
@@ -266,9 +263,9 @@ angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).w
 );
 (
 SynthDef.new(\ob, {
-	arg  n1=1, cutt=1200,decay=6,t=2,attack=0.05,x=1,y=1,z=1;
+	arg  n1=1, cutt=1200,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1, ry=1,rz=1;
 	var q,i,j,k,v1,v2,v3,ph_v1_x,ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_v3_x,ph_v3_y,ph_v3_z;
-		var osc1,osc2,osc3,freq, env,m=1,bank, pitch, fund, angle=0, rx, ry,rz, r;
+	var osc1,osc2,osc3,freq, env,m=1,bank, pitch, fund, angle=0,r;
 	var osc1_x,osc1_y,osc1_z,osc2_x,osc2_y,osc2_z,osc3_x,osc3_y,osc3_z;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -281,10 +278,6 @@ SynthDef.new(\ob, {
 		Out.ar(pair[0], pair[1])}};
 
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
-
-	rx=SinOsc.ar(0.1,phase:0.degrad);
-	ry=SinOsc.ar(0.1,phase:137.5.degrad);
-	rz=SinOsc.ar(0.1,phase:275.degrad);
 
 	r=[rx.pow(2),ry.pow(2),rz.pow(2)].normalizeSum;
 
@@ -317,7 +310,7 @@ osc1_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_
 osc1_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_z,2pi)), LFSaw.ar(1,ph_v1_z.linlin(2pi.neg,2pi,1.neg,1)));
 
 m=m+1;
-angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 		wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
 	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
@@ -328,9 +321,9 @@ angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).w
 );
 (
 SynthDef.new(\oc, {
-	arg  n1=1, cutt=1200,decay=6,t=2,attack=0.05,x=1,y=1,z=1;
+	arg  n1=1, cutt=1200,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1, ry=1,rz=1;
 	var q,i,j,k,v1,v2,v3,ph_v1_x,ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_v3_x,ph_v3_y,ph_v3_z;
-		var osc1,osc2,osc3,freq, env,m=1,bank, pitch, fund, angle=0, rx, ry,rz, r;
+	var osc1,osc2,osc3,freq, env,m=1,bank, pitch, fund, angle=0,r;
 	var osc1_x,osc1_y,osc1_z,osc2_x,osc2_y,osc2_z,osc3_x,osc3_y,osc3_z;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -343,10 +336,6 @@ SynthDef.new(\oc, {
 		Out.ar(pair[0], pair[1])}};
 
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
-
-	rx=SinOsc.ar(0.1,phase:0.degrad);
-	ry=SinOsc.ar(0.1,phase:137.5.degrad);
-	rz=SinOsc.ar(0.1,phase:275.degrad);
 
 	r=[rx.pow(2),ry.pow(2),rz.pow(2)].normalizeSum;
 
@@ -378,7 +367,7 @@ osc1_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_
 osc1_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_z,2pi)), LFSaw.ar(1,ph_v1_z.linlin(2pi.neg,2pi,1.neg,1)));
 
 m=m+1;
-angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 	wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
 	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
@@ -389,9 +378,9 @@ angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).w
 );
 (
 SynthDef.new(\od, {
-	arg  n1=1, cutt=1200,decay=6,t=2,attack=0.05,x=1,y=1,z=1;
+	arg  n1=1, cutt=1200,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1, ry=1,rz=1;
 	var q,i,j,k,v1,v2,v3,ph_v1_x,ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_v3_x,ph_v3_y,ph_v3_z;
-		var osc1,osc2,osc3,freq, env,m=1,bank, pitch, fund, angle=0, rx, ry,rz, r;
+	var osc1,osc2,osc3,freq, env,m=1,bank, pitch, fund, angle=0,r;
 	var osc1_x,osc1_y,osc1_z,osc2_x,osc2_y,osc2_z,osc3_x,osc3_y,osc3_z;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -404,10 +393,6 @@ SynthDef.new(\od, {
 		Out.ar(pair[0], pair[1])}};
 
 	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
-
-	rx=SinOsc.ar(0.1,phase:0.degrad);
-	ry=SinOsc.ar(0.1,phase:137.5.degrad);
-	rz=SinOsc.ar(0.1,phase:275.degrad);
 
 	r=[rx.pow(2),ry.pow(2),rz.pow(2)].normalizeSum;
 
@@ -440,7 +425,7 @@ osc1_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_
 osc1_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_z,2pi)), LFSaw.ar(1,ph_v1_z.linlin(2pi.neg,2pi,1.neg,1)));
 
 m=m+1;
-angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 	wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
 	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
@@ -460,7 +445,7 @@ var  anglex=0,angley=0,x=0,y=0;
 
 
 	~phasex = 10000.collect{
-		anglex=(anglex+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		anglex=(anglex+(360-(360/1.6180339887499))).wrap(0,360);
 		x=exp(Complex(0,1)*(anglex.degrad));
 	x=x.theta
 	};
@@ -479,27 +464,27 @@ v4=Quaternion(0,1,2,3);
 
 
 	~phase1 = 10000.collect{
-		angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 		q1=(cos(angle1.degrad)+(sin(angle1.degrad)*(i+j+k)));
 	v1=q1*v1;
 	ph1=v1.a;
 	};
 ~phase2 = 10000.collect{
-		angle2=(angle2+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angle2=(angle2+(360-(360/1.6180339887499))).wrap(0,360);
 		q2=(cos(angle2.degrad)+(sin(angle2.degrad)*(i+j+k)));
 	v2=q2*v2;
 	ph2=v2.b;
 	};
 
 ~phase3 = 10000.collect{
-		angle3=(angle3+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angle3=(angle3+(360-(360/1.6180339887499))).wrap(0,360);
 		q3=(cos(angle3.degrad)+(sin(angle3.degrad)*(i+j+k)));
 	v3=q3*v3;
 	ph3=v3.c;
 	};
 
 ~phase4 = 10000.collect{
-		angle4=(angle4+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angle4=(angle4+(360-(360/1.6180339887499))).wrap(0,360);
 		q4=(cos(angle4.degrad)+(sin(angle4.degrad)*(i+j+k)));
 	v4=q4*v4;
 	ph4=v4.d;
@@ -518,27 +503,27 @@ v4=Quaternion(0,5,7,12);
 
 
 	~n1 = 10000.collect{
-		angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 		q1=(cos(angle1.degrad)+(sin(angle1.degrad)*(i+j+k)));
 	v1=q1*v1;
 	ph1=v1.a.round(1);
 	};
 ~n2 = 10000.collect{
-		angle2=(angle2+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angle2=(angle2+(360-(360/1.6180339887499))).wrap(0,360);
 		q2=(cos(angle2.degrad)+(sin(angle2.degrad)*(i+j+k)));
 	v2=q2*v2;
 	ph2=v2.b.round(1);
 	};
 
 ~n3 = 10000.collect{
-		angle3=(angle3+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angle3=(angle3+(360-(360/1.6180339887499))).wrap(0,360);
 		q3=(cos(angle3.degrad)+(sin(angle3.degrad)*(i+j+k)));
 	v3=q3*v3;
 	ph3=v3.c.round(1);
 	};
 
 ~n4 = 10000.collect{
-		angle4=(angle4+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angle4=(angle4+(360-(360/1.6180339887499))).wrap(0,360);
 		q4=(cos(angle4.degrad)+(sin(angle4.degrad)*(i+j+k)));
 	v4=q4*v4;
 	ph4=v4.d.round(1);
@@ -563,6 +548,9 @@ a=Pdef(\1, Pbind(\instrument, \oa,
 	\x,Pbrown(1.neg,1,0.1,inf),
 	\y,Pbrown(1.neg,1,0.1,inf),
 	\z,Pbrown(1.neg,1,0.1,inf),
+	\rx,Pbrown(1.neg,1,0.1,inf),
+	\ry,Pbrown(1.neg,1,0.1,inf),
+	\rz,Pbrown(1.neg,1,0.1,inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 b=Pdef(\2, Pbind(\instrument, \ob,
@@ -576,6 +564,9 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 \x,Pbrown(1.neg,1,0.1,inf),
 	\y,Pbrown(1.neg,1,0.1,inf),
 	\z,Pbrown(1.neg,1,0.1,inf),
+	\rx,Pbrown(1.neg,1,0.1,inf),
+	\ry,Pbrown(1.neg,1,0.1,inf),
+	\rz,Pbrown(1.neg,1,0.1,inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 c=Pdef(\3, Pbind(\instrument, \oc,
@@ -588,6 +579,9 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 \x,Pbrown(1.neg,1,0.1,inf),
 	\y,Pbrown(1.neg,1,0.1,inf),
 	\z,Pbrown(1.neg,1,0.1,inf),
+	\rx,Pbrown(1.neg,1,0.1,inf),
+	\ry,Pbrown(1.neg,1,0.1,inf),
+	\rz,Pbrown(1.neg,1,0.1,inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 d=Pdef(\4, Pbind(\instrument, \od,
@@ -601,6 +595,9 @@ d=Pdef(\4, Pbind(\instrument, \od,
 	\x,Pbrown(1.neg,1,0.1,inf),
 	\y,Pbrown(1.neg,1,0.1,inf),
 	\z,Pbrown(1.neg,1,0.1,inf),
+	\rx,Pbrown(1.neg,1,0.1,inf),
+	\ry,Pbrown(1.neg,1,0.1,inf),
+	\rz,Pbrown(1.neg,1,0.1,inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 )
@@ -632,13 +629,13 @@ var  anglex=0,angley=0,x=0,y=0;
 
 
 	~x = 10000.collect{
-		anglex=(anglex+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		anglex=(anglex+(360-(360/1.6180339887499))).wrap(0,360);
 		x=exp(Complex(0,1)*(anglex.degrad));
 	x=x.real
 	};
 
 ~y = 10000.collect{
-		angley=(angley+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angley=(angley+(360-(360/1.6180339887499))).wrap(0,360);
 		y=exp(Complex(0,1)*(angley.degrad));
 	y=y.imag
 	};
@@ -669,7 +666,7 @@ var m=1,sig,part,anglex=0,x;
 
 100.do{
 	m=m+1;
-	anglex=(anglex+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+	anglex=(anglex+(360-(360/1.6180339887499))).wrap(0,360);
 		x=exp(Complex(0,1)*(anglex.degrad));
 		part=part+Pan2.ar(SinOsc.ar(220*m,mul:m.reciprocal),x.imag);
 };
@@ -752,8 +749,8 @@ osc1=PanAz.ar(2,SinOsc.ar((freq1*m),mul:m.reciprocal,add:w1,phase:SinOsc.ar(0.1,
 osc2=PanAz.ar(2,SinOsc.ar((freq1*m),mul:m.reciprocal,add:w2,phase:SinOsc.ar(0.1,detune2.theta,2pi)), LFSaw.ar(1,detune2.theta.linlin(2pi.neg,2pi,1.neg,1)));
 
 m=m+1;
-angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
-angle2=(angle2+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
+angle2=(angle2+(360-(360/1.6180339887499))).wrap(0,360);
 
 		wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1)*env),cutt));
 	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc2)*env),cutt));
@@ -800,8 +797,8 @@ osc1=PanAz.ar(2,SinOsc.ar((freq1*m),mul:m.reciprocal,add:w1,phase:SinOsc.ar(0.1,
 
 osc2=PanAz.ar(2,SinOsc.ar((freq1*m),mul:m.reciprocal,add:w2,phase:SinOsc.ar(0.1,detune2.theta,2pi)), LFSaw.ar(1,detune2.theta.linlin(2pi.neg,2pi,1.neg,1)));
 m=m+1;
-angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
-angle2=(angle2+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
+angle2=(angle2+(360-(360/1.6180339887499))).wrap(0,360);
 
 		wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1)*env),cutt));
 	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc2)*env),cutt));
@@ -849,8 +846,8 @@ osc1=PanAz.ar(2,SinOsc.ar((freq1*m),mul:m.reciprocal,add:w1,phase:SinOsc.ar(0.1,
 osc2=PanAz.ar(2,SinOsc.ar((freq1*m),mul:m.reciprocal,add:w2,phase:SinOsc.ar(0.1,detune2.theta,2pi)), LFSaw.ar(1,detune2.theta.linlin(2pi.neg,2pi,1.neg,1)));
 
 m=m+1;
-angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
-angle2=(angle2+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
+angle2=(angle2+(360-(360/1.6180339887499))).wrap(0,360);
 
 		wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1)*env),cutt));
 	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc2)*env),cutt));
@@ -898,8 +895,8 @@ osc1=PanAz.ar(2,SinOsc.ar((freq1*m),mul:m.reciprocal,add:w1,phase:SinOsc.ar(0.1,
 osc2=PanAz.ar(2,SinOsc.ar((freq1*m),mul:m.reciprocal,add:w2,phase:SinOsc.ar(0.1,detune2.theta,2pi)), LFSaw.ar(1,detune2.theta.linlin(2pi.neg,2pi,1.neg,1)));
 
 m=m+1;
-angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
-angle2=(angle2+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
+angle2=(angle2+(360-(360/1.6180339887499))).wrap(0,360);
 
 		wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1)*env),cutt));
 	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc2)*env),cutt));
@@ -914,7 +911,7 @@ var  anglex=0,angley=0,x=0,y=0;
 
 
 	~phasex = 10000.collect{
-		anglex=(anglex+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		anglex=(anglex+(360-(360/1.6180339887499))).wrap(0,360);
 		x=exp(Complex(0,1)*(anglex.degrad));
 	x=x.theta
 	};
@@ -1020,8 +1017,8 @@ osc1=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:w1,phase:SinOsc.ar(0.1,detune1.th
 osc2=PanAz.ar(2,SinOsc.ar((freq1*m)*pitch1,mul:w2,phase:SinOsc.ar(0.1,detune2.theta,2pi)), LFSaw.ar(1,detune2.theta.linlin(2pi.neg,2pi,1.neg,1)));
 
 m=m+1;
-angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
-angle2=(angle2+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
+angle2=(angle2+(360-(360/1.6180339887499))).wrap(0,360);
 
 		wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1)),cutt));
 	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc2)),cutt));

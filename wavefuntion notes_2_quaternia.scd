@@ -288,7 +288,7 @@ Synth.new(\oa,[\out,[0,1]]);
 (
 var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt, 0),k = Quaternion(0, 0, 0, (1/3).sqrt);
 var q,v,angle=0,x,y,z,phx,phy,phz;
-var scale=300,m=0,n=0,s,u;
+var scale=300,m=0,n=0,f,u;
 
 ///////0//////////////////////////////////////////////////////////////////////////////////////////////////
     Window.closeAll;
@@ -309,7 +309,7 @@ angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).w
 
 	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 		v=q*v;
-		s=v.a;
+		f=v.a;
 		x=v.b;
 		y=v.c;
 		z=v.d;
@@ -384,7 +384,7 @@ Synth.new(\player);
 var run = true;
 var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt, 0),k = Quaternion(0, 0, 0, (1/3).sqrt);
 var q,v,angle=0,x,y,z,phx,phy,phz;
-var m=0,n=0,r,u;
+var m=0,n=0,r,u,h1,h2;
 
 
 OSCdef(\amp1, { |msg|
@@ -400,18 +400,23 @@ OSCdef(\amp2, { |msg|
 
 ///////0//////////////////////////////////////////////////////////////////////////////////////////////////
     Window.closeAll;
-    w = Window("S",Rect(400,100,800,800),scroll:false).front.alwaysOnTop_(true);
+    w = Window("S",Rect(400,100,100,100),scroll:false).front.alwaysOnTop_(true);
     w.alpha = 1;  w.view.background = Color.green;
 
-~v = UserView.new(w,Rect(0,0,800,800)).background_(Color.white);
+~v = UserView.new(w,Rect(0,0,100,100)).background_(Color.white);
 ~v.animate;
 
 ~v.drawFunc ={
 
 v=Quaternion(0,1,2,3);
 
-800.do{
-800.do{
+
+100.do{
+		h1=~a;
+	h2=~b;
+100.do{
+				h1=~a;
+	h2=~b;
 
 angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
@@ -434,19 +439,20 @@ Pen.width=0.1;
 
 
 
-		Pen.fillRect(Rect.new(m,n,~a,~b));
+		Pen.fillRect(Rect.new(m,n,h1,h2));
 
 
 		Pen.stroke;
-m=m+~a;
+m=m+h1;
 
 	};
 		m=0;
-		n=n+~b;
+		n=n+h2;
+
 	};
 
 
 };
 
-{ while { run } {~v.background_(Color.white); ~v.refresh; (1/60).wait } }.fork(AppClock);
+{ while { run } {~v.background_(Color.white); ~v.refresh; (1/100).wait } }.fork(AppClock);
 )
