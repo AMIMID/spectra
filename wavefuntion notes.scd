@@ -1,10 +1,11 @@
 (
 s.options.numWireBufs = 1024*16;
-s.options.numOutputBusChannels=8;
+s.options.numOutputBusChannels=2;
 s.options.numInputBusChannels=0;
 TempoClock.default.tempo_(120/240);
 s.options.memSize = 8192*64;
-//s.options.blockSize = 64/4;
+s.options.blockSize = 16;
+s.options.maxLogins = 32;
 s.waitForBoot
 )
 Server.killAll
@@ -141,7 +142,7 @@ SynthDef.new(\oa, {
 	v1=Quaternion(0,x,y,z);
 	v2=Quaternion(0,0,1,0);
 	v3=Quaternion(0,0,0,1);
-	bank=32;
+	bank=16;
 	pitch=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
 	freq = (fund*6)*pitch;

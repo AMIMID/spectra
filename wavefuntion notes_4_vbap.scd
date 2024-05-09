@@ -44,7 +44,7 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:2)
 //env=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:2);
 
 	bank.do{
-angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 	v1=q*v1;
 
@@ -117,7 +117,7 @@ osc1_y=PanAz.ar(8,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_
 osc1_z=PanAz.ar(8,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_z,2pi)), LFSaw.ar(1,ph_v1_z.linlin(2pi.neg,2pi,1.neg,1)));
 
 m=m+1;
-angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 		wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
 	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
@@ -174,7 +174,7 @@ osc1_y=PanAz.ar(8,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_
 osc1_z=PanAz.ar(8,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_z,2pi)), LFSaw.ar(1,ph_v1_z.linlin(2pi.neg,2pi,1.neg,1)));
 
 m=m+1;
-angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 	wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
 	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
@@ -232,7 +232,7 @@ osc1_y=PanAz.ar(8,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_
 osc1_z=PanAz.ar(8,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_z,2pi)), LFSaw.ar(1,ph_v1_z.linlin(2pi.neg,2pi,1.neg,1)));
 
 m=m+1;
-angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 	wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
 	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
@@ -258,27 +258,27 @@ v4=Quaternion(0,1,2,3);
 
 
 	~phase1 = 10000.collect{
-		angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 		q1=(cos(angle1.degrad)+(sin(angle1.degrad)*(i+j+k)));
 	v1=q1*v1;
 	ph1=v1.a;
 	};
 ~phase2 = 10000.collect{
-		angle2=(angle2+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angle2=(angle2+(360-(360/1.6180339887499))).wrap(0,360);
 		q2=(cos(angle2.degrad)+(sin(angle2.degrad)*(i+j+k)));
 	v2=q2*v2;
 	ph2=v2.b;
 	};
 
 ~phase3 = 10000.collect{
-		angle3=(angle3+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angle3=(angle3+(360-(360/1.6180339887499))).wrap(0,360);
 		q3=(cos(angle3.degrad)+(sin(angle3.degrad)*(i+j+k)));
 	v3=q3*v3;
 	ph3=v3.c;
 	};
 
 ~phase4 = 10000.collect{
-		angle4=(angle4+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angle4=(angle4+(360-(360/1.6180339887499))).wrap(0,360);
 		q4=(cos(angle4.degrad)+(sin(angle4.degrad)*(i+j+k)));
 	v4=q4*v4;
 	ph4=v4.d;
@@ -297,27 +297,27 @@ v4=Quaternion(0,5,7,12);
 
 
 	~n1 = 10000.collect{
-		angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 		q1=(cos(angle1.degrad)+(sin(angle1.degrad)*(i+j+k)));
 	v1=q1*v1;
 	ph1=v1.a.round(1);
 	};
 ~n2 = 10000.collect{
-		angle2=(angle2+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angle2=(angle2+(360-(360/1.6180339887499))).wrap(0,360);
 		q2=(cos(angle2.degrad)+(sin(angle2.degrad)*(i+j+k)));
 	v2=q2*v2;
 	ph2=v2.b.round(1);
 	};
 
 ~n3 = 10000.collect{
-		angle3=(angle3+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angle3=(angle3+(360-(360/1.6180339887499))).wrap(0,360);
 		q3=(cos(angle3.degrad)+(sin(angle3.degrad)*(i+j+k)));
 	v3=q3*v3;
 	ph3=v3.c.round(1);
 	};
 
 ~n4 = 10000.collect{
-		angle4=(angle4+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angle4=(angle4+(360-(360/1.6180339887499))).wrap(0,360);
 		q4=(cos(angle4.degrad)+(sin(angle4.degrad)*(i+j+k)));
 	v4=q4*v4;
 	ph4=v4.d.round(1);
@@ -462,7 +462,7 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:2)
 
 	bank.do{
 
-	angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+	angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 	v1=q*v1;
@@ -549,7 +549,7 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:3/
 
 	bank.do{
 
-	angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+	angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 	v1=q*v1;
@@ -636,7 +636,7 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:4/
 
 	bank.do{
 
-	angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+	angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 	v1=q*v1;
@@ -724,7 +724,7 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:1)
 
 	bank.do{
 
-	angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+	angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 	v1=q*v1;
@@ -775,27 +775,27 @@ v4=Quaternion(0,1,2,3);
 
 
 	~phase1 = 10000.collect{
-		angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 		q1=(cos(angle1.degrad)+(sin(angle1.degrad)*(i+j+k)));
 	v1=q1*v1;
 	ph1=v1.a;
 	};
 ~phase2 = 10000.collect{
-		angle2=(angle2+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angle2=(angle2+(360-(360/1.6180339887499))).wrap(0,360);
 		q2=(cos(angle2.degrad)+(sin(angle2.degrad)*(i+j+k)));
 	v2=q2*v2;
 	ph2=v2.b;
 	};
 
 ~phase3 = 10000.collect{
-		angle3=(angle3+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angle3=(angle3+(360-(360/1.6180339887499))).wrap(0,360);
 		q3=(cos(angle3.degrad)+(sin(angle3.degrad)*(i+j+k)));
 	v3=q3*v3;
 	ph3=v3.c;
 	};
 
 ~phase4 = 10000.collect{
-		angle4=(angle4+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angle4=(angle4+(360-(360/1.6180339887499))).wrap(0,360);
 		q4=(cos(angle4.degrad)+(sin(angle4.degrad)*(i+j+k)));
 	v4=q4*v4;
 	ph4=v4.d;
@@ -814,27 +814,27 @@ v4=Quaternion(0,5,7,12);
 
 
 	~n1 = 10000.collect{
-		angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 		q1=(cos(angle1.degrad)+(sin(angle1.degrad)*(i+j+k)));
 	v1=q1*v1;
 	ph1=v1.a.round(1);
 	};
 ~n2 = 10000.collect{
-		angle2=(angle2+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angle2=(angle2+(360-(360/1.6180339887499))).wrap(0,360);
 		q2=(cos(angle2.degrad)+(sin(angle2.degrad)*(i+j+k)));
 	v2=q2*v2;
 	ph2=v2.b.round(1);
 	};
 
 ~n3 = 10000.collect{
-		angle3=(angle3+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angle3=(angle3+(360-(360/1.6180339887499))).wrap(0,360);
 		q3=(cos(angle3.degrad)+(sin(angle3.degrad)*(i+j+k)));
 	v3=q3*v3;
 	ph3=v3.c.round(1);
 	};
 
 ~n4 = 10000.collect{
-		angle4=(angle4+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		angle4=(angle4+(360-(360/1.6180339887499))).wrap(0,360);
 		q4=(cos(angle4.degrad)+(sin(angle4.degrad)*(i+j+k)));
 	v4=q4*v4;
 	ph4=v4.d.round(1);
