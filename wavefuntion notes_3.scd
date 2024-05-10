@@ -46,6 +46,8 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:2)
 
 	bank.do{
 
+		angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
+
 	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 	v1=q*v1;
 
@@ -61,7 +63,6 @@ osc1_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_
 
 
 m=m+1;
-angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 		wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
 	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
@@ -105,6 +106,8 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:3/
 
 	bank.do{
 
+		angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
+
 	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 	v1=q*v1;
 
@@ -118,8 +121,7 @@ osc1_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_
 
 osc1_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_z,2pi)), LFSaw.ar(1,ph_v1_z.linlin(2pi.neg,2pi,1.neg,1)));
 
-m=m+1;
-angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
+m=m+1;;
 
 		wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
 	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
@@ -163,6 +165,8 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:4/
 
 	bank.do{
 
+		angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
+
 	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 	v1=q*v1;
 	ph_v1_x=Complex(v1.a.round(0.0001),v1.b.round(0.0001)).phase;
@@ -176,7 +180,6 @@ osc1_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_
 osc1_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_z,2pi)), LFSaw.ar(1,ph_v1_z.linlin(2pi.neg,2pi,1.neg,1)));
 
 m=m+1;
-angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 	wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
 	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
@@ -220,6 +223,8 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:1)
 
 	bank.do{
 
+		angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
+
 	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 	v1=q*v1;
 
@@ -234,7 +239,6 @@ osc1_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_
 osc1_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_z,2pi)), LFSaw.ar(1,ph_v1_z.linlin(2pi.neg,2pi,1.neg,1)));
 
 m=m+1;
-angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 	wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
 	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
@@ -406,3 +410,76 @@ c.play;
 d.play;
 )
 
+
+
+(
+SynthDef.new(\oa, {
+	arg  n1=1, cutt=1200,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1, ry=1,rz=1;
+	var q,i,j,k,v1,v2,v3,ph_v1_x,ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_v3_x,ph_v3_y,ph_v3_z;
+	var osc1,osc2,osc3,freq, env,m=1,bank, pitch, fund, angle=0,r;
+	var osc1_x,osc1_y,osc1_z,osc2_x,osc2_y,osc2_z,osc3_x,osc3_y,osc3_z;
+	var spacex,timex,spacey,timey,spacez,timez;
+	var wrappedOut1 = { |busArray, signalArray|
+	[busArray, signalArray].flop.do { |pair|
+		Out.ar(pair[0], pair[1])}};
+	var wrappedOut2 = { |busArray, signalArray|
+	[busArray, signalArray].flop.do { |pair|
+		Out.ar(pair[0], pair[1])}};
+	var wrappedOut3 = { |busArray, signalArray|
+	[busArray, signalArray].flop.do { |pair|
+		Out.ar(pair[0], pair[1])}};
+
+	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
+
+	r=[rx.pow(2),ry.pow(2),rz.pow(2)].normalizeSum;
+
+	i = Quaternion(0, r.[0], 0, 0);
+	j = Quaternion(0, 0,r.[1], 0);
+	k = Quaternion(0, 0, 0, r.[2]);
+
+	v1=Quaternion(0,x,y,z);
+	bank=16;
+	pitch=2.pow(n1/(2*6));
+	fund=(((4*t)-1)*((4*t)/2));
+	freq = (fund*6)*pitch;
+
+//env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:2);
+//env=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:2);
+
+	bank.do{
+
+		angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
+
+	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
+	v1=q*v1;
+
+	ph_v1_x=Complex(v1.a.round(0.0001),v1.b.round(0.0001)).phase;
+	ph_v1_y=Complex(v1.a.round(0.0001),v1.c.round(0.0001)).phase;
+	ph_v1_z=Complex(v1.a.round(0.0001),v1.d.round(0.0001)).phase;
+
+		spacex=exp(Complex(0,1)*ph_v1_x).real;
+		timex=exp(Complex(0,1)*ph_v1_x).imag;
+		spacey=exp(Complex(0,1)*ph_v1_y).real;
+		timey=exp(Complex(0,1)*ph_v1_y).imag;
+		spacez=exp(Complex(0,1)*ph_v1_z).real;
+		timez=exp(Complex(0,1)*ph_v1_z).imag;
+
+
+osc1_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,timex.linlin(1.neg,1,2pi.neg,2pi),2pi)), LFSaw.ar(1,spacex));
+
+osc1_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,timey.linlin(1.neg,1,2pi.neg,2pi),2pi)), LFSaw.ar(1,spacey));
+
+osc1_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,timez.linlin(1.neg,1,2pi.neg,2pi),2pi)), LFSaw.ar(1,spacez));
+
+
+m=m+1;
+
+		wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)),cutt));
+	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc1_y)),cutt));
+	wrappedOut3.value(out, LPF.ar(LeakDC.ar((osc1_z)),cutt));
+
+	};
+}).add;
+)
+
+Synth.new(\oa)
