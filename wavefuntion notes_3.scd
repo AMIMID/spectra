@@ -1,9 +1,9 @@
 
 (
 s.options.numWireBufs = 1024*16;
-s.options.numOutputBusChannels=2;
+s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=0;
-TempoClock.default.tempo_(120/60);
+TempoClock.default.tempo_(120/120);
 s.options.memSize = 8192*64;
 s.options.blockSize = 16;
 s.options.maxLogins = 32;
@@ -429,7 +429,7 @@ SynthDef.new(\oa, {
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
 
-	var out = NamedControl.kr(\out, [0, 1]);  // multiple buses!
+	var out = NamedControl.kr(\out, [0, 1,2,3]);  // multiple buses!
 
 	r=[rx.pow(2),ry.pow(2),rz.pow(2)].normalizeSum;
 
@@ -443,7 +443,7 @@ SynthDef.new(\oa, {
 	fund=(((4*t)-1)*((4*t)/2));
 	freq = (fund*6)*pitch;
 
-env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:2);
+//env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:2);
 //env=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:2);
 
 	bank.do{
@@ -472,21 +472,39 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:2)
 		niy=2.pow(spacey/(2*6));
 		niz=2.pow(spacez/(2*6));
 
-osc1_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(nix,ph_v1_x,2pi)), LFSaw.ar(nx,ph_v1_x.linlin(2pi.neg,2pi,1.neg,1)));
+osc1_x=Pan4.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(1,ph_v1_x,2pi)),spacex,spacey);
 
-osc1_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(niy,ph_v1_y,2pi)), LFSaw.ar(ny,ph_v1_y.linlin(2pi.neg,2pi,1.neg,1)));
+osc1_y=Pan4.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(1,ph_v1_y,2pi)),spacex,spacey);
 
-osc1_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(niz,ph_v1_z,2pi)), LFSaw.ar(nz,ph_v1_z.linlin(2pi.neg,2pi,1.neg,1)));
+osc1_z=Pan4.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(1,ph_v1_z,2pi)),spacex,spacey);
 
 
 m=m+1;
 
-		wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
-	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
-	wrappedOut3.value(out, LPF.ar(LeakDC.ar((osc1_z)*env),cutt));
+		wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)),cutt));
+	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc1_y)),cutt));
+	wrappedOut3.value(out, LPF.ar(LeakDC.ar((osc1_z)),cutt));
 
 	};
 }).add;
 )
 
 Synth.new(\oa)
+
+a=Pdef(\1, Pbind(\instrument, \oa,
+	//\dur,1/2,
+	\dur,Pseq(~phase1.abs,inf),
+\n1,Pseq(~n1,inf),
+	\cutt,Pbrown(220*2,220*8,100,inf),
+		\out,Pn(Pshuf([0, 1,2,3], 1), inf).clump(4).collect([_]),
+	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
+	\x,Pbrown(1.neg,1,0.1,inf),
+	\y,Pbrown(1.neg,1,0.1,inf),
+	\z,Pbrown(1.neg,1,0.1,inf),
+	\rx,Pbrown(1.neg,1,0.1,inf),
+	\ry,Pbrown(1.neg,1,0.1,inf),
+	\rz,Pbrown(1.neg,1,0.1,inf),
+	\decay,Pbrown(2,8,1,inf);
+));
+
+a.play;
