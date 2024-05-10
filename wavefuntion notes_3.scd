@@ -418,7 +418,7 @@ SynthDef.new(\oa, {
 	var q,i,j,k,v1,v2,v3,ph_v1_x,ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_v3_x,ph_v3_y,ph_v3_z;
 	var osc1,osc2,osc3,freq, env,m=1,bank, pitch, fund, angle=0,r;
 	var osc1_x,osc1_y,osc1_z,osc2_x,osc2_y,osc2_z,osc3_x,osc3_y,osc3_z;
-	var spacex,timex,spacey,timey,spacez,timez;
+	var spacex,timex,spacey,timey,spacez,timez,nx,ny,nz,nix,niy,niz;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
@@ -464,12 +464,19 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:2)
 		spacez=exp(Complex(0,1)*ph_v1_z).real;
 		timez=exp(Complex(0,1)*ph_v1_z).imag;
 
+		nx=2.pow(timex/(2*6));
+		ny=2.pow(timey/(2*6));
+		nz=2.pow(timez/(2*6));
 
-osc1_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(timex,ph_v1_x,2pi)), LFSaw.ar(timex,spacex));
+		nix=2.pow(spacex/(2*6));
+		niy=2.pow(spacey/(2*6));
+		niz=2.pow(spacez/(2*6));
 
-osc1_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(timey,ph_v1_y,2pi)), LFSaw.ar(timey,spacey));
+osc1_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(nix,ph_v1_x,2pi)), LFSaw.ar(nx,spacex));
 
-osc1_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(timez,ph_v1_z,2pi)), LFSaw.ar(timez,spacez));
+osc1_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(niy,ph_v1_y,2pi)), LFSaw.ar(ny,spacey));
+
+osc1_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(niz,ph_v1_z,2pi)), LFSaw.ar(nz,spacez));
 
 
 m=m+1;
