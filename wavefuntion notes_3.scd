@@ -472,11 +472,11 @@ env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:2)
 		niy=2.pow(spacey/(2*6));
 		niz=2.pow(spacez/(2*6));
 
-osc1_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(nix,ph_v1_x,2pi)), LFSaw.ar(nx,spacex));
+osc1_x=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(nix,ph_v1_x,2pi)), LFSaw.ar(nx,ph_v1_x.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc1_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(niy,ph_v1_y,2pi)), LFSaw.ar(ny,spacey));
+osc1_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(niy,ph_v1_y,2pi)), LFSaw.ar(ny,ph_v1_y.linlin(2pi.neg,2pi,1.neg,1)));
 
-osc1_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(niz,ph_v1_z,2pi)), LFSaw.ar(nz,spacez));
+osc1_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(niz,ph_v1_z,2pi)), LFSaw.ar(nz,ph_v1_z.linlin(2pi.neg,2pi,1.neg,1)));
 
 
 m=m+1;
