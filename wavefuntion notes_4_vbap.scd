@@ -1410,3 +1410,76 @@ c.play;
 d.play;
 )
 
+/////////////////////////////////
+
+
+
+(
+var i = Quaternion(0, 0, 0, 0),j = Quaternion(0, 0, 0, 0),k = Quaternion(0, 0, 0, 1),q1,q2,v,angle=0,n;
+
+
+10.do{
+	angle=(angle+(90)).wrap(0,360);
+ 	q1=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
+ 	q2=q1.conjugate;
+	v=Quaternion(0,1,2,3);
+	v=q1*v;
+	//v=v*q2 opposite direction rotation
+	//v=v*q2;
+ 	//v.coordinates.round(0.0001).postln;
+	n=Cartesian(v.b,v.c,v.d);
+	n.theta.postln;
+}
+
+)
+
+
+Buffer.freeAll
+(
+// 3D
+a = VBAPSpeakerArray.new(3, [[0, 45], [90, 45], [180, 45], [-90, 45],[0, -45], [90, -45], [180, -45], [-90, -45],[0, 0], [45, 0], [90, 0], [135, 0],[180, 0], [-135, 0], [-90, 0], [-45,0]]); // torus geo dome
+~b = Buffer.loadCollection(s, a.getSetsAndMatrices);
+)
+
+(
+SynthDef.new(\oa, {
+	arg  n=1, cutt=20000,decay=3,harm=6,t=2;
+	var amps,tf,tfBuf=0;
+	var detune1, osc1;
+	var freq1, env,m=1,x=0;
+	var bank, angle1, pitch;
+	var fund,trig = Impulse.ar(0);
+	var wrappedOut = { |busArray, signalArray|
+	// magic trick to expand to the larger of the two arrays
+	[busArray, signalArray].flop.do { |pair|
+		Out.ar(pair[0], pair[1])
+	}
+};
+	var out = NamedControl.kr(\out, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]);  // multiple buses!
+
+	bank=6;
+	angle1=45;
+	pitch=2.pow(n/(2*6));
+fund=(((4*t)-1)*((4*t)/2));
+	freq1 = fund*harm;
+	freq1=freq1*(1/1);
+
+	bank.do{
+
+env=EnvGen.ar(Env.perc(0.05,decay,pitch.reciprocal),trig,doneAction:2);
+//env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2);
+
+		detune1=exp(Complex(0,1)*(angle1.degrad));
+
+			osc1=VBAP.ar(16,SinOsc.ar((freq1*m+detune1.theta)*pitch,
+			mul:m.reciprocal,
+			phase:2pi/detune1.theta),~b.bufnum,detune1.real.raddeg.wrap(-180,180),detune1.imag.raddeg.wrap(-90,90));
+
+x=x+1;
+	m=x+1;
+	m.postln;
+	angle1=(angle1+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+		wrappedOut.value(out, LPF.ar(LeakDC.ar((osc1 )* env),cutt));
+///trig = TDelay.ar(trig, 1);
+	};
+}).add;
