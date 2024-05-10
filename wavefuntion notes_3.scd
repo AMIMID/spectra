@@ -121,7 +121,7 @@ osc1_y=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_
 
 osc1_z=PanAz.ar(2,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_z,2pi)), LFSaw.ar(1,ph_v1_z.linlin(2pi.neg,2pi,1.neg,1)));
 
-m=m+1;;
+m=m+1;
 
 		wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
 	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
@@ -269,12 +269,14 @@ v4=Quaternion(0,1,2,3);
 		q1=(cos(angle1.degrad)+(sin(angle1.degrad)*(i+j+k)));
 	v1=q1*v1;
 	ph1=v1.a;
+	ph1=2.pow(ph1/(2*6));
 	};
 ~phase2 = 10000.collect{
 		angle2=(angle2+(360-(360/1.6180339887499))).wrap(0,360);
 		q2=(cos(angle2.degrad)+(sin(angle2.degrad)*(i+j+k)));
 	v2=q2*v2;
 	ph2=v2.b;
+	ph2=2.pow(ph2/(2*6));
 	};
 
 ~phase3 = 10000.collect{
@@ -282,6 +284,7 @@ v4=Quaternion(0,1,2,3);
 		q3=(cos(angle3.degrad)+(sin(angle3.degrad)*(i+j+k)));
 	v3=q3*v3;
 	ph3=v3.c;
+	ph3=2.pow(ph3/(2*6));
 	};
 
 ~phase4 = 10000.collect{
@@ -289,6 +292,7 @@ v4=Quaternion(0,1,2,3);
 		q4=(cos(angle4.degrad)+(sin(angle4.degrad)*(i+j+k)));
 	v4=q4*v4;
 	ph4=v4.d;
+	ph4=2.pow(ph4/(2*6));
 	};
 
 )
@@ -341,7 +345,7 @@ v4=Quaternion(0,5,7,12);
 (
 a=Pdef(\1, Pbind(\instrument, \oa,
 	//\dur,1/2,
-	\dur,Pseq(~phase1.abs,inf),
+	\dur,Pseq(~phase1,inf),
 \n1,Pseq(~n1,inf),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
@@ -356,7 +360,7 @@ a=Pdef(\1, Pbind(\instrument, \oa,
 ));
 b=Pdef(\2, Pbind(\instrument, \ob,
 	//\dur,1/2,
-	\dur,Pseq(~phase2.abs,inf),
+	\dur,Pseq(~phase2,inf),
 \n1,Pseq(~n2,inf),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
@@ -372,7 +376,7 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 ));
 c=Pdef(\3, Pbind(\instrument, \oc,
 	//\dur,1/2,
-	\dur,Pseq(~phase3.abs,inf),
+	\dur,Pseq(~phase3,inf),
 \n1,Pseq(~n3,inf),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
@@ -387,7 +391,7 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 ));
 d=Pdef(\4, Pbind(\instrument, \od,
 	//\dur,1/2,
-	\dur,Pseq(~phase4.abs,inf),
+	\dur,Pseq(~phase4,inf),
 \n1,Pseq(~n4,inf),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 	\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
