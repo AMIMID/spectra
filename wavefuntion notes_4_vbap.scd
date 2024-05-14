@@ -2,12 +2,12 @@
 s.options.numWireBufs = 1024*16;
 s.options.numOutputBusChannels=16;
 s.options.numInputBusChannels=0;
-TempoClock.default.tempo_(120/240);
+TempoClock.default.tempo_(120/400);
 s.options.memSize = 8192*64;
 //s.options.blockSize = 64/4;
+s.options.maxNodes = 1024 * 64;
 s.waitForBoot
 )
-
 
 (
 (
@@ -1414,31 +1414,12 @@ d.play;
 
 
 
-(
-var i = Quaternion(0, 0, 0, 0),j = Quaternion(0, 0, 0, 0),k = Quaternion(0, 0, 0, 1),q1,q2,v,angle=0,n;
-
-
-10.do{
-	angle=(angle+(90)).wrap(0,360);
- 	q1=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
- 	q2=q1.conjugate;
-	v=Quaternion(0,1,2,3);
-	v=q1*v;
-	//v=v*q2 opposite direction rotation
-	//v=v*q2;
- 	//v.coordinates.round(0.0001).postln;
-	n=Cartesian(v.b,v.c,v.d);
-	n.theta.postln;
-}
-
-)
-
 
 Buffer.freeAll
 (
 // 3D
-a = VBAPSpeakerArray.new(3, [[0, 45], [90, 45], [180, 45], [-90, 45],[0, -45], [90, -45], [180, -45], [-90, -45],[0, 0], [45, 0], [90, 0], [135, 0],[180, 0], [-135, 0], [-90, 0], [-45,0]]); // torus geo dome
-~b = Buffer.loadCollection(s, a.getSetsAndMatrices);
+~a = VBAPSpeakerArray.new(3, [[0, 45], [90, 45], [180, 45], [-90, 45],[0, -45], [90, -45], [180, -45], [-90, -45],[0, 0], [45, 0], [90, 0], [135, 0],[180, 0], [-135, 0], [-90, 0], [-45,0]]); // torus geo dome
+~b = Buffer.loadCollection(s, ~a.getSetsAndMatrices);
 )
 
 

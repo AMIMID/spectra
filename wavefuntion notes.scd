@@ -20,18 +20,19 @@ exp(Complex(0,1)*(180.degrad)).real;
 
 
 (
-var i = Quaternion(0, 0, 0, 0),j = Quaternion(0, 0, 0, 0),k = Quaternion(0, 0, 0, 1),q1,q2,v,angle=0;
+var i = Quaternion(0, 0, 0, 0),j = Quaternion(0, 0, 0, 0),k = Quaternion(0, 0, 0, 1),q1,q2,v,angle=0,n;
 
 
-1.do{
-	angle=(angle+(180)).wrap(0,360);
+10.do{
+	angle=(angle+(137.5)).wrap(0,360);
  	q1=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
  	q2=q1.conjugate;
-	v=Quaternion(0,1,0,0);
+	v=Quaternion(0,1,2,3);
 	v=q1*v;
 	//v=v*q2 opposite direction rotation
 	//v=v*q2;
- 	v.coordinates.round(0.0001).postln
+ 	n=v.coordinates.round(0.0001).postln;
+	n.normalize(1.neg,1).postln;
  }
 
 )
