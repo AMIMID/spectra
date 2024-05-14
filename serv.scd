@@ -444,3 +444,11 @@ d.play;
 
 
 ~s1.scope
+
+(
+~s1.record(numChannels:2);
+~s2.record(numChannels:2);
+~s3.record(numChannels:2);
+~s4.record(numChannels:2);
+)
+~s4.stopRecording
