@@ -1,7 +1,7 @@
 
 (
 s.options.numWireBufs = 1024*16;
-s.options.numOutputBusChannels=6;
+s.options.numOutputBusChannels=3;
 s.options.numInputBusChannels=0;
 TempoClock.default.tempo_(120/120);
 s.options.memSize = 8192*64;
@@ -12,9 +12,65 @@ s.waitForBoot
 
 
 (
-~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Dokuments/MUSIC/untitled.wav",channels:0 );
-~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Dokuments/MUSIC/untitled.wav",channels:0 );
-~c3 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Dokuments/MUSIC/untitled.wav",channels:0 );
+var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt, 0),k = Quaternion(0, 0, 0, (1/3).sqrt),q1,q2,v1,v2,v3,angle=0,ph1x,ph1y,ph1z,ph2x,ph2y,ph2z,ph3x,ph3y,ph3z;
+
+
+10.do{
+	angle=(angle+(137.5)).wrap(0,360);
+ 	q1=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
+	v1=Quaternion(0,1,2,3);
+	v1=q1*v1;
+ 	//v1.coordinates.round(0.0001).postln;
+	ph1x=Complex(v1.a.round(0.0001),v1.b.round(0.0001)).phase;
+	ph1y=Complex(v1.a.round(0.0001),v1.c.round(0.0001)).phase;
+	ph1z=Complex(v1.a.round(0.0001),v1.d.round(0.0001)).phase;
+	ph1x.postln;
+	ph1y.postln;
+	ph1z.postln;
+ }
+
+)
+2.7713283734942
+3.0323613723907
+2.4481334285491
+
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/KIMERA - MEWTWO.wav",channels:0 );
+(
+(
+SynthDef("help-phaseShift", { arg out=0;
+        var in, chain;
+        in = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0);
+        chain = FFT(LocalBuf(2048), in);
+        chain = PV_PhaseShift(chain,2.7713283734942);
+        Out.ar(out, 0.1 * IFFT(chain));
+}).play(s);
+);
+(
+SynthDef("help-phaseShift", { arg out=1;
+        var in, chain;
+        in = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0);
+        chain = FFT(LocalBuf(2048), in);
+        chain = PV_PhaseShift(chain,3.0323613723907);
+        Out.ar(out, 0.1 * IFFT(chain));
+}).play(s);
+);
+(
+SynthDef("help-phaseShift", { arg out=2;
+        var in, chain;
+        in = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0);
+        chain = FFT(LocalBuf(2048), in);
+        chain = PV_PhaseShift(chain,2.4481334285491);
+        Out.ar(out, 0.1 * IFFT(chain));
+}).play(s);
+);
+)
+
+s.record(numChannels:3)
+
+(
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/x.wav",channels:0 );
+~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/y.wav",channels:0 );
+~c3 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/z.wav",channels:0 );
 )
 
 
@@ -101,9 +157,7 @@ s.waitForBoot
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
 
-	var outx = NamedControl.kr(\out1, [0, 1,2,3]);  // multiple buses!
-	var outy = NamedControl.kr(\out2, [4, 0,5,2]);
-	var outz = NamedControl.kr(\out3, [4, 1,5,3]);
+	var out = NamedControl.kr(\out1, [0, 1]);  // multiple buses!
 
     in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0);
 	 in2 = PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c2), loop: 0);
@@ -142,9 +196,9 @@ s.waitForBoot
 	b=b+1;
 
 
-wrappedOut1.value(outx,PanAz.ar(2,LeakDC.ar(IFFT(chainx)),LFSaw.ar(1,phx.linlin(2pi.neg,2pi,1.neg,1))));
-wrappedOut2.value(outy,PanAz.ar(2,LeakDC.ar(IFFT(chainy)),LFSaw.ar(1,phy.linlin(2pi.neg,2pi,1.neg,1))));
-wrappedOut3.value(outz,PanAz.ar(2,LeakDC.ar(IFFT(chainz)),LFSaw.ar(1,phz.linlin(2pi.neg,2pi,1.neg,1))));
+wrappedOut1.value(out,PanAz.ar(2,LeakDC.ar(IFFT(chainx)),LFSaw.ar(1,phx.linlin(2pi.neg,2pi,1.neg,1))));
+wrappedOut2.value(out,PanAz.ar(2,LeakDC.ar(IFFT(chainy)),LFSaw.ar(1,phy.linlin(2pi.neg,2pi,1.neg,1))));
+wrappedOut3.value(out,PanAz.ar(2,LeakDC.ar(IFFT(chainz)),LFSaw.ar(1,phz.linlin(2pi.neg,2pi,1.neg,1))));
 
 	}
 }.play
