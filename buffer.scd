@@ -21,12 +21,13 @@ var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt, 0),k = 
 	v1=Quaternion(0,1,2,3);
 	v1=q1*v1;
  	//v1.coordinates.round(0.0001).postln;
+	v1.b.postln;
 	ph1x=Complex(v1.a.round(0.0001),v1.b.round(0.0001)).phase;
 	ph1y=Complex(v1.a.round(0.0001),v1.c.round(0.0001)).phase;
 	ph1z=Complex(v1.a.round(0.0001),v1.d.round(0.0001)).phase;
-	ph1x.postln;
-	ph1y.postln;
-	ph1z.postln;
+	//ph1x.postln;
+	//ph1y.postln;
+	//ph1z.postln;
  }
 
 )
@@ -147,17 +148,6 @@ s.record(numChannels:3)
     var in1,in2,in3, chainx,chainy,chainz,b=0,detune1,angle=0,sx,sy,sz,tx,ty,tz;
 	var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt, 0),k = Quaternion(0, 0, 0, (1/3).sqrt);
 	var v,q,phx,phy,phz;
-	var wrappedOut1 = { |busArray, signalArray|
-	[busArray, signalArray].flop.do { |pair|
-		Out.ar(pair[0], pair[1])}};
-	var wrappedOut2 = { |busArray, signalArray|
-	[busArray, signalArray].flop.do { |pair|
-		Out.ar(pair[0], pair[1])}};
-	var wrappedOut3 = { |busArray, signalArray|
-	[busArray, signalArray].flop.do { |pair|
-		Out.ar(pair[0], pair[1])}};
-
-	var out = NamedControl.kr(\out1, [0, 1]);  // multiple buses!
 
     in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0);
 	 in2 = PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c2), loop: 0);
@@ -196,9 +186,9 @@ s.record(numChannels:3)
 	b=b+1;
 
 
-wrappedOut1.value(out,PanAz.ar(2,LeakDC.ar(IFFT(chainx)),LFSaw.ar(1,phx.linlin(2pi.neg,2pi,1.neg,1))));
-wrappedOut2.value(out,PanAz.ar(2,LeakDC.ar(IFFT(chainy)),LFSaw.ar(1,phy.linlin(2pi.neg,2pi,1.neg,1))));
-wrappedOut3.value(out,PanAz.ar(2,LeakDC.ar(IFFT(chainz)),LFSaw.ar(1,phz.linlin(2pi.neg,2pi,1.neg,1))));
+Out.ar(0,Pan2.ar(LeakDC.ar(IFFT(chainx)),v.b.wrap(1.neg,1)));
+Out.ar(0,Pan2.ar(LeakDC.ar(IFFT(chainy)),v.c.wrap(1.neg,1)));
+Out.ar(0,Pan2.ar(LeakDC.ar(IFFT(chainz)),v.d.wrap(1.neg,1)));
 
 	}
 }.play
