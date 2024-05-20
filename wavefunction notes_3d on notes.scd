@@ -12,11 +12,11 @@ s.waitForBoot
 
 
 (
-var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt, 0),k = Quaternion(0, 0, 0, (1/3).sqrt),q1,q2,v1,v2,v3,angle=0,ph1x,ph1y,ph1z,ph2x,ph2y,ph2z,ph3x,ph3y,ph3z,r;
+var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt, 0),k = Quaternion(0, 0, 0, (1/3).sqrt),q1,q2,v1,v2,v3,angle=0,ph1x,ph1y,ph1z,ph2x,ph2y,ph2z,ph3x,ph3y,ph3z,r,cc;
 
-r=[1,2,3].normalizeSum;
-100.do{
-	angle=(angle+(137.5)).wrap(0,360);
+r=[1,0,0].normalizeSum;
+2.do{
+	angle=(angle+(90)).wrap(0,360);
  	q1=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 	v1=Quaternion(0,r.[0].sqrt,r.[1].sqrt,r.[2].sqrt);
 	v1=q1*v1;
@@ -28,10 +28,12 @@ r=[1,2,3].normalizeSum;
 	//ph1x.postln;
 	//ph1y.postln;
 	//ph1z.postln;
+	cc=Cartesian(v1.b,v1.c,v1.d);
+	cc.phi.postln;
  }
 
 )
-
+90.degrad
 [1,0.5,0.8].normalizeSum
 (
 (

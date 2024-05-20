@@ -2,7 +2,7 @@
 s.options.numWireBufs = 1024*16;
 s.options.numOutputBusChannels=16;
 s.options.numInputBusChannels=0;
-TempoClock.default.tempo_(120/400);
+TempoClock.default.tempo_(120/200);
 s.options.memSize = 8192*64;
 //s.options.blockSize = 64/4;
 s.options.maxNodes = 1024 * 64;
@@ -1898,12 +1898,12 @@ b.play;
 c.play;
 d.play;
 )
-/////////correct
+/////////correct//cube with vbap
 
 Buffer.freeAll
 (
 // 3D
-~a = VBAPSpeakerArray.new(3, [[0, 45], [90, 45], [180, 45], [-90, 45],[0, -45], [90, -45], [180, -45], [-90, -45],[0, 0], [45, 0], [90, 0], [135, 0],[180, 0], [-135, 0], [-90, 0], [-45,0]]); // torus geo dome
+~a = VBAPSpeakerArray.new(3, [[0, 45], [90, 45], [180, 45], [90.neg, 45],[0, 45.neg], [90, 45.neg], [180, 45.neg], [90.neg, 45.neg]]);
 ~b = Buffer.loadCollection(s, ~a.getSetsAndMatrices);
 )
 
@@ -1912,9 +1912,10 @@ Buffer.freeAll
 (
 SynthDef.new(\oa, {
 	arg  n1=1, cutt=440,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1, ry=1,rz=1;
-	var q,q1,i,j,k,v1,v2,v3,ph_v1_x,ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z;
+	var q,q1,i,j,k,v,v1,v2,v3,ph_v1_x,ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_v_x,ph_v_y,ph_v_z;
 	var osc1,osc2,osc3,freq, env,m=1,bank, pitch, fund, angle=0,angle1=90,r,p;
-	var osc1_x,osc1_y,osc1_z,osc2_x,osc2_y,osc2_z;
+	var osc1_x,osc1_y,osc1_z,osc2_x,osc2_y,osc2_z,cx,cy,cz;
+	var spacex,timex,spacey,timey,spacez,timez;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
@@ -1924,19 +1925,9 @@ SynthDef.new(\oa, {
 	var wrappedOut3 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
-	var wrappedOut4 = { |busArray, signalArray|
-	[busArray, signalArray].flop.do { |pair|
-		Out.ar(pair[0], pair[1])}};
-	var wrappedOut5 = { |busArray, signalArray|
-	[busArray, signalArray].flop.do { |pair|
-		Out.ar(pair[0], pair[1])}};
-	var wrappedOut6 = { |busArray, signalArray|
-	[busArray, signalArray].flop.do { |pair|
-		Out.ar(pair[0], pair[1])}};
 
-	var outx = NamedControl.kr(\out1, [0, 1]);  // multiple buses!
-	var outy = NamedControl.kr(\out2, [2, 3]);
-	var outz = NamedControl.kr(\out3, [4, 5]);
+
+	var out = NamedControl.kr(\out, [0, 1, 2, 3, 4, 5, 6, 7]);  // multiple buses!
 
 	r=[rx,ry,rz].normalizeSum;
 
@@ -1945,9 +1936,11 @@ SynthDef.new(\oa, {
 	k = Quaternion(0, 0, 0, r.[2].sqrt);
 
 	p=[x,y,z].normalizeSum;
-	v1=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
-	v2=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
-	bank=16;
+	v1=Quaternion(0,p.[0].sqrt,0,0);
+	v2=Quaternion(0,0,p.[1].sqrt,0);
+	v3=Quaternion(0,0,0,p.[2].sqrt);
+	v=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
+	bank=8;
 	pitch=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
 	freq = (fund*6)*pitch;
@@ -1962,38 +1955,32 @@ angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 	q1=(cos(angle1.degrad)+(sin(angle1.degrad)*(i+j+k)));
 
+	v=q*v;
 	v1=q*v1;
-	v2=q1*v2;
+	v2=q*v2;
+	v3=q*v3;
 
-	ph_v1_x=Complex(v1.a.round(0.0001),v1.b.round(0.0001)).phase;
-	ph_v1_y=Complex(v1.a.round(0.0001),v1.c.round(0.0001)).phase;
-	ph_v1_z=Complex(v1.a.round(0.0001),v1.d.round(0.0001)).phase;
+	cx=Cartesian(v1.b,v1.c,v1.d);
+	cy=Cartesian(v2.b,v2.c,v2.d);
+	cz=Cartesian(v3.b,v3.c,v3.d);
 
-	ph_v2_x=Complex(v2.a.round(0.0001),v2.b.round(0.0001)).phase;
-	ph_v2_y=Complex(v2.a.round(0.0001),v2.c.round(0.0001)).phase;
-	ph_v2_z=Complex(v2.a.round(0.0001),v2.d.round(0.0001)).phase;
 
-osc1_x=Pan2.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_x,2pi)),v1.b);
+	ph_v_x=Complex(v.a.round(0.0001),v.b.round(0.0001)).phase;
+	ph_v_y=Complex(v.a.round(0.0001),v.c.round(0.0001)).phase;
+	ph_v_z=Complex(v.a.round(0.0001),v.d.round(0.0001)).phase;
 
-osc1_y=Pan2.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_y,2pi)),v1.c);
 
-osc1_z=Pan2.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_z,2pi)),v1.d);
-
-osc2_x=Pan2.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_x,2pi)),v2.b);
-
-osc2_y=Pan2.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_y,2pi)),v2.c);
-
-osc2_z=Pan2.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_z,2pi)),v2.d);
+osc1_x=VBAP.ar(8,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(1,ph_v_x,2pi)),~b.bufnum,cx.theta,cx.phi);
+osc1_y=VBAP.ar(8,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(1,ph_v_y,2pi)),~b.bufnum,cy.theta,cy.phi);
+osc1_z=VBAP.ar(8,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(1,ph_v_z,2pi)),~b.bufnum,cz.theta,cz.phi);
 
 
 m=m+1;
 
-	wrappedOut1.value(outx,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
-	wrappedOut2.value(outy, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
-	wrappedOut3.value(outz, LPF.ar(LeakDC.ar((osc1_z)*env),cutt));
-	wrappedOut4.value(outx,LPF.ar(LeakDC.ar((osc2_x)*env),cutt));
-	wrappedOut5.value(outy, LPF.ar(LeakDC.ar((osc2_y)*env),cutt));
-	wrappedOut6.value(outz, LPF.ar(LeakDC.ar((osc2_z)*env),cutt));
+	wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
+	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
+	wrappedOut3.value(out, LPF.ar(LeakDC.ar((osc1_z)*env),cutt));
+
 
 	};
 }).add;
@@ -2001,9 +1988,10 @@ m=m+1;
 (
 SynthDef.new(\ob, {
 	arg  n1=1, cutt=440,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1, ry=1,rz=1;
-	var q,q1,i,j,k,v1,v2,v3,ph_v1_x,ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z;
+	var q,q1,i,j,k,v,v1,v2,v3,ph_v1_x,ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_v_x,ph_v_y,ph_v_z;
 	var osc1,osc2,osc3,freq, env,m=1,bank, pitch, fund, angle=0,angle1=90,r,p;
-	var osc1_x,osc1_y,osc1_z,osc2_x,osc2_y,osc2_z;
+	var osc1_x,osc1_y,osc1_z,osc2_x,osc2_y,osc2_z,cx,cy,cz;
+	var spacex,timex,spacey,timey,spacez,timez;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
@@ -2013,19 +2001,8 @@ SynthDef.new(\ob, {
 	var wrappedOut3 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
-	var wrappedOut4 = { |busArray, signalArray|
-	[busArray, signalArray].flop.do { |pair|
-		Out.ar(pair[0], pair[1])}};
-	var wrappedOut5 = { |busArray, signalArray|
-	[busArray, signalArray].flop.do { |pair|
-		Out.ar(pair[0], pair[1])}};
-	var wrappedOut6 = { |busArray, signalArray|
-	[busArray, signalArray].flop.do { |pair|
-		Out.ar(pair[0], pair[1])}};
 
-	var outx = NamedControl.kr(\out1, [0, 1]);  // multiple buses!
-	var outy = NamedControl.kr(\out2, [2, 3]);
-	var outz = NamedControl.kr(\out3, [4, 5]);
+	var out = NamedControl.kr(\out, [0, 1, 2, 3, 4, 5, 6, 7]);  // multiple buses!
 
 	r=[rx,ry,rz].normalizeSum;
 
@@ -2034,9 +2011,11 @@ SynthDef.new(\ob, {
 	k = Quaternion(0, 0, 0, r.[2].sqrt);
 
 	p=[x,y,z].normalizeSum;
-	v1=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
-	v2=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
-	bank=16;
+	v1=Quaternion(0,p.[0].sqrt,0,0);
+	v2=Quaternion(0,0,p.[1].sqrt,0);
+	v3=Quaternion(0,0,0,p.[2].sqrt);
+	v=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
+	bank=8;
 	pitch=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
 	freq = (fund*6)*pitch;
@@ -2051,38 +2030,32 @@ angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 	q1=(cos(angle1.degrad)+(sin(angle1.degrad)*(i+j+k)));
 
+	v=q*v;
 	v1=q*v1;
-	v2=q1*v2;
+	v2=q*v2;
+	v3=q*v3;
 
-	ph_v1_x=Complex(v1.a.round(0.0001),v1.b.round(0.0001)).phase;
-	ph_v1_y=Complex(v1.a.round(0.0001),v1.c.round(0.0001)).phase;
-	ph_v1_z=Complex(v1.a.round(0.0001),v1.d.round(0.0001)).phase;
+	cx=Cartesian(v1.b,v1.c,v1.d);
+	cy=Cartesian(v2.b,v2.c,v2.d);
+	cz=Cartesian(v3.b,v3.c,v3.d);
 
-	ph_v2_x=Complex(v2.a.round(0.0001),v2.b.round(0.0001)).phase;
-	ph_v2_y=Complex(v2.a.round(0.0001),v2.c.round(0.0001)).phase;
-	ph_v2_z=Complex(v2.a.round(0.0001),v2.d.round(0.0001)).phase;
 
-osc1_x=Pan2.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_x,2pi)),v1.b);
+	ph_v_x=Complex(v.a.round(0.0001),v.b.round(0.0001)).phase;
+	ph_v_y=Complex(v.a.round(0.0001),v.c.round(0.0001)).phase;
+	ph_v_z=Complex(v.a.round(0.0001),v.d.round(0.0001)).phase;
 
-osc1_y=Pan2.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_y,2pi)),v1.c);
 
-osc1_z=Pan2.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_z,2pi)),v1.d);
-
-osc2_x=Pan2.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_x,2pi)),v2.b);
-
-osc2_y=Pan2.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_y,2pi)),v2.c);
-
-osc2_z=Pan2.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_z,2pi)),v2.d);
+osc1_x=VBAP.ar(8,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(1,ph_v_x,2pi)),~b.bufnum,cx.theta,cx.phi);
+osc1_y=VBAP.ar(8,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(1,ph_v_y,2pi)),~b.bufnum,cy.theta,cy.phi);
+osc1_z=VBAP.ar(8,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(1,ph_v_z,2pi)),~b.bufnum,cz.theta,cz.phi);
 
 
 m=m+1;
 
-	wrappedOut1.value(outx,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
-	wrappedOut2.value(outy, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
-	wrappedOut3.value(outz, LPF.ar(LeakDC.ar((osc1_z)*env),cutt));
-	wrappedOut4.value(outx,LPF.ar(LeakDC.ar((osc2_x)*env),cutt));
-	wrappedOut5.value(outy, LPF.ar(LeakDC.ar((osc2_y)*env),cutt));
-	wrappedOut6.value(outz, LPF.ar(LeakDC.ar((osc2_z)*env),cutt));
+	wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
+	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
+	wrappedOut3.value(out, LPF.ar(LeakDC.ar((osc1_z)*env),cutt));
+
 
 	};
 }).add;
@@ -2090,9 +2063,10 @@ m=m+1;
 (
 SynthDef.new(\oc, {
 	arg  n1=1, cutt=440,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1, ry=1,rz=1;
-	var q,q1,i,j,k,v1,v2,v3,ph_v1_x,ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z;
+	var q,q1,i,j,k,v,v1,v2,v3,ph_v1_x,ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_v_x,ph_v_y,ph_v_z;
 	var osc1,osc2,osc3,freq, env,m=1,bank, pitch, fund, angle=0,angle1=90,r,p;
-	var osc1_x,osc1_y,osc1_z,osc2_x,osc2_y,osc2_z;
+	var osc1_x,osc1_y,osc1_z,osc2_x,osc2_y,osc2_z,cx,cy,cz;
+	var spacex,timex,spacey,timey,spacez,timez;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
@@ -2102,19 +2076,9 @@ SynthDef.new(\oc, {
 	var wrappedOut3 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
-	var wrappedOut4 = { |busArray, signalArray|
-	[busArray, signalArray].flop.do { |pair|
-		Out.ar(pair[0], pair[1])}};
-	var wrappedOut5 = { |busArray, signalArray|
-	[busArray, signalArray].flop.do { |pair|
-		Out.ar(pair[0], pair[1])}};
-	var wrappedOut6 = { |busArray, signalArray|
-	[busArray, signalArray].flop.do { |pair|
-		Out.ar(pair[0], pair[1])}};
 
-	var outx = NamedControl.kr(\out1, [0, 1]);  // multiple buses!
-	var outy = NamedControl.kr(\out2, [2, 3]);
-	var outz = NamedControl.kr(\out3, [4, 5]);
+
+	var out = NamedControl.kr(\out, [0, 1, 2, 3, 4, 5, 6, 7]);  // multiple buses!
 
 	r=[rx,ry,rz].normalizeSum;
 
@@ -2123,9 +2087,11 @@ SynthDef.new(\oc, {
 	k = Quaternion(0, 0, 0, r.[2].sqrt);
 
 	p=[x,y,z].normalizeSum;
-	v1=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
-	v2=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
-	bank=16;
+	v1=Quaternion(0,p.[0].sqrt,0,0);
+	v2=Quaternion(0,0,p.[1].sqrt,0);
+	v3=Quaternion(0,0,0,p.[2].sqrt);
+	v=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
+	bank=8;
 	pitch=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
 	freq = (fund*6)*pitch;
@@ -2140,38 +2106,32 @@ angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 	q1=(cos(angle1.degrad)+(sin(angle1.degrad)*(i+j+k)));
 
+	v=q*v;
 	v1=q*v1;
-	v2=q1*v2;
+	v2=q*v2;
+	v3=q*v3;
 
-	ph_v1_x=Complex(v1.a.round(0.0001),v1.b.round(0.0001)).phase;
-	ph_v1_y=Complex(v1.a.round(0.0001),v1.c.round(0.0001)).phase;
-	ph_v1_z=Complex(v1.a.round(0.0001),v1.d.round(0.0001)).phase;
+	cx=Cartesian(v1.b,v1.c,v1.d);
+	cy=Cartesian(v2.b,v2.c,v2.d);
+	cz=Cartesian(v3.b,v3.c,v3.d);
 
-	ph_v2_x=Complex(v2.a.round(0.0001),v2.b.round(0.0001)).phase;
-	ph_v2_y=Complex(v2.a.round(0.0001),v2.c.round(0.0001)).phase;
-	ph_v2_z=Complex(v2.a.round(0.0001),v2.d.round(0.0001)).phase;
 
-osc1_x=Pan2.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_x,2pi)),v1.b);
+	ph_v_x=Complex(v.a.round(0.0001),v.b.round(0.0001)).phase;
+	ph_v_y=Complex(v.a.round(0.0001),v.c.round(0.0001)).phase;
+	ph_v_z=Complex(v.a.round(0.0001),v.d.round(0.0001)).phase;
 
-osc1_y=Pan2.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_y,2pi)),v1.c);
 
-osc1_z=Pan2.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_z,2pi)),v1.d);
-
-osc2_x=Pan2.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_x,2pi)),v2.b);
-
-osc2_y=Pan2.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_y,2pi)),v2.c);
-
-osc2_z=Pan2.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_z,2pi)),v2.d);
+osc1_x=VBAP.ar(8,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(1,ph_v_x,2pi)),~b.bufnum,cx.theta,cx.phi);
+osc1_y=VBAP.ar(8,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(1,ph_v_y,2pi)),~b.bufnum,cy.theta,cy.phi);
+osc1_z=VBAP.ar(8,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(1,ph_v_z,2pi)),~b.bufnum,cz.theta,cz.phi);
 
 
 m=m+1;
 
-	wrappedOut1.value(outx,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
-	wrappedOut2.value(outy, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
-	wrappedOut3.value(outz, LPF.ar(LeakDC.ar((osc1_z)*env),cutt));
-	wrappedOut4.value(outx,LPF.ar(LeakDC.ar((osc2_x)*env),cutt));
-	wrappedOut5.value(outy, LPF.ar(LeakDC.ar((osc2_y)*env),cutt));
-	wrappedOut6.value(outz, LPF.ar(LeakDC.ar((osc2_z)*env),cutt));
+	wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
+	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
+	wrappedOut3.value(out, LPF.ar(LeakDC.ar((osc1_z)*env),cutt));
+
 
 	};
 }).add;
@@ -2179,9 +2139,10 @@ m=m+1;
 (
 SynthDef.new(\od, {
 	arg  n1=1, cutt=440,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1, ry=1,rz=1;
-	var q,q1,i,j,k,v1,v2,v3,ph_v1_x,ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z;
+	var q,q1,i,j,k,v,v1,v2,v3,ph_v1_x,ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_v_x,ph_v_y,ph_v_z;
 	var osc1,osc2,osc3,freq, env,m=1,bank, pitch, fund, angle=0,angle1=90,r,p;
-	var osc1_x,osc1_y,osc1_z,osc2_x,osc2_y,osc2_z;
+	var osc1_x,osc1_y,osc1_z,osc2_x,osc2_y,osc2_z,cx,cy,cz;
+	var spacex,timex,spacey,timey,spacez,timez;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
@@ -2191,19 +2152,8 @@ SynthDef.new(\od, {
 	var wrappedOut3 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
-	var wrappedOut4 = { |busArray, signalArray|
-	[busArray, signalArray].flop.do { |pair|
-		Out.ar(pair[0], pair[1])}};
-	var wrappedOut5 = { |busArray, signalArray|
-	[busArray, signalArray].flop.do { |pair|
-		Out.ar(pair[0], pair[1])}};
-	var wrappedOut6 = { |busArray, signalArray|
-	[busArray, signalArray].flop.do { |pair|
-		Out.ar(pair[0], pair[1])}};
 
-	var outx = NamedControl.kr(\out1, [0, 1]);  // multiple buses!
-	var outy = NamedControl.kr(\out2, [2, 3]);
-	var outz = NamedControl.kr(\out3, [4, 5]);
+	var out = NamedControl.kr(\out, [0, 1, 2, 3, 4, 5, 6, 7]);  // multiple buses!
 
 	r=[rx,ry,rz].normalizeSum;
 
@@ -2212,9 +2162,11 @@ SynthDef.new(\od, {
 	k = Quaternion(0, 0, 0, r.[2].sqrt);
 
 	p=[x,y,z].normalizeSum;
-	v1=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
-	v2=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
-	bank=16;
+	v1=Quaternion(0,p.[0].sqrt,0,0);
+	v2=Quaternion(0,0,p.[1].sqrt,0);
+	v3=Quaternion(0,0,0,p.[2].sqrt);
+	v=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
+	bank=8;
 	pitch=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
 	freq = (fund*6)*pitch;
@@ -2229,38 +2181,32 @@ angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 	q1=(cos(angle1.degrad)+(sin(angle1.degrad)*(i+j+k)));
 
+	v=q*v;
 	v1=q*v1;
-	v2=q1*v2;
+	v2=q*v2;
+	v3=q*v3;
 
-	ph_v1_x=Complex(v1.a.round(0.0001),v1.b.round(0.0001)).phase;
-	ph_v1_y=Complex(v1.a.round(0.0001),v1.c.round(0.0001)).phase;
-	ph_v1_z=Complex(v1.a.round(0.0001),v1.d.round(0.0001)).phase;
+	cx=Cartesian(v1.b,v1.c,v1.d);
+	cy=Cartesian(v2.b,v2.c,v2.d);
+	cz=Cartesian(v3.b,v3.c,v3.d);
 
-	ph_v2_x=Complex(v2.a.round(0.0001),v2.b.round(0.0001)).phase;
-	ph_v2_y=Complex(v2.a.round(0.0001),v2.c.round(0.0001)).phase;
-	ph_v2_z=Complex(v2.a.round(0.0001),v2.d.round(0.0001)).phase;
 
-osc1_x=Pan2.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_x,2pi)),v1.b);
+	ph_v_x=Complex(v.a.round(0.0001),v.b.round(0.0001)).phase;
+	ph_v_y=Complex(v.a.round(0.0001),v.c.round(0.0001)).phase;
+	ph_v_z=Complex(v.a.round(0.0001),v.d.round(0.0001)).phase;
 
-osc1_y=Pan2.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_y,2pi)),v1.c);
 
-osc1_z=Pan2.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v1_z,2pi)),v1.d);
-
-osc2_x=Pan2.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_x,2pi)),v2.b);
-
-osc2_y=Pan2.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_y,2pi)),v2.c);
-
-osc2_z=Pan2.ar(SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_v2_z,2pi)),v2.d);
+osc1_x=VBAP.ar(8,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(1,ph_v_x,2pi)),~b.bufnum,cx.theta,cx.phi);
+osc1_y=VBAP.ar(8,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(1,ph_v_y,2pi)),~b.bufnum,cy.theta,cy.phi);
+osc1_z=VBAP.ar(8,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(1,ph_v_z,2pi)),~b.bufnum,cz.theta,cz.phi);
 
 
 m=m+1;
 
-	wrappedOut1.value(outx,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
-	wrappedOut2.value(outy, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
-	wrappedOut3.value(outz, LPF.ar(LeakDC.ar((osc1_z)*env),cutt));
-	wrappedOut4.value(outx,LPF.ar(LeakDC.ar((osc2_x)*env),cutt));
-	wrappedOut5.value(outy, LPF.ar(LeakDC.ar((osc2_y)*env),cutt));
-	wrappedOut6.value(outz, LPF.ar(LeakDC.ar((osc2_z)*env),cutt));
+	wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc1_x)*env),cutt));
+	wrappedOut2.value(out, LPF.ar(LeakDC.ar((osc1_y)*env),cutt));
+	wrappedOut3.value(out, LPF.ar(LeakDC.ar((osc1_z)*env),cutt));
+
 
 	};
 }).add;
@@ -2369,9 +2315,7 @@ a=Pdef(\1, Pbind(\instrument, \oa,
 	\dur,Pseq(~phase1.abs,inf),
 \n1,Pseq(~n1,inf),
 	\cutt,Pbrown(220*2,220*8,100,inf),
-		\out1,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
-		\out2,Pn(Pshuf([2, 3], 1), inf).clump(2).collect([_]),
-		\out3,Pn(Pshuf([4, 5], 1), inf).clump(2).collect([_]),
+		\out,Pn(Pshuf([0, 1, 2, 3, 4, 5, 6, 7], 1), inf).clump(8).collect([_]),
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 	\x,Pbrown(0,1,0.1,inf),
 	\y,Pbrown(0,1,0.1,inf),
@@ -2386,9 +2330,7 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 	\dur,Pseq(~phase2.abs,inf),
 \n1,Pseq(~n2,inf),
 	\cutt,Pbrown(220*2,220*8,100,inf),
-		\out1,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
-		\out2,Pn(Pshuf([2, 3], 1), inf).clump(2).collect([_]),
-		\out3,Pn(Pshuf([4, 5], 1), inf).clump(2).collect([_]),
+		\out,Pn(Pshuf([0, 1, 2, 3, 4, 5, 6, 7], 1), inf).clump(8).collect([_]),
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 	\x,Pbrown(0,1,0.1,inf),
 	\y,Pbrown(0,1,0.1,inf),
@@ -2403,9 +2345,7 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 	\dur,Pseq(~phase3.abs,inf),
 \n1,Pseq(~n3,inf),
 	\cutt,Pbrown(220*2,220*8,100,inf),
-		\out1,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
-		\out2,Pn(Pshuf([2, 3], 1), inf).clump(2).collect([_]),
-		\out3,Pn(Pshuf([4, 5], 1), inf).clump(2).collect([_]),
+		\out,Pn(Pshuf([0, 1, 2, 3, 4, 5, 6, 7], 1), inf).clump(8).collect([_]),
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 	\x,Pbrown(0,1,0.1,inf),
 	\y,Pbrown(0,1,0.1,inf),
@@ -2420,9 +2360,7 @@ d=Pdef(\4, Pbind(\instrument, \od,
 	\dur,Pseq(~phase4.abs,inf),
 \n1,Pseq(~n4,inf),
 	\cutt,Pbrown(220*2,220*8,100,inf),
-	\out1,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
-		\out2,Pn(Pshuf([2, 3], 1), inf).clump(2).collect([_]),
-		\out3,Pn(Pshuf([4, 5], 1), inf).clump(2).collect([_]),
+	\out,Pn(Pshuf([0, 1, 2, 3, 4, 5, 6, 7], 1), inf).clump(8).collect([_]),
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
 
 	\x,Pbrown(0,1,0.1,inf),
