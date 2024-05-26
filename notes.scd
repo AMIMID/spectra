@@ -2,7 +2,7 @@
 s.options.numWireBufs = 1024*32;
 s.options.numOutputBusChannels=2;
 s.options.numInputBusChannels=0;
-TempoClock.default.tempo_(120/120);
+TempoClock.default.tempo_(120/80);
 s.options.memSize = 8192*64;
 //s.options.blockSize = 64/4;
 s.options.maxNodes = 1024 * 64;
@@ -402,14 +402,14 @@ v4=Quaternion(0,r.[0].sqrt,r.[1].sqrt,r.[2].sqrt);
 		angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 		q1=(cos(angle1.degrad)+(sin(angle1.degrad)*(i+j+k)));
 	v1=q1*v1;
-	ph1=(v1.a*m).round(0.5);
+	ph1=(v1.a*m).round(0.25);
 	//ph1=2.pow(ph1/(2*6));
 	};
 ~phase2 = 10000.collect{
 		angle2=(angle2+(360-(360/1.6180339887499))).wrap(0,360);
 		q2=(cos(angle2.degrad)+(sin(angle2.degrad)*(i+j+k)));
 	v2=q2*v2;
-	ph2=(v2.b*m).round(0.5);
+	ph2=(v2.b*m).round(0.25);
 	//ph2=2.pow(ph2/(2*6));
 	};
 
@@ -417,7 +417,7 @@ v4=Quaternion(0,r.[0].sqrt,r.[1].sqrt,r.[2].sqrt);
 		angle3=(angle3+(360-(360/1.6180339887499))).wrap(0,360);
 		q3=(cos(angle3.degrad)+(sin(angle3.degrad)*(i+j+k)));
 	v3=q3*v3;
-	ph3=(v3.c*m).round(0.5);
+	ph3=(v3.c*m).round(0.25);
 	//ph3=2.pow(ph3/(2*6));
 	};
 
@@ -425,7 +425,7 @@ v4=Quaternion(0,r.[0].sqrt,r.[1].sqrt,r.[2].sqrt);
 		angle4=(angle4+(360-(360/1.6180339887499))).wrap(0,360);
 		q4=(cos(angle4.degrad)+(sin(angle4.degrad)*(i+j+k)));
 	v4=q4*v4;
-	ph4=(v4.d*m).round(0.5);
+	ph4=(v4.d*m).round(0.25);
 	//ph4=2.pow(ph4/(2*6));
 	};
 
@@ -565,12 +565,12 @@ var  angle1=0,angle2=0,angle3=0,angle4=0,q1,q2,q3,q4,v1,v2,v3,v4,ph1,ph2,ph3,ph4
 	~phase1 = 10000.collect{
 		angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 	v1=exp(Complex(0,1)*angle1);
-	ph1=(v1.real*m).round(0.5);
+	ph1=(v1.real*m).round(0.25);
 	};
 ~phase2 = 10000.collect{
 		angle2=(angle2+(360-(360/1.6180339887499))).wrap(0,360);
 	v2=exp(Complex(0,1)*angle2);
-	ph2=(v2.imag*m).round(0.5);
+	ph2=(v2.imag*m).round(0.25);
 	};
 
 
