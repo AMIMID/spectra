@@ -70,9 +70,9 @@ SynthDef.new(\oa, {
 	p=[x,y,z].normalizeSum;
 	v1=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
 	v2=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
-	bank=16;
+	bank=8;
 	pitch=2.pow(n1/(2*6));
-	fund=(((4*t)-1)*((4*t)/2));
+	fund=55;//(((4*t)-1)*((4*t)/2));
 	freq = (fund*6)*pitch;
 
 env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:2*0.1);
@@ -157,9 +157,9 @@ SynthDef.new(\ob, {
 	p=[x,y,z].normalizeSum;
 	v1=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
 	v2=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
-	bank=16;
+	bank=8;
 	pitch=2.pow(n1/(2*6));
-	fund=(((4*t)-1)*((4*t)/2));
+	fund=55;//(((4*t)-1)*((4*t)/2));
 	freq = (fund*6)*pitch;
 
 env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:2*0.1);
@@ -244,9 +244,9 @@ SynthDef.new(\oc, {
 	p=[x,y,z].normalizeSum;
 	v1=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
 	v2=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
-	bank=16;
+	bank=8;
 	pitch=2.pow(n1/(2*6));
-	fund=(((4*t)-1)*((4*t)/2));
+	fund=55;//(((4*t)-1)*((4*t)/2));
 	freq = (fund*6)*pitch;
 
 env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:2*0.1);
@@ -331,9 +331,9 @@ SynthDef.new(\od, {
 	p=[x,y,z].normalizeSum;
 	v1=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
 	v2=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
-	bank=16;
+	bank=8;
 	pitch=2.pow(n1/(2*6));
-	fund=(((4*t)-1)*((4*t)/2));
+	fund=55;//(((4*t)-1)*((4*t)/2));
 	freq = (fund*6)*pitch;
 
 env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:2*0.1);
@@ -434,7 +434,7 @@ v4=Quaternion(0,r.[0].sqrt*m,r.[1].sqrt*m,r.[2].sqrt*m);
 ~scale=Buffer.loadCollection(s,Scale.minorPentatonic.degrees);
 ~scale.plot
 (
-var  angle1=0,angle2=0,angle3=0,angle4=0,q1,q2,q3,q4,v1,v2,v3,v4,ph1,ph2,ph3,ph4,r,m=24;
+var  angle1=0,angle2=0,angle3=0,angle4=0,q1,q2,q3,q4,v1,v2,v3,v4,ph1,ph2,ph3,ph4,r,m=12;
 var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt, 0),k = Quaternion(0, 0, 0, (1/3).sqrt),n1,n2,n3,n4;
 
 r=[5,7,12].normalizeSum;
@@ -490,7 +490,7 @@ v4=Quaternion(0,r.[0].sqrt*m,r.[1].sqrt*m,r.[2].sqrt*m);
 a=Pdef(\1, Pbind(\instrument, \oa,
 	//\dur,1/2,
 	\dur,Pseq(~phase1.abs,inf),
-\n1,Pavaroh(Pseq(~n1.abs,inf),Scale.minorPentatonic,Scale.minorPentatonic),
+\n1,PdegreeToKey(Pseq(~n1,inf),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
@@ -500,12 +500,12 @@ a=Pdef(\1, Pbind(\instrument, \oa,
 	\rx,Pbrown(0,1,0.1,inf),
 	\ry,Pbrown(0,1,0.1,inf),
 	\rz,Pbrown(0,1,0.1,inf),
-	\decay,Pbrown(1,4,1,inf);
+	\decay,Pbrown(2,6,1,inf);
 ));
 b=Pdef(\2, Pbind(\instrument, \ob,
 	//\dur,1/2,
 	\dur,Pseq(~phase2.abs,inf),
-\n1,Pavaroh(Pseq(~n2.abs,inf),Scale.minorPentatonic,Scale.minorPentatonic),
+\n1,PdegreeToKey(Pseq(~n2,inf),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
@@ -515,12 +515,12 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 	\rx,Pbrown(0,1,0.1,inf),
 	\ry,Pbrown(0,1,0.1,inf),
 	\rz,Pbrown(0,1,0.1,inf),
-	\decay,Pbrown(1,4,1,inf);
+	\decay,Pbrown(2,6,1,inf);
 ));
 c=Pdef(\3, Pbind(\instrument, \oc,
 	//\dur,1/2,
 	\dur,Pseq(~phase3.abs,inf),
-\n1,Pavaroh(Pseq(~n3.abs,inf),Scale.minorPentatonic,Scale.minorPentatonic),
+\n1,PdegreeToKey(Pseq(~n3,inf),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
@@ -530,12 +530,12 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 	\rx,Pbrown(0,1,0.1,inf),
 	\ry,Pbrown(0,1,0.1,inf),
 	\rz,Pbrown(0,1,0.1,inf),
-	\decay,Pbrown(1,4,1,inf);
+	\decay,Pbrown(2,6,1,inf);
 ));
 d=Pdef(\4, Pbind(\instrument, \od,
 	//\dur,1/2,
 	\dur,Pseq(~phase4.abs,inf),
-	\n1,Pavaroh(Pseq(~n4.abs,inf),Scale.minorPentatonic,Scale.minorPentatonic),
+	\n1,PdegreeToKey(Pseq(~n4,inf),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 	\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
@@ -546,7 +546,7 @@ d=Pdef(\4, Pbind(\instrument, \od,
 	\rx,Pbrown(0,1,0.1,inf),
 	\ry,Pbrown(0,1,0.1,inf),
 	\rz,Pbrown(0,1,0.1,inf),
-	\decay,Pbrown(1,4,1,inf);
+	\decay,Pbrown(2,6,1,inf);
 ));
 )
 
