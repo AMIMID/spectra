@@ -2,7 +2,7 @@
 s.options.numWireBufs = 1024*32;
 s.options.numOutputBusChannels=2;
 s.options.numInputBusChannels=0;
-TempoClock.default.tempo_(120/80);
+TempoClock.default.tempo_(120/120);
 s.options.memSize = 8192*64;
 //s.options.blockSize = 64/4;
 s.options.maxNodes = 1024 * 64;
@@ -70,9 +70,9 @@ SynthDef.new(\oa, {
 	p=[x,y,z].normalizeSum;
 	v1=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
 	v2=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
-	bank=8;
+	bank=16;
 	pitch=2.pow(n1/(2*6));
-	fund=55;//(((4*t)-1)*((4*t)/2));
+	fund=(((4*t)-1)*((4*t)/2));
 	freq = (fund*6)*pitch;
 
 env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:2*0.1);
@@ -157,12 +157,12 @@ SynthDef.new(\ob, {
 	p=[x,y,z].normalizeSum;
 	v1=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
 	v2=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
-	bank=8;
+	bank=16;
 	pitch=2.pow(n1/(2*6));
-	fund=55;//(((4*t)-1)*((4*t)/2));
-	freq = (fund*6)*pitch;
+	fund=(((4*t)-1)*((4*t)/2));
+	freq = (fund*8)*pitch;
 
-env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:2*0.1);
+	env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:(3/2)*0.1);
 //env=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:2);
 
 	bank.do{
@@ -244,12 +244,12 @@ SynthDef.new(\oc, {
 	p=[x,y,z].normalizeSum;
 	v1=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
 	v2=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
-	bank=8;
+	bank=16;
 	pitch=2.pow(n1/(2*6));
-	fund=55;//(((4*t)-1)*((4*t)/2));
-	freq = (fund*6)*pitch;
+	fund=(((4*t)-1)*((4*t)/2));
+	freq = (fund*9)*pitch;
 
-env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:2*0.1);
+	env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:(4/3)*0.1);
 //env=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:2);
 
 	bank.do{
@@ -331,12 +331,12 @@ SynthDef.new(\od, {
 	p=[x,y,z].normalizeSum;
 	v1=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
 	v2=Quaternion(0,p.[0].sqrt,p.[1].sqrt,p.[2].sqrt);
-	bank=8;
+	bank=16;
 	pitch=2.pow(n1/(2*6));
-	fund=55;//(((4*t)-1)*((4*t)/2));
-	freq = (fund*6)*pitch;
+	fund=(((4*t)-1)*((4*t)/2));
+	freq = (fund*12)*pitch;
 
-env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:2*0.1);
+env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:1*0.1);
 //env=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:2);
 
 	bank.do{
@@ -390,7 +390,7 @@ m=m+1;
 var  angle1=0,angle2=0,angle3=0,angle4=0,q1,q2,q3,q4,v1,v2,v3,v4,ph1,ph2,ph3,ph4,r,m=4;
 var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt, 0),k = Quaternion(0, 0, 0, (1/3).sqrt);
 
-r=[1,2,3].normalizeSum;
+r=[1/2,2/3,3/4].normalizeSum;
 
 v1=Quaternion(0,r.[0].sqrt,r.[1].sqrt,r.[2].sqrt);
 v2=Quaternion(0,r.[0].sqrt,r.[1].sqrt,r.[2].sqrt);
@@ -437,7 +437,7 @@ v4=Quaternion(0,r.[0].sqrt,r.[1].sqrt,r.[2].sqrt);
 var  angle1=0,angle2=0,angle3=0,angle4=0,q1,q2,q3,q4,v1,v2,v3,v4,ph1,ph2,ph3,ph4,r,m=12;
 var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt, 0),k = Quaternion(0, 0, 0, (1/3).sqrt),n1,n2,n3,n4;
 
-r=[5,7,12].normalizeSum;
+r=[1/2,2/3,3/4].normalizeSum;
 
 v1=Quaternion(0,r.[0].sqrt,r.[1].sqrt,r.[2].sqrt);
 v2=Quaternion(0,r.[0].sqrt,r.[1].sqrt,r.[2].sqrt);
@@ -490,7 +490,7 @@ Scale.directory
 a=Pdef(\1, Pbind(\instrument, \oa,
 	//\dur,1/2,
 	\dur,Pseq(~phase1.abs,inf),
-\n1,PdegreeToKey(Pseq(~n1,inf),Scale.mixolydian),
+\n1,PdegreeToKey(Pseq(~n1,inf),Scale.minorPentatonic),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
@@ -505,7 +505,7 @@ a=Pdef(\1, Pbind(\instrument, \oa,
 b=Pdef(\2, Pbind(\instrument, \ob,
 	//\dur,1/2,
 	\dur,Pseq(~phase2.abs,inf),
-\n1,PdegreeToKey(Pseq(~n2,inf),Scale.mixolydian),
+\n1,PdegreeToKey(Pseq(~n2,inf),Scale.minorPentatonic),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
@@ -520,7 +520,7 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 c=Pdef(\3, Pbind(\instrument, \oc,
 	//\dur,1/2,
 	\dur,Pseq(~phase3.abs,inf),
-\n1,PdegreeToKey(Pseq(~n3,inf),Scale.mixolydian),
+\n1,PdegreeToKey(Pseq(~n3,inf),Scale.minorPentatonic),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
@@ -535,7 +535,7 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 d=Pdef(\4, Pbind(\instrument, \od,
 	//\dur,1/2,
 	\dur,Pseq(~phase4.abs,inf),
-	\n1,PdegreeToKey(Pseq(~n4,inf),Scale.mixolydian),
+	\n1,PdegreeToKey(Pseq(~n4,inf),Scale.minorPentatonic),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 	\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
