@@ -2,7 +2,7 @@
 s.options.numWireBufs = 1024*32;
 s.options.numOutputBusChannels=2;
 s.options.numInputBusChannels=0;
-TempoClock.default.tempo_(120/120);
+TempoClock.default.tempo_(120/60);
 s.options.memSize = 8192*64;
 //s.options.blockSize = 64/4;
 s.options.maxNodes = 1024 * 64;
@@ -85,8 +85,8 @@ angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 	q1=(cos(angle1.degrad)+(sin(angle1.degrad)*(i+j+k)));
 
-	v1=q*v1;
-	v2=q1*v2;
+	v1=q*v1*q.conjugate;
+	v2=q1*v2*q1.conjugate;
 
 	ph_v1_x=Complex(v1.a.round(0.0001),v1.b.round(0.0001)).phase;
 	ph_v1_y=Complex(v1.a.round(0.0001),v1.c.round(0.0001)).phase;
@@ -172,8 +172,8 @@ angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 	q1=(cos(angle1.degrad)+(sin(angle1.degrad)*(i+j+k)));
 
-	v1=q*v1;
-	v2=q1*v2;
+		v1=q*v1*q.conjugate;
+	v2=q1*v2*q1.conjugate;
 
 	ph_v1_x=Complex(v1.a.round(0.0001),v1.b.round(0.0001)).phase;
 	ph_v1_y=Complex(v1.a.round(0.0001),v1.c.round(0.0001)).phase;
@@ -259,8 +259,8 @@ angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 	q1=(cos(angle1.degrad)+(sin(angle1.degrad)*(i+j+k)));
 
-	v1=q*v1;
-	v2=q1*v2;
+		v1=q*v1*q.conjugate;
+	v2=q1*v2*q1.conjugate;
 
 	ph_v1_x=Complex(v1.a.round(0.0001),v1.b.round(0.0001)).phase;
 	ph_v1_y=Complex(v1.a.round(0.0001),v1.c.round(0.0001)).phase;
@@ -346,8 +346,8 @@ angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 	q1=(cos(angle1.degrad)+(sin(angle1.degrad)*(i+j+k)));
 
-	v1=q*v1;
-	v2=q1*v2;
+		v1=q*v1*q.conjugate;
+	v2=q1*v2*q1.conjugate;
 
 
 	ph_v1_x=Complex(v1.a.round(0.0001),v1.b.round(0.0001)).phase;
@@ -401,14 +401,14 @@ v4=Quaternion(0,r.[0].sqrt,r.[1].sqrt,r.[2].sqrt);
 	~phase1 = 10000.collect{
 		angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 		q1=(cos(angle1.degrad)+(sin(angle1.degrad)*(i+j+k)));
-	v1=q1*v1;
+	v1=q1*v1*q1.conjugate;
 	ph1=(v1.a*m).round(0.25);
 	//ph1=2.pow(ph1/(2*6));
 	};
 ~phase2 = 10000.collect{
 		angle2=(angle2+(360-(360/1.6180339887499))).wrap(0,360);
 		q2=(cos(angle2.degrad)+(sin(angle2.degrad)*(i+j+k)));
-	v2=q2*v2;
+	v2=q2*v2*q2.conjugate;
 	ph2=(v2.b*m).round(0.25);
 	//ph2=2.pow(ph2/(2*6));
 	};
@@ -416,7 +416,7 @@ v4=Quaternion(0,r.[0].sqrt,r.[1].sqrt,r.[2].sqrt);
 ~phase3 = 10000.collect{
 		angle3=(angle3+(360-(360/1.6180339887499))).wrap(0,360);
 		q3=(cos(angle3.degrad)+(sin(angle3.degrad)*(i+j+k)));
-	v3=q3*v3;
+	v3=q3*v3*q3.conjugate;
 	ph3=(v3.c*m).round(0.25);
 	//ph3=2.pow(ph3/(2*6));
 	};
@@ -424,7 +424,7 @@ v4=Quaternion(0,r.[0].sqrt,r.[1].sqrt,r.[2].sqrt);
 ~phase4 = 10000.collect{
 		angle4=(angle4+(360-(360/1.6180339887499))).wrap(0,360);
 		q4=(cos(angle4.degrad)+(sin(angle4.degrad)*(i+j+k)));
-	v4=q4*v4;
+	v4=q4*v4*q4.conjugate;
 	ph4=(v4.d*m).round(0.25);
 	//ph4=2.pow(ph4/(2*6));
 	};
@@ -439,29 +439,29 @@ var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt, 0),k = 
 
 r=[1/2,2/3,3/4].normalizeSum;
 
-v1=Quaternion(0,r.[0].sqrt,r.[1].sqrt,r.[2].sqrt);
-v2=Quaternion(0,r.[0].sqrt,r.[1].sqrt,r.[2].sqrt);
-v3=Quaternion(0,r.[0].sqrt,r.[1].sqrt,r.[2].sqrt);
-v4=Quaternion(0,r.[0].sqrt,r.[1].sqrt,r.[2].sqrt);
+v1=Quaternion(0,r.[0].sqrt,r.[1].sqrt,r.[2].sqrt.neg);
+v2=Quaternion(0,r.[0].sqrt,r.[1].sqrt,r.[2].sqrt.neg);
+v3=Quaternion(0,r.[0].sqrt,r.[1].sqrt,r.[2].sqrt.neg);
+v4=Quaternion(0,r.[0].sqrt,r.[1].sqrt,r.[2].sqrt.neg);
 
 
 	~n1 = 10000.collect{
 		angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 		q1=(cos(angle1.degrad)+(sin(angle1.degrad)*(i+j+k)));
-	v1=q1*v1;
+	v1=q1*v1*q1.conjugate;
 	ph1=(v1.a*m).round(1);
 	};
 ~n2 = 10000.collect{
 		angle2=(angle2+(360-(360/1.6180339887499))).wrap(0,360);
 		q2=(cos(angle2.degrad)+(sin(angle2.degrad)*(i+j+k)));
-	v2=q2*v2;
+	v2=q2*v2*q2.conjugate;
 	ph2=(v2.b*m).round(1);
 	};
 
 ~n3 = 10000.collect{
 		angle3=(angle3+(360-(360/1.6180339887499))).wrap(0,360);
 		q3=(cos(angle3.degrad)+(sin(angle3.degrad)*(i+j+k)));
-	v3=q3*v3;
+	v3=q3*v3*q3.conjugate;
 	ph3=(v3.c*m).round(1);
 	//ph3=v3.c*BufFrames.kr(~scale);
 	//n3=DegreeToKey.kr(~scale,ph3);
@@ -470,7 +470,7 @@ v4=Quaternion(0,r.[0].sqrt,r.[1].sqrt,r.[2].sqrt);
 ~n4 = 10000.collect{
 		angle4=(angle4+(360-(360/1.6180339887499))).wrap(0,360);
 		q4=(cos(angle4.degrad)+(sin(angle4.degrad)*(i+j+k)));
-	v4=q4*v4;
+	v4=q4*v4*q4.conjugate;
 	ph4=(v4.d*m).round(1);
 	//n4=DegreeToKey.kr(~scale,ph4);
 	};
@@ -490,7 +490,7 @@ Scale.directory
 a=Pdef(\1, Pbind(\instrument, \oa,
 	//\dur,1/2,
 	\dur,Pseq(~phase1.abs,inf),
-\n1,PdegreeToKey(Pseq(~n1,inf),Scale.minorPentatonic),
+\n1,PdegreeToKey(Pseq(~n1,inf),Scale.ionian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
@@ -505,7 +505,7 @@ a=Pdef(\1, Pbind(\instrument, \oa,
 b=Pdef(\2, Pbind(\instrument, \ob,
 	//\dur,1/2,
 	\dur,Pseq(~phase2.abs,inf),
-\n1,PdegreeToKey(Pseq(~n2,inf),Scale.minorPentatonic),
+\n1,PdegreeToKey(Pseq(~n2,inf),Scale.ionian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
@@ -520,7 +520,7 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 c=Pdef(\3, Pbind(\instrument, \oc,
 	//\dur,1/2,
 	\dur,Pseq(~phase3.abs,inf),
-\n1,PdegreeToKey(Pseq(~n3,inf),Scale.minorPentatonic),
+\n1,PdegreeToKey(Pseq(~n3,inf),Scale.ionian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),
@@ -535,7 +535,7 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 d=Pdef(\4, Pbind(\instrument, \od,
 	//\dur,1/2,
 	\dur,Pseq(~phase4.abs,inf),
-	\n1,PdegreeToKey(Pseq(~n4,inf),Scale.minorPentatonic),
+	\n1,PdegreeToKey(Pseq(~n4,inf),Scale.ionian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 	\out,Pn(Pshuf([0, 1], 1), inf).clump(2).collect([_]),
 	//\out,Pn(Pshuf([0, 1], 1), inf).clump(4).collect([_]),

@@ -51,40 +51,44 @@ ijk=[x.pow(2),y.pow(2),z.pow(2)].normalizeSum;
 }.play
 )
 (
-var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt, 0),k = Quaternion(0, 0, 0, (1/3).sqrt),q1,q2,v1,v2,v3,angle=0,ph1x,ph1y,ph1z,ph2x,ph2y,ph2z,ph3x,ph3y,ph3z;
+var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt, 0),k = Quaternion(0, 0, 0, (1/3).sqrt),q1,q2,v1,v2,v3,angle=0,ph1x,ph1y,ph1z,ph2x,ph2y,ph2z,ph3x,ph3y,ph3z,ra;
 
-
-10.do{
-	angle=(angle+(137.5)).wrap(0,360);
- 	q1=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
- 	q2=q1.conjugate;
-	v1=Quaternion(0,1,2,3);
+	ra=[1,2,3].normalizeSum;
+	v1=Quaternion(0,ra.[0],ra.[1],ra.[2].neg);
 	v2=Quaternion(0,0,(1/3).sqrt,0);
 	v3=Quaternion(0,0,0,1);
-	v1=q1*v1;
+
+8.do{
+	angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
+ 	q1=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
+ 	q2=q1.conjugate;
+	v1=q1*v1*q1.conjugate;
 	v2=q1*v2;
 	v3=q1*v3;
 	//v=v*q2 opposite direction rotation
 	//v=v*q2;
- 	//v1.coordinates.round(0.0001).postln;
-	v2.coordinates.round(0.0001).postln;
+ 	v1.coordinates.round(0.0001).postln;
+	//v2.coordinates.round(0.0001).postln;
 	//v3.coordinates.round(0.0001).postln;
-	ph1x=Complex(v1.a.round(0.0001),v1.b.round(0.0001)).phase;
-	ph1y=Complex(v1.a.round(0.0001),v1.c.round(0.0001)).phase;
-	ph1z=Complex(v1.a.round(0.0001),v1.d.round(0.0001)).phase;
+	//v1.b.postln;
+	//v1.c.postln;
+	//v1.d.postln;
+	ph1x=Complex(0,v1.b.round(0.0001)).phase;
+	ph1y=Complex(0,v1.c.round(0.0001)).phase;
+	ph1z=Complex(0,v1.d.round(0.0001)).phase;
 	ph2x=Complex(v2.a.round(0.0001),v2.b.round(0.0001)).phase;
 	ph2y=Complex(v2.a.round(0.0001),v2.c.round(0.0001)).phase;
 	ph2z=Complex(v2.a.round(0.0001),v2.d.round(0.0001)).phase;
 	ph3x=Complex(v3.a.round(0.0001),v3.b.round(0.0001)).phase;
 	ph3y=Complex(v3.a.round(0.0001),v3.c.round(0.0001)).phase;
 	ph3z=Complex(v3.a.round(0.0001),v3.d.round(0.0001)).phase;
-	//ph1x.postln;
-	//ph1y.postln;
-	//ph1z.postln;
+//	ph1x.postln;
+//	ph1y.postln;
+//	ph1z.postln;
  }
 
 )
-
+Complex(1,2).phase
 (
 var i = (1/3).sqrt,j = (1/3).sqrt,k = (1/3).sqrt;
 
