@@ -288,7 +288,7 @@ Synth.new(\oa,[\out,[0,1]]);
 (
 var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt, 0),k = Quaternion(0, 0, 0, (1/3).sqrt);
 var q,v,angle=0,x,y,z,phx,phy,phz;
-var scale=300,m=0,n=0,f,u;
+var scale=300,m=0,n=0,f,u,ra;
 
 ///////0//////////////////////////////////////////////////////////////////////////////////////////////////
     Window.closeAll;
@@ -300,7 +300,8 @@ var scale=300,m=0,n=0,f,u;
 w.drawFunc={
 //Pen.translate(400,400);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////points
-v=Quaternion(0,1,2,3);
+	ra=[1,2,3].normalizeSum;
+	v=Quaternion(0,ra.[0].sqrt,ra.[1].sqrt,ra.[2].sqrt);
 
 800.do{
 800.do{
@@ -308,21 +309,17 @@ v=Quaternion(0,1,2,3);
 angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
 
 	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
-		v=q*v;
-		f=v.a;
-		x=v.b;
-		y=v.c;
-		z=v.d;
+		v=q*v*q.conjugate;
+
 		//phx=Complex(v.a.round(0.0001),v.b.round(0.0001)).phase.linlin(2pi.neg,2pi,0,255);
 		//phy=Complex(v.a.round(0.0001),v.c.round(0.0001)).phase.linlin(2pi.neg,2pi,0,255);
 		//phz=Complex(v.a.round(0.0001),v.d.round(0.0001)).phase.linlin(2pi.neg,2pi,0,255);
-		u=[x,y,z].normalize.abs;
 
 Pen.width=0.1;
 
 
 			//Color(red:u.[0],green:u.[1],blue:u.[2],alpha:1).set;
-			Color(red:u.[0],green:u.[1],blue:u.[2],alpha:1).set;
+			Color(red:v.b,green:v.c,blue:v.d,alpha:1).set;
 
 
 
@@ -455,4 +452,97 @@ m=m+h1;
 };
 
 { while { run } {~v.background_(Color.white); ~v.refresh; (1/100).wait } }.fork(AppClock);
+)
+
+
+
+
+
+
+
+
+(
+var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt, 0),k = Quaternion(0, 0, 0, (1/3).sqrt);
+var q,v,angle=0,x,y,z,phx,phy,phz;
+var scale=300,m=0,n=0,f,u,ra,run=true;
+
+///////0//////////////////////////////////////////////////////////////////////////////////////////////////
+    Window.closeAll;
+    w = Window("S",Rect(400,100,800,800),scroll:false).front.alwaysOnTop_(true);
+    w.alpha = 1;  w.view.background = Color.white;
+
+~v = UserView.new(w,Rect(0,0,800,800)).background_(Color.white);
+~v.animate;
+
+~v.drawFunc={
+Pen.translate(400,400);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////points
+	ra=[1,2,3].normalizeSum;
+	v=Quaternion(0,ra.[0].sqrt.neg,ra.[1].sqrt,ra.[2].sqrt);
+
+800.do{
+
+angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
+
+	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
+		v=q*v*q.conjugate;
+
+Pen.width=0.1;
+
+
+			//Color(red:u.[0],green:u.[1],blue:u.[2],alpha:1).set;
+			Color.black;
+
+
+
+		Pen.line(Point(v.b*200,v.c*200),Point(v.c*200,v.d*200));
+
+		//Pen.rotate(pi/2);
+		Pen.stroke;~v.refresh;
+
+	}
+
+
+};
+{ while { run } {~v.background_(Color.white); ~v.refresh; (1/100).wait } }.fork(AppClock);
+)
+
+(
+var data,i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt, 0),k = Quaternion(0, 0, 0, (1/3).sqrt);
+var q,v,angle=0,x,y,z,r,d,m=1;
+
+r=[1,2,3].normalizeSum;
+v=Quaternion(0,r.[0].sqrt.neg,r.[1].sqrt,r.[2].sqrt);
+
+data = 4000.collect{
+		angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
+		q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
+	    v=q*v*q.conjugate;
+	v=v*m;
+	//m=m+0.0000001;
+	d=Cartesian(v.b.round(0.0001),v.c.round(0.0001),v.d.round(0.0001)).asArray;
+};
+
+w = Window.new("3D Scatterplot", Rect(40,40, 800, 800)).front;
+a = ScatterView3d(w, Rect(10,10, 650,650), data, [-1, 1].asSpec,[-1, 1].asSpec,[-1, 1].asSpec);
+a.drawMethod = \fillRect;
+a.symbolSize = 1;
+a.symbolColor = Color.white;
+a.background = Color.black;
+
+// Y Slider
+Slider(w, Rect(10, 470+250, 450, 10)).action_{|me|
+    a.rotY = me.value * 2pi;
+    w.refresh;
+};
+// X Slider
+Slider(w, Rect(470+300, 10, 10, 450)).action_{|me|
+    a.rotX = me.value * 2pi;
+    w.refresh;
+};
+// Z Slider
+Slider(w, Rect(490+300, 10, 10, 450)).action_{|me|
+    a.rotZ = me.value * 2pi;
+    w.refresh;
+};
 )
