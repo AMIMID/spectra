@@ -297,6 +297,7 @@ var scale=300,m=0,n=0,f,u,ra;
 
 //~v = UserView.new(w,Rect(0,0,800,800)).background_(Color.white);
 //~v.animate;
+angle=(360-(360/1.6180339887499));
 w.drawFunc={
 //Pen.translate(400,400);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////points
@@ -306,9 +307,7 @@ w.drawFunc={
 800.do{
 800.do{
 
-angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
-
-	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
+	q=(cos(angle.degrad/2)+(sin(angle.degrad/2)*(i+j+k)));
 		v=q*v*q.conjugate;
 
 		//phx=Complex(v.a.round(0.0001),v.b.round(0.0001)).phase.linlin(2pi.neg,2pi,0,255);
@@ -319,19 +318,19 @@ Pen.width=0.1;
 
 
 			//Color(red:u.[0],green:u.[1],blue:u.[2],alpha:1).set;
-			Color(red:v.b,green:v.c,blue:v.d,alpha:1).set;
+			Color(red:v.b.abs,green:v.c.abs,blue:v.d.abs,alpha:1).set;
 
 
 
-		Pen.fillRect(Rect.new(m,n,1,1));
+		Pen.fillRect(Rect.new(m,n,5,5));
 
 
 		Pen.stroke;
-m=m+1;
+m=m+5;
 
 	};
 		m=0;
-		n=n+1;
+		n=n+5;
 	}
 
 
@@ -415,7 +414,7 @@ v=Quaternion(0,1,2,3);
 				h1=~a;
 	h2=~b;
 
-angle=(angle+(360-(360/1.61803398874989484820458683436563811772030917980576))).wrap(0,360);
+angle=(360-(360/1.6180339887499));
 
 	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 		v=q*v;
@@ -508,40 +507,42 @@ Pen.width=0.1;
 )
 
 (
-var data,i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt, 0),k = Quaternion(0, 0, 0, (1/3).sqrt);
-var q,v,angle=0,x,y,z,r,d,m=1;
+var data,i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt,0),k = Quaternion(0, 0, 0, (1/3).sqrt);
+var q,v,angle=0,x,y,z,r,d,m=1,pp=1;
 
 r=[1,2,3].normalizeSum;
 v=Quaternion(0,r.[0].sqrt.neg,r.[1].sqrt,r.[2].sqrt);
+angle=(360-(360/1.6180339887499));
 
-data = 4000.collect{
-		angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
+data = 100000.collect{
+		//angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 		q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 	    v=q*v*q.conjugate;
-	v=v*m;
-	//m=m+0.0000001;
-	d=Cartesian(v.b.round(0.0001),v.c.round(0.0001),v.d.round(0.0001)).asArray;
+	//pp=(m+0.001)/m;
+	//v=v*pp;
+	m=m+0.01;
+	d=Cartesian(v.b.round(0.0001)*m,v.c.round(0.0001)*m,v.d.round(0.0001)*m).asArray;
 };
 
-w = Window.new("3D Scatterplot", Rect(40,40, 800, 800)).front;
-a = ScatterView3d(w, Rect(10,10, 650,650), data, [-1, 1].asSpec,[-1, 1].asSpec,[-1, 1].asSpec);
+w = Window.new("3D Scatterplot", Rect(40,40, 1000, 800)).front;
+a = ScatterView3d(w, Rect(0,0, 800,800), data, [-100, 100].asSpec,[-100, 100].asSpec,[-100, 100].asSpec);
 a.drawMethod = \fillRect;
 a.symbolSize = 1;
 a.symbolColor = Color.white;
 a.background = Color.black;
 
 // Y Slider
-Slider(w, Rect(10, 470+250, 450, 10)).action_{|me|
+Slider(w, Rect(820, 10, 10, 450)).action_{|me|
     a.rotY = me.value * 2pi;
     w.refresh;
 };
 // X Slider
-Slider(w, Rect(470+300, 10, 10, 450)).action_{|me|
+Slider(w, Rect(870, 10, 10, 450)).action_{|me|
     a.rotX = me.value * 2pi;
     w.refresh;
 };
 // Z Slider
-Slider(w, Rect(490+300, 10, 10, 450)).action_{|me|
+Slider(w, Rect(920, 10, 10, 450)).action_{|me|
     a.rotZ = me.value * 2pi;
     w.refresh;
 };

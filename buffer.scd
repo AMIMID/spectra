@@ -108,10 +108,10 @@ s.record(numChannels:3)
 		chainy = FFT(LocalBuf(1024), in2);
 		chainz = FFT(LocalBuf(1024), in3);
 
-		angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
+		angle=((360-(360/1.6180339887499))).wrap(0,360);
 
-		q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
-		v=q*v;
+		q=(cos(angle.degrad/2)+(sin(angle.degrad/2)*(i+j+k)));
+		v=q*vq.conjugate;
 
 	phx=Complex(v.a.round(0.0001),v.b.round(0.0001)).phase;
 	phy=Complex(v.a.round(0.0001),v.c.round(0.0001)).phase;
@@ -160,10 +160,10 @@ s.record(numChannels:3)
 		chainy = FFT(LocalBuf(1024), in2);
 		chainz = FFT(LocalBuf(1024), in3);
 
-		angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
+		angle=((360-(360/1.6180339887499))).wrap(0,360);
 
-		q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
-		v=q*v;
+		q=(cos(angle.degrad/2)+(sin(angle.degrad/2)*(i+j+k)));
+		v=q*vq.conjugate;
 
 	phx=Complex(v.a.round(0.0001),v.b.round(0.0001)).phase;
 	phy=Complex(v.a.round(0.0001),v.c.round(0.0001)).phase;
