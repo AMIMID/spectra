@@ -25,7 +25,7 @@ SynthDef.new(\oa, {
 	var q,q1,i,j,k,va,vb,v1,v2,v3,v4,v5,v6,ph_v1_x,ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_va_x,ph_va_y,ph_va_z,ph_vb_x,ph_vb_y,ph_vb_z;
 	var osc1,osc2,osc3,freq, env,m=1,bank, pitch, fund, angle=0,angle1=90,r,p;
 	var osc1_x,osc1_y,osc1_z,osc2_x,osc2_y,osc2_z,cvax,cvay,cvaz,cvbx,cvby,cvbz,cva,cvb,phx,phy;
-	var spacex,timex,spacey,timey,spacez,timez,ang=(360-(360/1.6180339887499)),ang1=90+(360-(360/1.6180339887499));
+	var spacex,timex,spacey,timey,spacez,timez,ang=(360-(360/1.6180339887499));
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
@@ -72,13 +72,18 @@ SynthDef.new(\oa, {
 
 env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:2*0.1);
 //env=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:2);
+	q1=(cos(90.degrad/2)+(sin(90.degrad/2)*(i+j+k)));
+	vb=q1*vb*q1.conjugate;
+	v4=q1*v4*q1.conjugate;
+	v5=q1*v5*q1.conjugate;
+	v6=q1*v6*q1.conjugate;
 
 	bank.do{
 angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 
 	q=(cos(ang.degrad/2)+(sin(ang.degrad/2)*(i+j+k)));
-	q1=(cos(ang1.degrad/2)+(sin(ang1.degrad/2)*(i+j+k)));
+	q1=(cos(ang.degrad/2)+(sin(ang.degrad/2)*(i+j+k)));
 
 
 	va=q*va*q.conjugate;
@@ -152,7 +157,7 @@ SynthDef.new(\ob, {
 	var q,q1,i,j,k,va,vb,v1,v2,v3,v4,v5,v6,ph_v1_x,ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_va_x,ph_va_y,ph_va_z,ph_vb_x,ph_vb_y,ph_vb_z;
 	var osc1,osc2,osc3,freq, env,m=1,bank, pitch, fund, angle=0,angle1=90,r,p;
 	var osc1_x,osc1_y,osc1_z,osc2_x,osc2_y,osc2_z,cvax,cvay,cvaz,cvbx,cvby,cvbz,cva,cvb,phx,phy;
-	var spacex,timex,spacey,timey,spacez,timez,ang=(360-(360/1.6180339887499)),ang1=90+(360-(360/1.6180339887499));
+	var spacex,timex,spacey,timey,spacez,timez,ang=(360-(360/1.6180339887499));
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
@@ -200,13 +205,18 @@ SynthDef.new(\ob, {
 
 env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:2*0.1);
 //env=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:2);
+	q1=(cos(90.degrad/2)+(sin(90.degrad/2)*(i+j+k)));
+	vb=q1*vb*q1.conjugate;
+	v4=q1*v4*q1.conjugate;
+	v5=q1*v5*q1.conjugate;
+	v6=q1*v6*q1.conjugate;
 
 	bank.do{
 angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 
 	q=(cos(ang.degrad/2)+(sin(ang.degrad/2)*(i+j+k)));
-	q1=(cos(ang1.degrad/2)+(sin(ang1.degrad/2)*(i+j+k)));
+	q1=(cos(ang.degrad/2)+(sin(ang.degrad/2)*(i+j+k)));
 
 
 	va=q*va*q.conjugate;
@@ -281,7 +291,7 @@ SynthDef.new(\oc, {
 	var q,q1,i,j,k,va,vb,v1,v2,v3,v4,v5,v6,ph_v1_x,ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_va_x,ph_va_y,ph_va_z,ph_vb_x,ph_vb_y,ph_vb_z;
 	var osc1,osc2,osc3,freq, env,m=1,bank, pitch, fund, angle=0,angle1=90,r,p;
 	var osc1_x,osc1_y,osc1_z,osc2_x,osc2_y,osc2_z,cvax,cvay,cvaz,cvbx,cvby,cvbz,cva,cvb,phx,phy;
-	var spacex,timex,spacey,timey,spacez,timez,ang=(360-(360/1.6180339887499)),ang1=90+(360-(360/1.6180339887499));
+	var spacex,timex,spacey,timey,spacez,timez,ang=(360-(360/1.6180339887499));
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
@@ -329,13 +339,18 @@ SynthDef.new(\oc, {
 
 env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:2*0.1);
 //env=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:2);
+	q1=(cos(90.degrad/2)+(sin(90.degrad/2)*(i+j+k)));
+	vb=q1*vb*q1.conjugate;
+	v4=q1*v4*q1.conjugate;
+	v5=q1*v5*q1.conjugate;
+	v6=q1*v6*q1.conjugate;
 
 	bank.do{
 angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 
 	q=(cos(ang.degrad/2)+(sin(ang.degrad/2)*(i+j+k)));
-	q1=(cos(ang1.degrad/2)+(sin(ang1.degrad/2)*(i+j+k)));
+	q1=(cos(ang.degrad/2)+(sin(ang.degrad/2)*(i+j+k)));
 
 
 	va=q*va*q.conjugate;
@@ -410,7 +425,7 @@ SynthDef.new(\od, {
 	var q,q1,i,j,k,va,vb,v1,v2,v3,v4,v5,v6,ph_v1_x,ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_va_x,ph_va_y,ph_va_z,ph_vb_x,ph_vb_y,ph_vb_z;
 	var osc1,osc2,osc3,freq, env,m=1,bank, pitch, fund, angle=0,angle1=90,r,p;
 	var osc1_x,osc1_y,osc1_z,osc2_x,osc2_y,osc2_z,cvax,cvay,cvaz,cvbx,cvby,cvbz,cva,cvb,phx,phy;
-	var spacex,timex,spacey,timey,spacez,timez,ang=(360-(360/1.6180339887499)),ang1=90+(360-(360/1.6180339887499));
+	var spacex,timex,spacey,timey,spacez,timez,ang=(360-(360/1.6180339887499));
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
@@ -458,13 +473,18 @@ SynthDef.new(\od, {
 
 env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:2*0.1);
 //env=EnvGen.ar(Env.sine(decay,pitch1.reciprocal),doneAction:2,levelScale:2);
+	q1=(cos(90.degrad/2)+(sin(90.degrad/2)*(i+j+k)));
+	vb=q1*vb*q1.conjugate;
+	v4=q1*v4*q1.conjugate;
+	v5=q1*v5*q1.conjugate;
+	v6=q1*v6*q1.conjugate;
 
 	bank.do{
 angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 
 	q=(cos(ang.degrad/2)+(sin(ang.degrad/2)*(i+j+k)));
-	q1=(cos(ang1.degrad/2)+(sin(ang1.degrad/2)*(i+j+k)));
+	q1=(cos(ang.degrad/2)+(sin(ang.degrad/2)*(i+j+k)));
 
 
 	va=q*va*q.conjugate;
@@ -598,7 +618,7 @@ v4=Quaternion(0,r.[0].sqrt.neg,r.[1].sqrt,r.[2].sqrt);
 
 	~n1 = 10000.collect{
 		angle1=((360-(360/1.6180339887499))).wrap(0,360);
-		q1=(cos(ang1.degrad/2)+(sin(ang1.degrad/2)*(i+j+k)));
+		q1=(cos(angle1.degrad/2)+(sin(angle1.degrad/2)*(i+j+k)));
 
 	v1=q1*v1*q1.conjugate;
 	ph1=(v1.a*m).round(1);
