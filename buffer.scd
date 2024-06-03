@@ -1,7 +1,7 @@
 
 (
 s.options.numWireBufs = 1024*16;
-s.options.numOutputBusChannels=3;
+s.options.numOutputBusChannels=2;
 s.options.numInputBusChannels=0;
 TempoClock.default.tempo_(120/120);
 s.options.memSize = 8192*64;
@@ -71,7 +71,7 @@ s.record(numChannels:3)
 (
 ~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240601_195507.wav",channels:0 );
 ~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240601_195507.wav",channels:1 );
-//~c3 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/z.wav",channels:0 );
+~c3 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240601_195507.wav",channels:1 );
 )
 
 
@@ -152,7 +152,7 @@ s.record(numChannels:3)
 
     in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0);
 	 in2 = PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c2), loop: 0);
-	//in3 = PlayBuf.ar(1, ~c3.bufnum, BufRateScale.kr(~c3), loop: 0);
+in3 = PlayBuf.ar(1, ~c3.bufnum, BufRateScale.kr(~c3), loop: 0);
 
 	vp=[1,2,3].normalizeSum;
 	v=Quaternion(0,vp.[0].sqrt,vp.[1].sqrt,vp.[2].sqrt);
@@ -162,7 +162,7 @@ s.record(numChannels:3)
 
 		chainx = FFT(LocalBuf(1024), in1);
 		chainy = FFT(LocalBuf(1024), in2);
-		//chainz = FFT(LocalBuf(1024), in3);
+	  chainz = FFT(LocalBuf(1024), in3);
 
 
 		q=(cos(angle.degrad/2)+(sin(angle.degrad/2)*(i+j+k)));
@@ -183,7 +183,7 @@ s.record(numChannels:3)
 
    chainy = chainy.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
 
-  // chainz = chainz.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
+   chainz = chainz.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
 
 
 	b=b+1;
@@ -191,8 +191,54 @@ s.record(numChannels:3)
 
 Out.ar(0,Pan2.ar(LeakDC.ar(IFFT(chainx)),v.b));
 Out.ar(0,Pan2.ar(LeakDC.ar(IFFT(chainy)),v.c));
-//Out.ar(0,Pan2.ar(LeakDC.ar(IFFT(chainy)),v.d));
+Out.ar(0,Pan2.ar(LeakDC.ar(IFFT(chainz)),v.d));
 
 	}
 }.play
 )
+
+
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240603_090817.wav",channels:[0,1] );
+
+
+(SynthDef.new(\oe, {
+	var osc1;
+	osc1=BBandPass.ar(PlayBuf.ar(2, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0),600,MouseX.kr(0.0001,1,1),MouseX.kr(1000,1,1));
+	Out.ar(0,LeakDC.ar(osc1));
+}).add;)
+
+Synth(\oe);
+s.record;
+
+(
+~fftsize=8192;
+~hop=0.25;
+~win=0;
+~f={Buffer.alloc(s,~c1.duration.calcPVRecSize(~fftsize,~hop))}!2;
+)
+(
+{
+	var sig,chain,localbuf;
+	sig=PlayBuf.ar(2, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0,doneAction:2);
+	localbuf={LocalBuf.new(~fftsize)}!2;
+	chain=FFT(localbuf,sig,~hop,~win);
+	chain=PV_RecordBuf(chain,~f,run:1,hop:~hop,wintype:~win);
+	0;
+}.play;
+)
+
+(
+x={
+	var sig,chain,localbuf;
+	localbuf={LocalBuf.new(~fftsize)}!2;
+		chain=PV_PlayBuf(localbuf,~f,\rate.kr(1),loop:inf);
+		sig=IFFT(chain,~win);
+	}.play;
+)
+
+x.set(\rate,0);
+x.set(\rate,1/10);
+x.set(\rate,-2/3);
+x.release(2);
+
+
