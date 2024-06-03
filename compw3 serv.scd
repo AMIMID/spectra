@@ -2,7 +2,7 @@
 s.options.numWireBufs = 1024*16;
 s.options.numOutputBusChannels=8;
 s.options.numInputBusChannels=0;
-TempoClock.default.tempo_(120/120);
+TempoClock.default.tempo_(120/240);
 s.options.memSize = 8192*64;
 //s.options.blockSize = 64/4;
 s.options.maxNodes = 1024 * 64;
@@ -19,19 +19,16 @@ Server.freeAll
 ~s1.makeGui(w);
 ~s2.makeGui(w);
 ~s3.makeGui(w);
-~s1.meter;
-~s2.meter;
-~s3.meter;
 )
 
 Buffer.freeAll
 (
 // 3D
 ~a = VBAPSpeakerArray.new(3, [[0, 45], [180, 45], [90, 45.neg], [90.neg, 45.neg]]);
-~b = Buffer.loadCollection(s, ~a.getSetsAndMatrices);
+//~b = Buffer.loadCollection(~s1, ~a.getSetsAndMatrices);
+//~c = Buffer.loadCollection(~s2, ~a.getSetsAndMatrices);
+//~d = Buffer.loadCollection(~s3, ~a.getSetsAndMatrices);
 )
-
-
 (
 (
 SynthDef.new(\ob, {
@@ -60,7 +57,7 @@ SynthDef.new(\ob, {
 		Out.ar(pair[0], pair[1])}};
 
 
-	var out = NamedControl.kr(\out, [4, 5, 6, 7]);  // multiple buses!
+	var out = NamedControl.kr(\out, [0, 1, 2, 3]);  // multiple buses!
 
 	r=[rx,ry,rz].normalizeSum;
 
@@ -80,7 +77,7 @@ SynthDef.new(\ob, {
 	va=Quaternion(0,p.[0].sqrt*ng1,p.[1].sqrt*ng2,p.[2].sqrt*ng3);
 	vb=Quaternion(0,p.[0].sqrt*ng1,p.[1].sqrt*ng2,p.[2].sqrt*ng3);
 
-	bank=8;
+	bank=32;
 	pitch=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
 	freq = (fund*6)*pitch;
@@ -135,8 +132,8 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:p
 env2=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:phx.imag.round(0.0001));
 
 
-osc1_x=VBAP.ar(4,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,phx,2pi)),~b.bufnum,cva.theta.degrad,cva.phi.degrad);
-osc1_y=VBAP.ar(4,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,phy,2pi)),~b.bufnum,cvb.theta.degrad,cvb.phi.degrad);
+osc1_x=VBAP.ar(4,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,phx,2pi)),Buffer.loadCollection(~s1, ~a.getSetsAndMatrices);,cva.theta.degrad,cva.phi.degrad);
+osc1_y=VBAP.ar(4,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,phy,2pi)),Buffer.loadCollection(~s1, ~a.getSetsAndMatrices);,cvb.theta.degrad,cvb.phi.degrad);
 
 //osc1_x=VBAP.ar(4,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_va_x,2pi)),~b.bufnum,cvax.theta,cvax.phi);
 //osc1_y=VBAP.ar(4,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_va_y,2pi)),~b.bufnum,cvay.theta,cvay.phi);
@@ -195,7 +192,7 @@ SynthDef.new(\oc, {
 		Out.ar(pair[0], pair[1])}};
 
 
-	var out = NamedControl.kr(\out, [4, 5, 6, 7]);  // multiple buses!
+	var out = NamedControl.kr(\out, [0, 1, 2, 3]);  // multiple buses!
 
 	r=[rx,ry,rz].normalizeSum;
 
@@ -215,7 +212,7 @@ SynthDef.new(\oc, {
 	va=Quaternion(0,p.[0].sqrt*ng1,p.[1].sqrt*ng2,p.[2].sqrt*ng3);
 	vb=Quaternion(0,p.[0].sqrt*ng1,p.[1].sqrt*ng2,p.[2].sqrt*ng3);
 
-	bank=8;
+	bank=32;
 	pitch=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
 	freq = (fund*6)*pitch;
@@ -270,8 +267,8 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:p
 env2=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:phx.imag.round(0.0001));
 
 
-osc1_x=VBAP.ar(4,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,phx,2pi)),~b.bufnum,cva.theta.degrad,cva.phi.degrad);
-osc1_y=VBAP.ar(4,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,phy,2pi)),~b.bufnum,cvb.theta.degrad,cvb.phi.degrad);
+osc1_x=VBAP.ar(4,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,phx,2pi)),Buffer.loadCollection(~s2, ~a.getSetsAndMatrices);,cva.theta.degrad,cva.phi.degrad);
+osc1_y=VBAP.ar(4,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,phy,2pi)),Buffer.loadCollection(~s2, ~a.getSetsAndMatrices);,cvb.theta.degrad,cvb.phi.degrad);
 
 //osc1_x=VBAP.ar(4,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_va_x,2pi)),~b.bufnum,cvax.theta,cvax.phi);
 //osc1_y=VBAP.ar(4,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_va_y,2pi)),~b.bufnum,cvay.theta,cvay.phi);
@@ -330,7 +327,7 @@ SynthDef.new(\od, {
 		Out.ar(pair[0], pair[1])}};
 
 
-	var out = NamedControl.kr(\out, [4, 5, 6, 7]);  // multiple buses!
+	var out = NamedControl.kr(\out, [0, 1, 2, 3]);  // multiple buses!
 
 	r=[rx,ry,rz].normalizeSum;
 
@@ -350,7 +347,7 @@ SynthDef.new(\od, {
 	va=Quaternion(0,p.[0].sqrt*ng1,p.[1].sqrt*ng2,p.[2].sqrt*ng3);
 	vb=Quaternion(0,p.[0].sqrt*ng1,p.[1].sqrt*ng2,p.[2].sqrt*ng3);
 
-	bank=8;
+	bank=32;
 	pitch=2.pow(n1/(2*6));
 	fund=(((4*t)-1)*((4*t)/2));
 	freq = (fund*6)*pitch;
@@ -405,8 +402,8 @@ env1=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:p
 env2=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:phx.imag.round(0.0001));
 
 
-osc1_x=VBAP.ar(4,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,phx,2pi)),~b.bufnum,cva.theta.degrad,cva.phi.degrad);
-osc1_y=VBAP.ar(4,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,phy,2pi)),~b.bufnum,cvb.theta.degrad,cvb.phi.degrad);
+osc1_x=VBAP.ar(4,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,phx,2pi)),Buffer.loadCollection(~s3, ~a.getSetsAndMatrices);,cva.theta.degrad,cva.phi.degrad);
+osc1_y=VBAP.ar(4,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,phy,2pi)),Buffer.loadCollection(~s3, ~a.getSetsAndMatrices);,cvb.theta.degrad,cvb.phi.degrad);
 
 //osc1_x=VBAP.ar(4,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_va_x,2pi)),~b.bufnum,cvax.theta,cvax.phi);
 //osc1_y=VBAP.ar(4,SinOsc.ar((freq*m),mul:m.reciprocal,phase:SinOsc.ar(0.1,ph_va_y,2pi)),~b.bufnum,cvay.theta,cvay.phi);
@@ -551,7 +548,7 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 	\server,~s1,
 \n1,PdegreeToKey(Pseq(~n2,1),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
-		\out,Pn(Pshuf([4, 5, 6, 7], 1), inf).clump(4).collect([_]),
+		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\x,Pbrown(0,1,0.1,inf),
 	\y,Pbrown(0,1,0.1,inf),
 	\z,Pbrown(0,1,0.1,inf),
@@ -569,7 +566,7 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 	\server,~s2,
 \n1,PdegreeToKey(Pseq(~n3,1),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
-		\out,Pn(Pshuf([4, 5, 6, 7], 1), inf).clump(4).collect([_]),
+		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\x,Pbrown(0,1,0.1,inf),
 	\y,Pbrown(0,1,0.1,inf),
 	\z,Pbrown(0,1,0.1,inf),
@@ -587,7 +584,7 @@ d=Pdef(\4, Pbind(\instrument, \od,
 	\server,~s3,
 \n1,PdegreeToKey(Pseq(~n4,1),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
-	\out,Pn(Pshuf([4, 5, 6, 7], 1), inf).clump(4).collect([_]),
+	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\x,Pbrown(0,1,0.1,inf),
 	\y,Pbrown(0,1,0.1,inf),
 	\z,Pbrown(0,1,0.1,inf),
@@ -606,10 +603,13 @@ d=Pdef(\4, Pbind(\instrument, \od,
 b.play;
 c.play;
 d.play;
-{Out.ar(0,InFeedback.ar(4))}.play;
-{Out.ar(1,InFeedback.ar(5))}.play;
-{Out.ar(2,InFeedback.ar(6))}.play;
-{Out.ar(3,InFeedback.ar(7))}.play;
-s.record(numChannels:4)
 
 )
+
+~r1=Recorder.new(~s1);
+~r2=Recorder.new(~s2);
+~r3=Recorder.new(~s3);
+
+~r1.record(numChannels:4);
+~r2.record(numChannels:4);
+~r3.record(numChannels:4);
