@@ -21,9 +21,10 @@ Buffer.freeAll
 (
 (
 SynthDef.new(\oa, {
-	arg  n1=1, cutt=440,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1, ry=1,rz=1,ng1=1,ng2=1,ng3=1;
-	var q,q1,i,j,k,va,vb,v1,v2,v3,v4,v5,v6,ph_v1_x,ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_va_x,ph_va_y,ph_va_z,ph_vb_x,ph_vb_y,ph_vb_z;
-	var osc1,osc2,osc3,freq, env1,env2,m=1,bank, pitch, fund, angle=0,angle1=90,r,p;
+	arg  n1=1, cutt=440,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1,ry=1,rz=1,rx1=1,ry1=1,rz1=1,ng1=1,ng2=1,ng3=1;
+	var q,q1,i,j,k,i1,j1,k1,va,vb,v1,v2,v3,v4,v5,v6,ph_v1_x;
+	var ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_va_x,ph_va_y,ph_va_z,ph_vb_x,ph_vb_y,ph_vb_z;
+	var osc1,osc2,osc3,freq, env1,env2,m=1,bank, pitch, fund, angle=0,angle1=90,r1,r2,p;
 	var osc1_x,osc1_y,osc1_z,osc2_x,osc2_y,osc2_z,cvax,cvay,cvaz,cvbx,cvby,cvbz,cva,cvb,phx,phy;
 	var spacex,timex,spacey,timey,spacez,timez,ang=(360-(360/1.6180339887499));
 	var wrappedOut1 = { |busArray, signalArray|
@@ -47,11 +48,16 @@ SynthDef.new(\oa, {
 
 	var out = NamedControl.kr(\out, [0, 1, 2, 3]);  // multiple buses!
 
-	r=[rx,ry,rz].normalizeSum;
+	r1=[rx,ry,rz].normalizeSum;
+	r2=[rx1,ry1,rz1].normalizeSum;
 
-	i = Quaternion(0, r.[0].sqrt, 0, 0);
-	j = Quaternion(0, 0,r.[1].sqrt, 0);
-	k = Quaternion(0, 0, 0, r.[2].sqrt);
+	i = Quaternion(0, r1.[0].sqrt, 0, 0);
+	j = Quaternion(0, 0,r1.[1].sqrt, 0);
+	k = Quaternion(0, 0, 0, r1.[2].sqrt);
+
+	i1 = Quaternion(0, r2.[0].sqrt, 0, 0);
+	j1 = Quaternion(0, 0,r2.[1].sqrt, 0);
+	k1 = Quaternion(0, 0, 0, r2.[2].sqrt);
 
 	p=[x,y,z].normalizeSum;
 
@@ -70,18 +76,12 @@ SynthDef.new(\oa, {
 	fund=(((4*t)-1)*((4*t)/2));
 	freq = (fund*6)*pitch;
 
-	q1=(cos(90.degrad/2)+(sin(90.degrad/2)*(i+j+k)));
-	vb=q1*vb*q1.conjugate;
-	v4=q1*v4*q1.conjugate;
-	v5=q1*v5*q1.conjugate;
-	v6=q1*v6*q1.conjugate;
-
 	bank.do{
 angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 
 	q=(cos(ang.degrad/2)+(sin(ang.degrad/2)*(i+j+k)));
-	q1=(cos(ang.degrad/2)+(sin(ang.degrad/2)*(i+j+k)));
+	q1=(cos(ang.degrad/2)+(sin(ang.degrad/2)*(i1+j1+k1)));
 
 
 	va=q*va*q.conjugate;
@@ -154,9 +154,10 @@ m=m+1;
 );
 (
 SynthDef.new(\ob, {
-	arg  n1=1, cutt=440,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1, ry=1,rz=1,ng1=1,ng2=1,ng3=1;
-	var q,q1,i,j,k,va,vb,v1,v2,v3,v4,v5,v6,ph_v1_x,ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_va_x,ph_va_y,ph_va_z,ph_vb_x,ph_vb_y,ph_vb_z;
-	var osc1,osc2,osc3,freq, env1,env2,m=1,bank, pitch, fund, angle=0,angle1=90,r,p;
+	arg  n1=1, cutt=440,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1,ry=1,rz=1,rx1=1,ry1=1,rz1=1,ng1=1,ng2=1,ng3=1;
+	var q,q1,i,j,k,i1,j1,k1,va,vb,v1,v2,v3,v4,v5,v6,ph_v1_x;
+	var ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_va_x,ph_va_y,ph_va_z,ph_vb_x,ph_vb_y,ph_vb_z;
+	var osc1,osc2,osc3,freq, env1,env2,m=1,bank, pitch, fund, angle=0,angle1=90,r1,r2,p;
 	var osc1_x,osc1_y,osc1_z,osc2_x,osc2_y,osc2_z,cvax,cvay,cvaz,cvbx,cvby,cvbz,cva,cvb,phx,phy;
 	var spacex,timex,spacey,timey,spacez,timez,ang=(360-(360/1.6180339887499));
 	var wrappedOut1 = { |busArray, signalArray|
@@ -178,14 +179,18 @@ SynthDef.new(\ob, {
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
 
-
 	var out = NamedControl.kr(\out, [0, 1, 2, 3]);  // multiple buses!
 
-	r=[rx,ry,rz].normalizeSum;
+	r1=[rx,ry,rz].normalizeSum;
+	r2=[rx1,ry1,rz1].normalizeSum;
 
-	i = Quaternion(0, r.[0].sqrt, 0, 0);
-	j = Quaternion(0, 0,r.[1].sqrt, 0);
-	k = Quaternion(0, 0, 0, r.[2].sqrt);
+	i = Quaternion(0, r1.[0].sqrt, 0, 0);
+	j = Quaternion(0, 0,r1.[1].sqrt, 0);
+	k = Quaternion(0, 0, 0, r1.[2].sqrt);
+
+	i1 = Quaternion(0, r2.[0].sqrt, 0, 0);
+	j1 = Quaternion(0, 0,r2.[1].sqrt, 0);
+	k1 = Quaternion(0, 0, 0, r2.[2].sqrt);
 
 	p=[x,y,z].normalizeSum;
 
@@ -204,18 +209,12 @@ SynthDef.new(\ob, {
 	fund=(((4*t)-1)*((4*t)/2));
 	freq = (fund*6)*pitch;
 
-	q1=(cos(90.degrad/2)+(sin(90.degrad/2)*(i+j+k)));
-	vb=q1*vb*q1.conjugate;
-	v4=q1*v4*q1.conjugate;
-	v5=q1*v5*q1.conjugate;
-	v6=q1*v6*q1.conjugate;
-
 	bank.do{
 angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 
 	q=(cos(ang.degrad/2)+(sin(ang.degrad/2)*(i+j+k)));
-	q1=(cos(ang.degrad/2)+(sin(ang.degrad/2)*(i+j+k)));
+	q1=(cos(ang.degrad/2)+(sin(ang.degrad/2)*(i1+j1+k1)));
 
 
 	va=q*va*q.conjugate;
@@ -289,9 +288,10 @@ m=m+1;
 );
 (
 SynthDef.new(\oc, {
-	arg  n1=1, cutt=440,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1, ry=1,rz=1,ng1=1,ng2=1,ng3=1;
-	var q,q1,i,j,k,va,vb,v1,v2,v3,v4,v5,v6,ph_v1_x,ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_va_x,ph_va_y,ph_va_z,ph_vb_x,ph_vb_y,ph_vb_z;
-	var osc1,osc2,osc3,freq, env1,env2,m=1,bank, pitch, fund, angle=0,angle1=90,r,p;
+arg  n1=1, cutt=440,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1,ry=1,rz=1,rx1=1,ry1=1,rz1=1,ng1=1,ng2=1,ng3=1;
+	var q,q1,i,j,k,i1,j1,k1,va,vb,v1,v2,v3,v4,v5,v6,ph_v1_x;
+	var ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_va_x,ph_va_y,ph_va_z,ph_vb_x,ph_vb_y,ph_vb_z;
+	var osc1,osc2,osc3,freq, env1,env2,m=1,bank, pitch, fund, angle=0,angle1=90,r1,r2,p;
 	var osc1_x,osc1_y,osc1_z,osc2_x,osc2_y,osc2_z,cvax,cvay,cvaz,cvbx,cvby,cvbz,cva,cvb,phx,phy;
 	var spacex,timex,spacey,timey,spacez,timez,ang=(360-(360/1.6180339887499));
 	var wrappedOut1 = { |busArray, signalArray|
@@ -313,14 +313,18 @@ SynthDef.new(\oc, {
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
 
-
 	var out = NamedControl.kr(\out, [0, 1, 2, 3]);  // multiple buses!
 
-	r=[rx,ry,rz].normalizeSum;
+	r1=[rx,ry,rz].normalizeSum;
+	r2=[rx1,ry1,rz1].normalizeSum;
 
-	i = Quaternion(0, r.[0].sqrt, 0, 0);
-	j = Quaternion(0, 0,r.[1].sqrt, 0);
-	k = Quaternion(0, 0, 0, r.[2].sqrt);
+	i = Quaternion(0, r1.[0].sqrt, 0, 0);
+	j = Quaternion(0, 0,r1.[1].sqrt, 0);
+	k = Quaternion(0, 0, 0, r1.[2].sqrt);
+
+	i1 = Quaternion(0, r2.[0].sqrt, 0, 0);
+	j1 = Quaternion(0, 0,r2.[1].sqrt, 0);
+	k1 = Quaternion(0, 0, 0, r2.[2].sqrt);
 
 	p=[x,y,z].normalizeSum;
 
@@ -339,19 +343,12 @@ SynthDef.new(\oc, {
 	fund=(((4*t)-1)*((4*t)/2));
 	freq = (fund*6)*pitch;
 
-	q1=(cos(90.degrad/2)+(sin(90.degrad/2)*(i+j+k)));
-	vb=q1*vb*q1.conjugate;
-	v4=q1*v4*q1.conjugate;
-	v5=q1*v5*q1.conjugate;
-	v6=q1*v6*q1.conjugate;
-
 	bank.do{
 angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 
 	q=(cos(ang.degrad/2)+(sin(ang.degrad/2)*(i+j+k)));
-	q1=(cos(ang.degrad/2)+(sin(ang.degrad/2)*(i+j+k)));
-
+	q1=(cos(ang.degrad/2)+(sin(ang.degrad/2)*(i1+j1+k1)));
 
 	va=q*va*q.conjugate;
 	v1=q*v1*q.conjugate;
@@ -424,9 +421,10 @@ m=m+1;
 );
 (
 SynthDef.new(\od, {
-	arg  n1=1, cutt=440,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1, ry=1,rz=1,ng1=1,ng2=1,ng3=1;
-	var q,q1,i,j,k,va,vb,v1,v2,v3,v4,v5,v6,ph_v1_x,ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_va_x,ph_va_y,ph_va_z,ph_vb_x,ph_vb_y,ph_vb_z;
-	var osc1,osc2,osc3,freq, env1,env2,m=1,bank, pitch, fund, angle=0,angle1=90,r,p;
+arg  n1=1, cutt=440,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1,ry=1,rz=1,rx1=1,ry1=1,rz1=1,ng1=1,ng2=1,ng3=1;
+	var q,q1,i,j,k,i1,j1,k1,va,vb,v1,v2,v3,v4,v5,v6,ph_v1_x;
+	var ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_va_x,ph_va_y,ph_va_z,ph_vb_x,ph_vb_y,ph_vb_z;
+	var osc1,osc2,osc3,freq, env1,env2,m=1,bank, pitch, fund, angle=0,angle1=90,r1,r2,p;
 	var osc1_x,osc1_y,osc1_z,osc2_x,osc2_y,osc2_z,cvax,cvay,cvaz,cvbx,cvby,cvbz,cva,cvb,phx,phy;
 	var spacex,timex,spacey,timey,spacez,timez,ang=(360-(360/1.6180339887499));
 	var wrappedOut1 = { |busArray, signalArray|
@@ -448,14 +446,18 @@ SynthDef.new(\od, {
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
 
-
 	var out = NamedControl.kr(\out, [0, 1, 2, 3]);  // multiple buses!
 
-	r=[rx,ry,rz].normalizeSum;
+	r1=[rx,ry,rz].normalizeSum;
+	r2=[rx1,ry1,rz1].normalizeSum;
 
-	i = Quaternion(0, r.[0].sqrt, 0, 0);
-	j = Quaternion(0, 0,r.[1].sqrt, 0);
-	k = Quaternion(0, 0, 0, r.[2].sqrt);
+	i = Quaternion(0, r1.[0].sqrt, 0, 0);
+	j = Quaternion(0, 0,r1.[1].sqrt, 0);
+	k = Quaternion(0, 0, 0, r1.[2].sqrt);
+
+	i1 = Quaternion(0, r2.[0].sqrt, 0, 0);
+	j1 = Quaternion(0, 0,r2.[1].sqrt, 0);
+	k1 = Quaternion(0, 0, 0, r2.[2].sqrt);
 
 	p=[x,y,z].normalizeSum;
 
@@ -474,19 +476,12 @@ SynthDef.new(\od, {
 	fund=(((4*t)-1)*((4*t)/2));
 	freq = (fund*6)*pitch;
 
-	q1=(cos(90.degrad/2)+(sin(90.degrad/2)*(i+j+k)));
-	vb=q1*vb*q1.conjugate;
-	v4=q1*v4*q1.conjugate;
-	v5=q1*v5*q1.conjugate;
-	v6=q1*v6*q1.conjugate;
-
 	bank.do{
 angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 
 	q=(cos(ang.degrad/2)+(sin(ang.degrad/2)*(i+j+k)));
-	q1=(cos(ang.degrad/2)+(sin(ang.degrad/2)*(i+j+k)));
-
+	q1=(cos(ang.degrad/2)+(sin(ang.degrad/2)*(i1+j1+k1)));
 
 	va=q*va*q.conjugate;
 	v1=q*v1*q.conjugate;
