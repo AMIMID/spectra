@@ -17,6 +17,12 @@ Buffer.freeAll
 ~b = Buffer.loadCollection(s, ~a.getSetsAndMatrices);
 )
 
+(
+// 3D random
+~a = VBAPSpeakerArray.new(3, [[180.rand2, 90.rand2], [180.rand2, 90.rand2], [180.rand2, 90.rand2], [180.rand2, 90.rand2]]);
+~b = Buffer.loadCollection(s, ~a.getSetsAndMatrices);
+)
+
 
 (
 (

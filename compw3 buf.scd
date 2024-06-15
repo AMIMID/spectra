@@ -18,6 +18,12 @@ Buffer.freeAll
 )
 
 (
+// 3D random
+~a = VBAPSpeakerArray.new(3, [[180.rand2, 90.rand2], [180.rand2, 90.rand2], [180.rand2, 90.rand2], [180.rand2, 90.rand2]]);
+~b = Buffer.loadCollection(s, ~a.getSetsAndMatrices);
+)
+
+(
 ~c1 = Buffer.readChannel(s,,channels:0 );
 ~c2 = Buffer.readChannel(s,,channels:1 );
 ~c3 = Buffer.readChannel(s,,channels:0 );
