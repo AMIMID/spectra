@@ -27,7 +27,7 @@ Buffer.freeAll
 (
 (
 SynthDef.new(\oa, {
-	arg  n1=1, cutt=440,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1,ry=1,rz=1,rx1=1,ry1=1,rz1=1,ng1=1,ng2=1,ng3=1;
+	arg  n1=1, cutt=440,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1,ry=1,rz=1,rx1=1,ry1=1,rz1=1,ng1=1,ng2=1,ng3=1,ng4=1,ng5=1,ng6=1;
 	var q,q1,i,j,k,i1,j1,k1,va,vb,v1,v2,v3,v4,v5,v6,ph_v1_x;
 	var ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_va_x,ph_va_y,ph_va_z,ph_vb_x,ph_vb_y,ph_vb_z;
 	var osc1,osc2,osc3,freq, env1,env2,m=1,bank, pitch, fund, angle=0,angle1=90,r1,r2,p;
@@ -75,7 +75,7 @@ SynthDef.new(\oa, {
 	v5=Quaternion(0,0,p.[1].sqrt*ng2,0);
 	v6=Quaternion(0,0,0,p.[2].sqrt*ng3);
 	va=Quaternion(0,p.[0].sqrt*ng1,p.[1].sqrt*ng2,p.[2].sqrt*ng3);
-	vb=Quaternion(0,p.[0].sqrt*ng1,p.[1].sqrt*ng2,p.[2].sqrt*ng3);
+	vb=Quaternion(0,p.[0].sqrt*ng4,p.[1].sqrt*ng5,p.[2].sqrt*ng6);
 
 	bank=8;
 	pitch=2.pow(n1/(2*6));
@@ -160,7 +160,7 @@ m=m+1;
 );
 (
 SynthDef.new(\ob, {
-	arg  n1=1, cutt=440,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1,ry=1,rz=1,rx1=1,ry1=1,rz1=1,ng1=1,ng2=1,ng3=1;
+	arg  n1=1, cutt=440,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1,ry=1,rz=1,rx1=1,ry1=1,rz1=1,ng1=1,ng2=1,ng3=1,ng4=1,ng5=1,ng6=1;
 	var q,q1,i,j,k,i1,j1,k1,va,vb,v1,v2,v3,v4,v5,v6,ph_v1_x;
 	var ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_va_x,ph_va_y,ph_va_z,ph_vb_x,ph_vb_y,ph_vb_z;
 	var osc1,osc2,osc3,freq, env1,env2,m=1,bank, pitch, fund, angle=0,angle1=90,r1,r2,p;
@@ -208,7 +208,7 @@ SynthDef.new(\ob, {
 	v5=Quaternion(0,0,p.[1].sqrt*ng2,0);
 	v6=Quaternion(0,0,0,p.[2].sqrt*ng3);
 	va=Quaternion(0,p.[0].sqrt*ng1,p.[1].sqrt*ng2,p.[2].sqrt*ng3);
-	vb=Quaternion(0,p.[0].sqrt*ng1,p.[1].sqrt*ng2,p.[2].sqrt*ng3);
+	vb=Quaternion(0,p.[0].sqrt*ng4,p.[1].sqrt*ng5,p.[2].sqrt*ng6);
 
 	bank=8;
 	pitch=2.pow(n1/(2*6));
@@ -294,7 +294,7 @@ m=m+1;
 );
 (
 SynthDef.new(\oc, {
-arg  n1=1, cutt=440,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1,ry=1,rz=1,rx1=1,ry1=1,rz1=1,ng1=1,ng2=1,ng3=1;
+arg  n1=1, cutt=440,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1,ry=1,rz=1,rx1=1,ry1=1,rz1=1,ng1=1,ng2=1,ng3=1,ng4=1,ng5=1,ng6=1;
 	var q,q1,i,j,k,i1,j1,k1,va,vb,v1,v2,v3,v4,v5,v6,ph_v1_x;
 	var ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_va_x,ph_va_y,ph_va_z,ph_vb_x,ph_vb_y,ph_vb_z;
 	var osc1,osc2,osc3,freq, env1,env2,m=1,bank, pitch, fund, angle=0,angle1=90,r1,r2,p;
@@ -342,7 +342,7 @@ arg  n1=1, cutt=440,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1,ry=1,rz=1,rx1=
 	v5=Quaternion(0,0,p.[1].sqrt*ng2,0);
 	v6=Quaternion(0,0,0,p.[2].sqrt*ng3);
 	va=Quaternion(0,p.[0].sqrt*ng1,p.[1].sqrt*ng2,p.[2].sqrt*ng3);
-	vb=Quaternion(0,p.[0].sqrt*ng1,p.[1].sqrt*ng2,p.[2].sqrt*ng3);
+	vb=Quaternion(0,p.[0].sqrt*ng4,p.[1].sqrt*ng5,p.[2].sqrt*ng6);
 
 	bank=8;
 	pitch=2.pow(n1/(2*6));
@@ -427,7 +427,7 @@ m=m+1;
 );
 (
 SynthDef.new(\od, {
-arg  n1=1, cutt=440,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1,ry=1,rz=1,rx1=1,ry1=1,rz1=1,ng1=1,ng2=1,ng3=1;
+arg  n1=1, cutt=440,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1,ry=1,rz=1,rx1=1,ry1=1,rz1=1,ng1=1,ng2=1,ng3=1,ng4=1,ng5=1,ng6=1;
 	var q,q1,i,j,k,i1,j1,k1,va,vb,v1,v2,v3,v4,v5,v6,ph_v1_x;
 	var ph_v1_y,ph_v1_z,ph_v2_x,ph_v2_y,ph_v2_z,ph_va_x,ph_va_y,ph_va_z,ph_vb_x,ph_vb_y,ph_vb_z;
 	var osc1,osc2,osc3,freq, env1,env2,m=1,bank, pitch, fund, angle=0,angle1=90,r1,r2,p;
@@ -475,7 +475,7 @@ arg  n1=1, cutt=440,decay=6,t=2,attack=0.05,x=1,y=0.5,z=0.25,rx=1,ry=1,rz=1,rx1=
 	v5=Quaternion(0,0,p.[1].sqrt*ng2,0);
 	v6=Quaternion(0,0,0,p.[2].sqrt*ng3);
 	va=Quaternion(0,p.[0].sqrt*ng1,p.[1].sqrt*ng2,p.[2].sqrt*ng3);
-	vb=Quaternion(0,p.[0].sqrt*ng1,p.[1].sqrt*ng2,p.[2].sqrt*ng3);
+	vb=Quaternion(0,p.[0].sqrt*ng4,p.[1].sqrt*ng5,p.[2].sqrt*ng6);
 
 	bank=8;
 	pitch=2.pow(n1/(2*6));
@@ -714,6 +714,9 @@ a=Pdef(\1, Pbind(\instrument, \oa,
 		\ng1,Prand([1.neg,1,1.neg,1],inf),
 	\ng2,Prand([1.neg,1,1.neg,1],inf),
 	\ng3,Prand([1.neg,1,1.neg,1],inf),
+			\ng4,Prand([1.neg,1,1.neg,1],inf),
+	\ng5,Prand([1.neg,1,1.neg,1],inf),
+	\ng6,Prand([1.neg,1,1.neg,1],inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 b=Pdef(\2, Pbind(\instrument, \ob,
@@ -734,6 +737,9 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 		\ng1,Prand([1.neg,1,1.neg,1],inf),
 	\ng2,Prand([1.neg,1,1.neg,1],inf),
 	\ng3,Prand([1.neg,1,1.neg,1],inf),
+			\ng4,Prand([1.neg,1,1.neg,1],inf),
+	\ng5,Prand([1.neg,1,1.neg,1],inf),
+	\ng6,Prand([1.neg,1,1.neg,1],inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 c=Pdef(\3, Pbind(\instrument, \oc,
@@ -754,6 +760,9 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 		\ng1,Prand([1.neg,1,1.neg,1],inf),
 	\ng2,Prand([1.neg,1,1.neg,1],inf),
 	\ng3,Prand([1.neg,1,1.neg,1],inf),
+			\ng4,Prand([1.neg,1,1.neg,1],inf),
+	\ng5,Prand([1.neg,1,1.neg,1],inf),
+	\ng6,Prand([1.neg,1,1.neg,1],inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 d=Pdef(\4, Pbind(\instrument, \od,
@@ -774,6 +783,9 @@ d=Pdef(\4, Pbind(\instrument, \od,
 		\ng1,Prand([1.neg,1,1.neg,1],inf),
 	\ng2,Prand([1.neg,1,1.neg,1],inf),
 	\ng3,Prand([1.neg,1,1.neg,1],inf),
+		\ng4,Prand([1.neg,1,1.neg,1],inf),
+	\ng5,Prand([1.neg,1,1.neg,1],inf),
+	\ng6,Prand([1.neg,1,1.neg,1],inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 )
