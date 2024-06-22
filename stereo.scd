@@ -16,13 +16,11 @@ s.waitForBoot
 ~c3 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240613_215715.wav",channels:2 );
 ~c4 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_240613_215715.wav",channels:3 );
 )
--1.exp
 
-exp(Complex(0,1)*0.degrad).round(0.0001)
 
 (
 {
-var pos1,pos2,pos3,pos4,amp1,amp2,amp3,amp4;
+var pos1,pos2,pos3,pos4,ampx,ampy,amp3,amp4;
 
 pos1=MouseX.kr(1.neg,1);
 pos2=MouseX.kr(1.neg,1).neg;
@@ -35,22 +33,22 @@ pos4=MouseY.kr(1.neg,1);
 	Out.ar(0,Pan2.ar(PlayBuf.ar(1, ~c4.bufnum, BufRateScale.kr(~c4), loop: 0, doneAction:2),pos2));
 }.play;
 )
-
+////////////////////////////////////////////////////////////////
 (
 (
 a={
-	arg /*posx,posy,*/amp;
-	var pos1,pos2,pos3,pos4,amp1,amp2,amp3,amp4;
+	arg posx,posy,ampx,ampy,echox,echoy;
+	var ch1,ch2,ch3,ch4;
 
-pos1=MouseX.kr(1.neg,1);
-pos2=MouseX.kr(1.neg,1).neg;
-pos3=MouseY.kr(1.neg,1).neg;
-pos4=MouseY.kr(1.neg,1);
+	ch1=FreeVerb.ar(PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0, doneAction:2));
+	ch2=FreeVerb.ar(PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c2), loop: 0, doneAction:2));
+	ch3=FreeVerb.ar(PlayBuf.ar(1, ~c3.bufnum, BufRateScale.kr(~c3), loop: 0, doneAction:2));
+	ch4=FreeVerb.ar(PlayBuf.ar(1, ~c4.bufnum, BufRateScale.kr(~c4), loop: 0, doneAction:2));
 
-	Out.ar(0,Pan2.ar(PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0, doneAction:2),pos3,amp));
-	Out.ar(0,Pan2.ar(PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c2), loop: 0, doneAction:2),pos4,amp));
-	Out.ar(0,Pan2.ar(PlayBuf.ar(1, ~c3.bufnum, BufRateScale.kr(~c3), loop: 0, doneAction:2),pos1,amp));
-	Out.ar(0,Pan2.ar(PlayBuf.ar(1, ~c4.bufnum, BufRateScale.kr(~c4), loop: 0, doneAction:2),pos2,amp));
+	Out.ar(0,Pan2.ar(ch1,posy.neg,ampy));
+	Out.ar(0,Pan2.ar(ch2,posy,ampy));
+	Out.ar(0,Pan2.ar(ch3,posx,ampx));
+	Out.ar(0,Pan2.ar(ch3,posx.neg,ampx));
 }.play;
 );
 
@@ -60,30 +58,34 @@ w = Window("Nest", Rect(100,10,300,300))
 .front
 .alwaysOnTop_(true);
 
-				Slider2D(w, Rect(190,205,100,185))
+				Slider2D(w, Rect(10,80,200,200))
 				.background_(Color.rand)
 	.x_(0)
 	.y_(0)
 	.action_({
 		arg obj;
-		var gg, cg, ff;
+		var posx, posy, pl,echox, echoy, distx, disty;
 
-		cg = obj.y.linlin(0,1,1.neg,1);
-		ff = obj.x.linlin(0,1,1.neg,1);
-		gg = [cg, ff];
-		gg.postln;
-	a.set(\posx,ff,\posy,cg);
+	posy = obj.y.linlin(0,1,1.neg,1).round(0.0001);
+	posx = obj.x.linlin(0,1,1.neg,1).round(0.0001);
+	echox= obj.x.linlin(0,1,1.neg,1).abs.reciprocal.wrap(0,1).round(0.0001);
+	echoy= obj.y.linlin(0,1,1.neg,1).abs.reciprocal.wrap(0,1).round(0.0001);
+	distx= obj.x.linlin(0,1,1.neg,1).abs.linexp(0,1,0.01,1).round(0.0001);
+	disty= obj.y.linlin(0,1,1.neg,1).abs.linexp(0,1,0.01,1).round(0.0001);
+		pl = [posx, posy];
+		pl.postln;
+	a.set(\posx,posx,\posy,posy,\ampx,distx,\ampy,disty,\echox,echox,\echoy,echoy);
 });
 
 
-				Slider(w, Rect(120,115,65,10))
+	/*			Slider(w, Rect(10,10,250,50))
 				.background_(Color.rand)
 	.action_({
 	arg obj;
 	var cf;
 	cf = obj.value.linexp(0,1,0.01,1).postln;
 		a.set(\amp,cf);
-	})
+	})*/
 
 )
 
