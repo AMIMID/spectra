@@ -38,17 +38,20 @@ pos4=MouseY.kr(1.neg,1);
 (
 a={
 	arg posx,posy,ampx,ampy,echox,echoy;
-	var ch1,ch2,ch3,ch4;
+	var ch1,ch2,ch3,ch4,c,angle;
 
 	ch1=FreeVerb.ar(PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0, doneAction:2));
 	ch2=FreeVerb.ar(PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c2), loop: 0, doneAction:2));
 	ch3=FreeVerb.ar(PlayBuf.ar(1, ~c3.bufnum, BufRateScale.kr(~c3), loop: 0, doneAction:2));
 	ch4=FreeVerb.ar(PlayBuf.ar(1, ~c4.bufnum, BufRateScale.kr(~c4), loop: 0, doneAction:2));
 
-	Out.ar(0,Pan2.ar(ch1,posy.neg,ampy));
-	Out.ar(0,Pan2.ar(ch2,posy,ampy));
-	Out.ar(0,Pan2.ar(ch3,posx,ampx));
-	Out.ar(0,Pan2.ar(ch3,posx.neg,ampx));
+	angle=Complex(posx,posy).theta;
+	c=exp(Complex(0,1)*angle);
+
+	Out.ar(0,Pan2.ar(ch1,c.imag.neg.round(0.0001),ampy));
+	Out.ar(0,Pan2.ar(ch2,c.imag.round(0.0001).poll,ampy));
+	Out.ar(0,Pan2.ar(ch3,c.real.round(0.0001).poll,ampx));
+	Out.ar(0,Pan2.ar(ch4,c.real.neg.round(0.0001),ampx));
 }.play;
 );
 
@@ -73,19 +76,8 @@ w = Window("Nest", Rect(100,10,300,300))
 	distx= obj.x.linlin(0,1,1.neg,1).abs.linexp(0,1,0.01,1).round(0.0001);
 	disty= obj.y.linlin(0,1,1.neg,1).abs.linexp(0,1,0.01,1).round(0.0001);
 		pl = [posx, posy];
-		pl.postln;
+		//pl.postln;
 	a.set(\posx,posx,\posy,posy,\ampx,distx,\ampy,disty,\echox,echox,\echoy,echoy);
 });
-
-
-	/*			Slider(w, Rect(10,10,250,50))
-				.background_(Color.rand)
-	.action_({
-	arg obj;
-	var cf;
-	cf = obj.value.linexp(0,1,0.01,1).postln;
-		a.set(\amp,cf);
-	})*/
-
 )
 
